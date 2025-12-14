@@ -15,21 +15,19 @@ configuration {
 
 window {
     transparency:                "real";
-    location:                    center;
+    location:                    south;
     anchor:                      center;
     fullscreen:                  false;
     width:                       600px;
-    height:                      800px;
+    height:                      600px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     enabled:                     true;
     margin:                      0px;
     padding:                     0px;
-    border:                      1px solid;
-    border-radius:               10px;
-    border-color:                @mauve;
-    background-color:            @mantle;
+    border-radius:               30px 30px 0px 0px;
+    background-color:            black;
     cursor:                      "default";
 }
 
@@ -39,7 +37,7 @@ mainbox {
     spacing:                     10px;
     margin:                      0px;
     padding:                     20px 20px;
-    border:                      0px solid;
+    // border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
     border-color:                @mauve;
     background-color:            transparent;
@@ -52,9 +50,10 @@ inputbar {
     spacing:                     5px;
     margin:                      2% 3%;
     padding:                     10px;
-    border:                      1px solid;
+    // border:                      1px solid;
     border-radius:               10px;
-    border-color:                @mauve;
+    // border-color:                @overlay0;
+    // border-color:                @mauve;
     background-color:            white / 5%;
     text-color:                  @text;
     children:                    [ "prompt", "entry" ];
@@ -85,22 +84,23 @@ entry {
 listview {
     enabled:                     true;
     columns:                     4;
-    lines:                       4;
     cycle:                       true;
-    dynamic:                     true;
+    dynamic:                     false;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
-    fixed-height:                true;
-    fixed-columns:               true;
+    fixed-height:                false;
+    fixed-columns:               false;
     
     spacing:                     0px;
     margin:                      0px;
-    padding:                     10px;
-    border:                      1px solid;
-    border-radius:               10px;
-    border-color:                @mauve;
-    background-color:            @crust;
+    // padding:                     10px;
+    // border:                      1px solid;
+    // border-radius:               10px;
+    // border-color:                @mauve;
+    // background-color:            @crust;
+    // background-color:            white / 5%;
+    background-color:            transparent;
     text-color:                  @text;
     cursor:                      "default";
 }
@@ -117,9 +117,9 @@ element {
     spacing:                     5px;
     margin:                      5px;
     padding:                     10px 10px;
-    border:                      0px solid;
+    // border:                      0px solid;
     border-radius:               10px;
-    border-color:                @mauve;
+    // border-color:                @overlay0;
     background-color:            transparent;
     text-color:                  @text;
     orientation:                 vertical;
@@ -133,7 +133,8 @@ element selected.normal {
     background-color:            white / 15%;
     text-color:                  @text;
     border:                      1px solid;
-    border-color:                @mauve;
+    border-color:                @overlay0;
+    // border-color:                @mauve;
 }
 element-icon {
     background-color:            transparent;

@@ -106,7 +106,7 @@ window.top_bar .modules-center {
 
 #pulseaudio {
   background-color: @base;
-  border: solid @sapphire 1px;
+  border: solid @red 1px;
   border-radius: 6px;
   margin-top: 5px;
 
@@ -120,30 +120,37 @@ window.top_bar .modules-center {
 
 #pulseaudio.low {
   color: @teal;
+  border-color: @teal;
 }
 
 #pulseaudio.lower-medium {
   color: @green;
+  border-color: @green;
 }
 
 #pulseaudio.medium {
   color: @yellow;
+  border-color: @yellow;
 }
 
 #pulseaudio.upper-medium {
   color: @peach;
+  border-color: @peach;
 }
 
 #pulseaudio.high {
   color: @maroon;
+  border-color: @maroon;
 }
 
 #pulseaudio.bluetooth {
   color: @sapphire;
+  border-color: @sapphire;
 }
 
 #pulseaudio.muted {
   color: @surface2;
+  border-color: @surface2;
 }
 
 
