@@ -1,0 +1,62 @@
+@use "/home/dmitry/.config/eww/colors/catppuccin-mocha.scss" as colors;
+
+* {
+    all: unset;
+    font-family: "JetBrains Mono";
+}
+
+@mixin header_style($color) {
+    color: #000000;
+    background: $color;
+    margin: 8px 20px 5px 20px;
+    border-radius: 50%;
+    font-size: 16;
+    font-weight: bold;
+}
+
+.bar-window {
+  background: #000000;
+}
+
+.apps-window {
+  background: transparent;
+
+  .btn-box {
+    background: #000000;
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .app1-btn-header {
+    @include header_style(colors.$sky);
+  }
+  .app2-btn-header {
+    @include header_style(colors.$teal);
+  }
+  .app3-btn-header {
+    @include header_style(colors.$green);
+  }
+  .app4-btn-header {
+    @include header_style(colors.$yellow);
+  }
+  .app5-btn-header {
+    @include header_style(colors.$peach);
+  }
+  .app6-btn-header {
+    @include header_style(colors.$red);
+  }
+  .app7-btn-header {
+    @include header_style(colors.$mauve);
+  }
+
+  .btn {
+    background: #000000;
+    margin: 8px;
+    margin-bottom: 12px;
+  }
+
+  .btn-btn {
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+

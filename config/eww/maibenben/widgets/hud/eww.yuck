@@ -1,0 +1,358 @@
+(defvar eww "~/.config/eww/widgets/hud")
+
+(defvar date_reveal_state false)
+(defvar bat_reveal_state false)
+(defvar volume_reveal_state false)
+(defvar volume-state false)
+(defvar brightness-state false)
+
+;; datetime
+(defpoll time :interval "60s" `date +%H:%M`)
+(defpoll day :interval "60s" `date +%d`)
+(defpoll month :interval "60s" `date +%m`)
+(defpoll year :interval "60s" `date +%Y`)
+(defpoll day_name :interval "60s" `date +%A`)
+;; scripts
+(defpoll kb_layout :interval "1s" `~/.config/eww/widgets/hud/scripts/layout.sh`)
+(defpoll workspace :interval "1s" `~/.config/eww/widgets/hud/scripts/active_workspace.sh`)
+(defpoll count_workspaces :interval "1s" `~/.config/eww/widgets/hud/scripts/count_workspaces.sh`)
+;; battery
+(defpoll bat_status :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh`)
+(defpoll bat_time :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh time`)
+(defpoll bat_color :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh color`)
+;; sound
+(defpoll volume :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh value`)
+(defpoll volume-mute :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh`)
+(defpoll volume-icon :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh icon`)
+(defpoll volume-color :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh color`)
+(defvar volume-update `wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%`)
+(defvar volume-toggle-mute "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
+;; brightness
+(defpoll brightness :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness.sh`)
+(defpoll brightness-color :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness.sh color`)
+(defpoll brightness-icon :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness.sh icon`)
+(defvar brightness-update `brightnessctl s {}%`)
+
+
+(defwidget kb-layout []
+  (label
+    :text "${kb_layout}"
+    :class "kb_layout"
+  )
+)
+
+(defwidget workspaces []
+  (box
+    :class "workspace"
+    :spacing 6
+    :space-evenly false
+    (label
+      :text "${workspace}"
+      :class "current-workspace"
+    )
+    (label
+      :text "+${count_workspaces - 1}"
+      :class "workspacesp"
+    )
+  )
+)
+
+(defwidget left-group []
+  (box
+    :class "left-group"
+    :orientation "h"
+    :spacing 6
+    :space-evenly false
+    :halign "start"
+    (kb-layout)
+    (workspaces)
+  )
+)
+
+(defwidget datetime []
+  (eventbox
+    :onhover "sleep 0.5 | eww update -c ${eww} date_reveal_state=true"
+    :onhoverlost "sleep 0.5 | eww update -c ${eww} date_reveal_state=false"
+    (box
+      :orientation "h"
+      :space-evenly false
+      :spacing 4
+      :class "datetime"
+      (revealer
+        :transition "slideleft"
+        :duration 200
+        :reveal {date_reveal_state}
+        (box
+          :class "dates"
+          :orientation "h"
+          :space-evenly false
+          (label
+            :text " ${day_name}"
+            :class "day_name"
+          )
+        )
+      )
+      (label
+        :text " ${time}"
+        :class "time"
+      )
+      (revealer
+        :transition "slideright"
+        :duration 200
+        :reveal {date_reveal_state}
+        (box
+          :class "dates"
+          :orientation "h"
+          :space-evenly false
+          (label
+            :text " ${day}.${month}.${year}"
+            :class "date"
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget center-group []
+  (box
+    :class "center-group"
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    (datetime)
+  )
+)
+
+(defwidget volume-widget []
+  (button
+    :onclick {volume-toggle-mute}
+    (box
+      :orientation "h"
+      :class "volume"
+      :space-evenly false
+      :style "background: ${volume-color};"
+      (label
+        :text "${volume-icon} "
+      )
+      (revealer
+        :transition "slideright"
+        :duration 200
+        :reveal {volume-mute != 1}
+        (box
+          :orientation "h"
+          :space-evenly false
+          (label
+            :class "volume-val"
+            :text "${volume}%"
+            :style "color: ${volume-color};"
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget battery-widget []
+  (eventbox
+    :onhover "sleep 0.5 | eww update -c ${eww} bat_reveal_state=true"
+    :onhoverlost "sleep 0.5 | eww update -c ${eww} bat_reveal_state=false"
+    (box
+      :orientation "h"
+      :class "battery"
+      :space-evenly false
+      :style "background: ${bat_color}"
+      (revealer
+        :transition "slideleft"
+        :duration 200
+        :reveal {bat_reveal_state}
+        (box
+          :orientation "h"
+          :space-evenly false
+          (label
+            :class "bat"
+            :text "${bat_time}"
+            :style "color: ${bat_color}"
+          )
+        )
+      )
+      (label
+        :text "${bat_status}"
+      )
+    )
+  )
+)
+
+(defwidget right-group []
+  (box
+    :class "right-group"
+    :orientation "h"
+    :spacing 6
+    :halign "end"
+    :space-evenly false
+    (systray
+      :class "tray"
+      :icon-size 14
+      :spacing 5
+    )
+    (volume-widget)
+    (battery-widget)
+  )
+)
+
+
+(defwidget layout []
+  (box
+    :class "panel"
+    :orientation "h"
+    :halign "fill"
+    :valign "center"
+    (left-group)
+    (center-group)
+    (right-group)
+  )
+)
+
+
+(defwidget volume-content []
+  (eventbox
+    :onhover "sleep 0.5 | eww update -c ${eww} volume-state=true"
+    :onhoverlost "sleep 1 | eww update -c ${eww} volume-state=false"
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "end"
+      (revealer
+        :transition "slideleft"
+        :duration 300
+        :reveal {volume-state}
+        (box
+          :class "content"
+          :orientation "v"
+          :valign "center"
+          :space-evenly false
+          (button
+            :onclick {volume-toggle-mute}
+            (label 
+              :class "volume"
+              :text "${volume-icon} ${volume}%"
+              :style "background: ${volume-color};"
+            )
+          )
+          (box
+            :orientation "v"
+            :space-evenly false
+            :class "volume-slider"
+            (scale
+              :orientation "v"
+              :flipped true
+              :value {volume}
+              :onchange {volume-update}
+              :max 101
+              :min 0
+              :css ".volume-slider scale trough highlight { background-color: ${volume-color}; }"
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget brightness-content []
+  (eventbox
+    :onhover "sleep 0.5 | eww update -c ${eww} brightness-state=true"
+    :onhoverlost "sleep 1 | eww update -c ${eww} brightness-state=false"
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "end"
+      (revealer
+        :transition "slideright"
+        :duration 300
+        :reveal {brightness-state}
+        (box
+          :class "content"
+          :orientation "v"
+          :valign "center"
+          :space-evenly false
+          (label 
+            :class "brightness"
+            :text "${brightness-icon} ${brightness}%"
+            :style "background: ${brightness-color};"
+          )
+          (box
+            :orientation "v"
+            :space-evenly false
+            :class "brightness-slider"
+            (scale
+              :orientation "v"
+              :flipped true
+              :value {brightness}
+              :onchange {brightness-update}
+              :max 101
+              :min 0
+              :css ".brightness-slider scale trough highlight { background-color: ${brightness-color}; }"
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+
+(defwindow volume-window
+  :monitor 0
+  :windowtype "normal"
+  :geometry (geometry
+    :y "3%"
+    :x "0px"
+    :width "6px"
+    :height "100px"
+    :anchor "right top"
+  )
+  :resizable false
+  (eventbox
+    :onhover "sleep 0.5 | eww update -c ${eww} volume-state=true"
+    :onhoverlost "sleep 1 | eww update -c ${eww} volume-state=false"
+    (volume-content)
+  )
+)
+
+(defwindow brightness-window
+  :monitor 0
+  :windowtype "normal"
+  :geometry (geometry
+    :y "3%"
+    :x "0px"
+    :width "6px"
+    :height "100px"
+    :anchor "left top"
+  )
+  :resizable false
+  (eventbox
+    :onhover "sleep 0.5 | eww update -c ${eww} brightness-state=true"
+    :onhoverlost "sleep 1 | eww update -c ${eww} brightness-state=false"
+    (brightness-content)
+  )
+)
+
+(defwindow hud-window
+  :exclusive true
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :width "100%"
+    :height "20px"
+    :anchor "top center"
+  )
+  :resizable false
+  :reserve (struts :side "top" :distance "20")
+  (layout)
+)
+
