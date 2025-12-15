@@ -21,17 +21,17 @@
 (defpoll bat_time :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh time`)
 (defpoll bat_color :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh color`)
 ;; sound
-(defpoll volume :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh value`)
-(defpoll volume-mute :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh`)
-(defpoll volume-icon :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh icon`)
-(defpoll volume-color :interval "1s" `~/.config/eww/widgets/hud/scripts/volume.sh color`)
-(defvar volume-update `wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%`)
-(defvar volume-toggle-mute "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
+(defpoll vol :interval "2s" `~/.config/eww/widgets/hud/scripts/volume_updater.sh`)
+(defvar vol-mute true)
+(defvar vol-icon " ")
+(defvar vol-color "#ff0000")
+(defvar vol-update "~/.config/eww/widgets/hud/scripts/volume_updater.sh {}")
+(defvar vol-toggle-mute "~/.config/eww/widgets/hud/scripts/volume_updater.sh toggle")
 ;; brightness
-(defpoll brightness :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness.sh`)
-(defpoll brightness-color :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness.sh color`)
-(defpoll brightness-icon :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness.sh icon`)
-(defvar brightness-update `brightnessctl s {}%`)
+(defpoll br :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness_updater.sh`)
+(defvar br-icon "󰃚 ")
+(defvar br-color "#ff0000")
+(defvar br-update "~/.config/eww/widgets/hud/scripts/brightness_updater.sh {}")
 
 
 (defwidget kb-layout []
@@ -126,26 +126,26 @@
 
 (defwidget volume-widget []
   (button
-    :onclick {volume-toggle-mute}
+    :onclick {vol-toggle-mute}
     (box
       :orientation "h"
       :class "volume"
       :space-evenly false
-      :style "background: ${volume-color};"
+      :style "background: ${vol-color};"
       (label
-        :text "${volume-icon} "
+        :text "${vol-icon} "
       )
       (revealer
         :transition "slideright"
         :duration 200
-        :reveal {volume-mute != 1}
+        :reveal {!vol-mute}
         (box
           :orientation "h"
           :space-evenly false
           (label
             :class "volume-val"
-            :text "${volume}%"
-            :style "color: ${volume-color};"
+            :text "${vol}%"
+            :style "color: ${vol-color};"
           )
         )
       )
@@ -233,11 +233,11 @@
           :valign "center"
           :space-evenly false
           (button
-            :onclick {volume-toggle-mute}
+            :onclick {vol-toggle-mute}
             (label 
               :class "volume"
-              :text "${volume-icon} ${volume}%"
-              :style "background: ${volume-color};"
+              :text "${vol-icon} ${vol}%"
+              :style "background: ${vol-color};"
             )
           )
           (box
@@ -247,11 +247,11 @@
             (scale
               :orientation "v"
               :flipped true
-              :value {volume}
-              :onchange {volume-update}
+              :value {vol}
+              :onchange {vol-update}
               :max 101
               :min 0
-              :css ".volume-slider scale trough highlight { background-color: ${volume-color}; }"
+              :css ".volume-slider scale trough highlight { background-color: ${vol-color}; }"
             )
           )
         )
@@ -280,8 +280,8 @@
           :space-evenly false
           (label 
             :class "brightness"
-            :text "${brightness-icon} ${brightness}%"
-            :style "background: ${brightness-color};"
+            :text "${br-icon} ${br}%"
+            :style "background: ${br-color};"
           )
           (box
             :orientation "v"
@@ -290,11 +290,11 @@
             (scale
               :orientation "v"
               :flipped true
-              :value {brightness}
-              :onchange {brightness-update}
+              :value {br}
+              :onchange {br-update}
               :max 101
               :min 0
-              :css ".brightness-slider scale trough highlight { background-color: ${brightness-color}; }"
+              :css ".brightness-slider scale trough highlight { background-color: ${br-color}; }"
             )
           )
         )
