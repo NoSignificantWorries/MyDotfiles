@@ -99,9 +99,10 @@ environment {
 }
 spawn-sh-at-startup "swww-daemon &"
 spawn-sh-at-startup "swww img ~/.wallpaper --transition-type none"
-spawn-at-startup "waybar"
+// spawn-at-startup "waybar"
 spawn-at-startup "swaync"
-spawn-sh-at-startup "systemctl --user start opentabletdriver.service"
+spawn-at-startup "~/.config/eww/widgets/hud/launch.sh"
+// spawn-sh-at-startup "systemctl --user start opentabletdriver.service"
 hotkey-overlay {
     skip-at-startup
 }
@@ -189,6 +190,9 @@ binds {
     }
     Mod+X hotkey-overlay-title="Logout menu" {
         spawn "~/.config/wlogout/logout_menu.sh"
+    }
+    Mod+Shift+W hotkey-overlay-title="Toggle waybar" {
+        spawn-sh "~/.config/waybar/toggle_waybar.sh"
     }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" {
         spawn "swaylock"

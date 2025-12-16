@@ -1,0 +1,144 @@
+@use "/home/dmitry/.config/eww/colors/catppuccin-mocha.scss" as colors;
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font";
+}
+
+.hud-window {
+    background: #000000;
+
+  .kb_layout {
+    margin-left: 8px;
+    color: colors.$lavender;
+    background: colors.$mantle;
+    border-radius: 5px;
+
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .workspace {
+    color: #000000;
+    background: colors.$lavender;
+    border-radius: 5px;
+
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .current-workspace {
+    color: #000000;
+    font-weight: bold;
+  }
+
+  .workspacesp {
+    color: colors.$text;
+    background: colors.$surface0;
+    border-radius: 5px;
+
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .datetime {
+    background: colors.$teal;
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 5px;
+  }
+  .time {
+    color: #000000;
+    font-weight: bold;
+  }
+  .date {
+    background: #000000;
+    color: colors.$peach;
+    font-weight: bold;
+    margin: 3px 4px 3px 4px;
+    border-radius: 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .day_name {
+    background: #000000;
+    color: colors.$mauve;
+    font-weight: bold;
+    margin: 3px 4px 3px 4px;
+    border-radius: 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .volume {
+    color: #000000;
+    background: colors.$sky;
+    border-radius: 5px;
+
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    padding-left: 4px;
+    padding-right: 6px;
+    margin-right: 10px;
+  }
+
+  .volume-val {
+    background: #000000;
+    color: colors.$sky;
+    border-radius: 3px;
+    margin-top: 2px;
+    margin-left: 4px;
+    margin-bottom: 2px;
+
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
+
+.volume-window {
+  background: transparent;
+
+  .content {
+    background: #000000;
+    padding: 15px 0px 15px 8px;
+    border-radius: 10px 0px 0px 10px;
+  }
+
+
+  .volume {
+    color: #000000;
+    background: colors.$green;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+
+  .volume-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$green;
+    color: #000000;
+    border-radius: 10px;
+  }
+
+  .volume-slider scale trough {
+    all: unset;
+    background-color: colors.$base;
+    border-radius: 50px;
+    min-height: 200px;
+    min-width: 10px;
+  }
+}
+
