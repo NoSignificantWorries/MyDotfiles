@@ -181,10 +181,10 @@ binds {
     Mod+Shift+X hotkey-overlay-title="Open Xournal++" {
         spawn "xournalpp"
     }
-    Mod+Shift+C hotkey-overlay-title="Open code editor (noevim)" {
-        spawn-sh "kitty -e nvim"
+    Mod+Shift+N hotkey-overlay-title="Open code editor (noevim)" {
+        spawn-sh "neovide"
     }
-    Mod+Shift+Ctrl+C hotkey-overlay-title="Open additional code editor (Code)" {
+    Mod+Shift+C hotkey-overlay-title="Open additional code editor (Code)" {
         spawn-sh "code"
     }
     Mod+X hotkey-overlay-title="Logout menu" {
@@ -271,16 +271,16 @@ binds {
     Mod+I {
         focus-workspace-up
     }
-    Mod+Ctrl+U {
+    Mod+Ctrl+I {
         move-column-to-workspace-down
     }
-    Mod+Ctrl+I {
+    Mod+Ctrl+U {
         move-column-to-workspace-up
     }
-    Mod+Shift+U {
+    Mod+Shift+I {
         move-workspace-down
     }
-    Mod+Shift+I {
+    Mod+Shift+U {
         move-workspace-up
     }
     Mod+WheelScrollDown cooldown-ms=150 {
