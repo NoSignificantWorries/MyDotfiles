@@ -82,6 +82,26 @@
     padding-right: 4px;
   }
 
+  .tray {
+    menu {
+      background: #000000;
+      color: colors.$text;
+      border-radius: 10px;
+      padding: 5px;
+    }
+    menuitem {
+      color: colors.$text;
+      border-radius: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    menuitem:hover {
+      background: colors.$base;
+      border: 1px solid colors.$blue;
+      color: colors.$blue;
+    }
+  }
+
   .volume {
     color: #000000;
     background: colors.$sky;
