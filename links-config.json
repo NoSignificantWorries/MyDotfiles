@@ -1,0 +1,17 @@
+{
+  "ignore-hidden": true,
+  "ignore-dirs": false,
+  "ignore-files": false,
+  "always-ignore": ["__pycache__", "*README*", "*LICENSE*"],
+  "subdir": ".links",
+  "dotdirs": ["config", "scripts", "icons"],
+  "associations": {
+    "config": "~/.config",
+    "scripts": "~/.scripts",
+    "icons": "~/.icons",
+    "config/p10k.zsh": "~/.p10k.zsh",
+    "config/tmux.conf": "~/.tmux.conf",
+    "config/zshrc": "~/.zshrc",
+    "config/zsh": "~/.zsh"
+  }
+}

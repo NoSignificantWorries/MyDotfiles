@@ -1,0 +1,24 @@
+[
+  {
+    "include": [
+      "~/.config/waybar/modules.jsonc",
+      "~/.config/waybar/custom_modules.jsonc",
+    ],
+    "name": "top_bar",
+    "layer": "top",
+    "output": ["*"],
+    "position": "top",
+    "mode": "dock",
+    "passthrough": false,
+    "reload_style_on_charge": true,
+
+    "height": 53,
+    "spacing": 0,
+    "margin-left": 8,
+    "margin-right": 8,
+
+    "modules-left": ["user", "clock#time", "niri/workspaces"],
+    "modules-center": ["cpu", "memory", "disk", "custom/cpu-temp"],
+    "modules-right": ["tray", "pulseaudio", "network", "niri/language"],
+  },
+]

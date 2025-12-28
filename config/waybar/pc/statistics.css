@@ -1,0 +1,87 @@
+/* statistics */
+#cpu {
+  padding-right: 14px;
+  color: @sapphire;
+}
+
+#cpu.low {
+  color: @rosewater;
+}
+
+#cpu.lower-medium {
+  color: @yellow;
+}
+
+#cpu.medium {
+  color: @peach;
+}
+
+#cpu.upper-medium {
+  color: @maroon;
+}
+
+#cpu.high {
+  color: @red;
+}
+
+
+#memory {
+  padding-right: 14px;
+  color: @sapphire;
+}
+
+#memory.low {
+  color: @rosewater;
+}
+
+#memory.lower-medium {
+  color: @yellow;
+}
+
+#memory.medium {
+  color: @peach;
+}
+
+#memory.upper-medium {
+  color: @maroon;
+}
+
+#memory.high {
+  color: @red;
+}
+
+
+#disk {
+  padding-right: 14px;
+  color: @sapphire;
+}
+
+#disk.low {
+  color: @rosewater;
+}
+
+#disk.lower-medium {
+  color: @yellow;
+}
+
+#disk.medium {
+  color: @peach;
+}
+
+#disk.upper-medium {
+  color: @maroon;
+}
+
+#disk.high {
+  color: @red;
+}
+
+
+#custom-cpu-temp {
+  color: @green;
+}
+
+#custom-cpu-temp.critical {
+  color: @red;
+}
+

@@ -1,0 +1,194 @@
+@import "catppuccin_mocha.css";
+@import "statistics.css";
+
+* {
+  font-family: "JetBrainsMono Nerd Font", "Fira Code", "Font Awesome 7 Free";
+  font-size: 14px;
+}
+
+window.top_bar#waybar {
+  background-color: transparent;
+}
+
+window.top_bar .modules-left {
+}
+
+window.top_bar .modules-right {
+}
+
+window.top_bar .modules-center {
+  background-color: @base;
+  border: solid @blue 1px;
+  border-radius: 5px;
+  margin-top: 5px;
+
+  padding-left: 14px;
+  padding-right: 10px;
+
+  font-weight: bold;
+}
+
+#user {
+  background-color: @base;
+  border: solid @green 1px;
+  border-radius: 6px;
+  margin-top: 5px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  margin-right: 8px;
+
+  font-weight: bold;
+  color: @green;
+}
+
+#clock.time {
+  background-color: @base;
+  border: solid @green 1px;
+  border-radius: 6px;
+  margin-top: 5px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  margin-right: 8px;
+
+  font-weight: bold;
+  color: @green;
+}
+
+#workspaces {
+  background-color: @base;
+  border: solid @blue 1px;
+  border-radius: 6px;
+  margin-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  margin-right: 8px;
+
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+#workspaces button {
+  color: @peach;
+  border-radius: 0px;
+}
+
+#workspaces button.empty {
+  color: @overlay0;
+}
+
+#workspaces button.active {
+  background-color: @teal;
+  color: @base;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+#tray {
+  background-color: @base;
+  border: solid @lavender 1px;
+  border-radius: 6px;
+  margin-top: 5px;
+  margin-right: 8px;
+
+  padding-right: 10px;
+  padding-left: 8px;
+}
+
+
+#pulseaudio {
+  background-color: @base;
+  border: solid @red 1px;
+  border-radius: 6px;
+  margin-top: 5px;
+
+  margin-right: 8px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  color: @red;
+}
+
+#pulseaudio.low {
+  color: @teal;
+  border-color: @teal;
+}
+
+#pulseaudio.lower-medium {
+  color: @green;
+  border-color: @green;
+}
+
+#pulseaudio.medium {
+  color: @yellow;
+  border-color: @yellow;
+}
+
+#pulseaudio.upper-medium {
+  color: @peach;
+  border-color: @peach;
+}
+
+#pulseaudio.high {
+  color: @maroon;
+  border-color: @maroon;
+}
+
+#pulseaudio.bluetooth {
+  color: @sapphire;
+  border-color: @sapphire;
+}
+
+#pulseaudio.muted {
+  color: @surface2;
+  border-color: @surface2;
+}
+
+
+#network {
+  background-color: @base;
+  border: solid @green 1px;
+  border-radius: 5px;
+  margin-top: 5px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  margin-right: 8px;
+}
+
+#network.disabled {
+  border-color: @subtext0;
+  color: @subtext0;
+}
+
+#network.disconnected {
+  border-color: @red;
+  color: @red;
+}
+
+#network.wifi {
+  border-color: @teal;
+  color: @teal;
+}
+
+#language {
+  background-color: @base;
+  border: solid @sky 1px;
+  border-radius: 6px;
+  margin-top: 5px;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  color: @text;
+}
+
+

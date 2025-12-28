@@ -65,6 +65,7 @@
 
 ## which style to use
 ## possible values: auto, full, compact
+[display]
 style = "compact"
 
 ## the maximum number of lines the interface should take up

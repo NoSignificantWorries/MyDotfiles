@@ -1,0 +1,16 @@
+{
+  "custom/cpu-temp": {
+    "exec": "sensors | grep 'Tctl:' | awk '{print $2}' | sed 's/+//; s/°C//'",
+    "interval": 5,
+    "format": "{icon} {text}°C",
+    "format-icons": ["", "", "", ""],
+    "format-icons": ["", "", "", "", ""],
+    "tooltip": true,
+    "on-click": "kitty -e sensors",
+
+    "states": {
+      "warning": 70,
+      "critical": 85,
+    },
+  },
+}

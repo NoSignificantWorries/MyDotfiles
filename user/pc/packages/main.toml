@@ -1,0 +1,184 @@
+[settings]
+provider = "main"
+
+[Fonts]
+install = [
+  "fontconfig",
+  "ttf-jetbrains-mono",
+  "woff2-font-awesome",
+  "noto-fonts-emoji",
+]
+  commands = [
+  "fc-cache -f -v"
+]
+
+[Styling_utils]
+install = [
+  "qt5ct",
+  "qt6ct",
+  "nwg-look",
+  "kvantum",
+  "lxappearance",
+]
+
+[Sys_utils]
+install = [
+  "openssh",
+]
+
+[DE_elements]
+install = [
+  "wlogout",
+  "kanata",
+  "swww",
+  "swaylock",
+]
+
+[Drivers]
+install = [ "opentabletdriver-git" ]
+
+[Shell]
+install = [
+  "nushell",
+  "zsh",
+  "oh-my-zsh-git",
+  "zsh-theme-powerlevel10k-git",
+  "zsh-autosuggestions",
+  "zsh-syntax-highlighting",
+]
+commands = [
+  "chsh -s $(which nu)"
+]
+
+[Shell_utils]
+install = [
+  "nvtop",
+  "bottom",
+  "ncdu",
+  "ps_mem",
+  "neofetch",
+  "nitch",
+  "atuin",
+  "yazi",
+  "lsd",
+  "tmux",
+  "timg",
+  "tree",
+  "lazygit",
+  "slidev-cli",
+  "bc",
+  "fzf",
+  "fd",
+  "ripgrep",
+  "tumbler",
+  "libnotify",
+  "zoxide",
+]
+commands = [
+  "atuin init nu | save ~/.local/share/atuin/init.nu",
+  "zoxide init nushell | save ~/.zoxide.nu"
+]
+
+[look-And-Feel]
+install = [
+  "papirus-icon-theme",
+  "papirus-folders",
+  "catppuccin-qt5ct-git"
+]
+commands = [
+  "papirus-folders -C yaru --theme Papirus-Dark"
+]
+
+[Sys_applications]
+install = [
+  "imagemagick",
+  "pavucontrol",
+  "mission-center",
+  "network-manager-applet",
+  "blueman",
+  "gnome-disk-utility",
+  "bleachbit",
+]
+
+[DE_applications]
+install = [
+  "xed",
+  "mpv",
+  "geeqie",
+  "nemo",
+  "zathura",
+  "zathura-pdf-mupdf",
+]
+
+[Applications]
+install = [
+  "zen-browser-bin",
+  "min-browser-bin",
+  "telegram-desktop",
+  "hiddify",
+  "gitkraken",
+  "xournalpp",
+]
+
+[C/C++]
+install = [
+  "gcc",
+  "cmake",
+]
+
+[node]
+install = [
+  "nodejs",
+  "npm",
+  "pnpm",
+]
+commands = [
+  "mkdir -p ~/.npm-global",
+  "npm config set prefix '~/.npm-global'",
+]
+
+[python]
+install = [
+ "python-pip",
+ "python-pipx",
+ "python-uv",
+ "ruff",
+]
+
+[jupyter]
+install = [
+  "jupyterlab",
+  "python-jupytext",
+  "jupyter-notebook",
+]
+
+[rust]
+install = [
+  "rustup",
+  "rust-src",
+]
+
+[go]
+install = ["go"]
+
+[LaTeX]
+install = [
+  "texlive-most",
+  "texlive-lang",
+  "biber",
+]
+
+[Docker]
+install = [
+  "docker",
+  "docker-compose",
+  "docker-buildx",
+  "lazydocker",
+]
+commands = [
+  "sudo systemctl enable docker",
+  "sudo systemctl start docker",
+  "sudo usermod -aG docker $USER",
+]
+
+
