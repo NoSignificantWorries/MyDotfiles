@@ -17,7 +17,6 @@ class CmdRunner:
                 cmd,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
-                text=False
             )
             stdout, _ = await proc.communicate()
             return stdout.strip()
