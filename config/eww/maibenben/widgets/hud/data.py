@@ -1,7 +1,25 @@
 import os
+import sys
+import signal
 import asyncio
 import subprocess
 from pathlib import Path
+
+
+pid_file = os.path.expanduser("~/.config/eww/widgets/hud/data.pid")
+
+def cleanup(signum, frame):
+    print("Получен SIGTERM, завершаем...")
+    if os.path.exists(pid_file):
+        os.unlink(pid_file)
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, cleanup)
+signal.signal(signal.SIGINT, cleanup)
+signal.signal(signal.SIGHUP, signal.SIG_IGN)
+
+with open(pid_file, 'w') as f:
+    f.write(str(os.getpid()))
 
 
 CONFIG = Path("~/.config/eww/widgets/hud").expanduser()
@@ -47,6 +65,11 @@ BAT_COLORS = [
     "#a1d860",
     "#91e34a"
 ]
+
+KB_LAYOUTS = {
+    "Russian": "RU 🇷🇺",
+    "English (US)": "EN 🇺🇸"
+}
 
 class EwwUpdater:
     @staticmethod
@@ -108,7 +131,7 @@ async def vol_br_loop():
         muted = "[MUTED]" in vol
         vol = vol.split(" ")
         vol = round(float(vol[1]) * 100)
-        if last_vol != vol or last_muted != last_muted:
+        if last_vol != vol or last_muted is last_muted:
             if muted:
                 vol_color = VOL_COLORS[0]
                 vol_icon = VOL_ICONS[0]
@@ -140,20 +163,29 @@ async def vol_br_loop():
 async def hyprland_events():
     his = os.environ.get('HYPRLAND_INSTANCE_SIGNATURE')
     if not his:
-        print("Hyprland не запущен")
+        print("Hyprland didn't start")
         return
 
     socket_path = f"{os.environ['XDG_RUNTIME_DIR']}/hypr/{his}/.socket2.sock"
 
     reader, writer = await asyncio.open_unix_connection(socket_path)
 
-    print("Подписка на события Hyprland...")
-
     try:
+        preserved_workspaces = ["1", "2", "3", "4", "5"]
         while True:
             data = await reader.readline()
             event = data.decode().strip()
             print(event)
+            event, value = event.split(">>")
+            match event:
+                case "activelayout":
+                    new_layout = value.split(",")[-1]
+                    if new_layout in KB_LAYOUTS.keys():
+                        new_layout = KB_LAYOUTS[new_layout]
+                    EwwUpdater.update("kb_layout", new_layout)
+                case "workspace":
+                    active_workspace = value
+                    EwwUpdater.update("workspace", active_workspace)
     except asyncio.CancelledError:
         pass
     finally:
@@ -162,12 +194,19 @@ async def hyprland_events():
 
 
 async def main():
-        tasks = [asyncio.create_task(hyprland_events()),
-                 asyncio.create_task(vol_br_loop()),
-                 asyncio.create_task(bat_loop())]
-        await asyncio.gather(*tasks)
+    tasks = [asyncio.create_task(hyprland_events()),
+             asyncio.create_task(vol_br_loop()),
+             asyncio.create_task(bat_loop())]
+    await asyncio.gather(*tasks)
 
 
 if __name__ == "__main__":
+    result = subprocess.run(["hyprctl", "workspaces", "-j"], capture_output=True, text=True)
+    print(result.stdout)
+
+    try:
         asyncio.run(main())
+    finally:
+        if os.path.exists(pid_file):
+            os.unlink(pid_file)
 

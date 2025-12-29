@@ -13,18 +13,15 @@
 (defpoll year :interval "60s" `date +%Y`)
 (defpoll day_name :interval "60s" `date +%A`)
 ;; scripts
-(defpoll kb_layout :interval "1s" `~/.config/eww/widgets/hud/scripts/layout.sh`)
-(defpoll workspace :interval "1s" `~/.config/eww/widgets/hud/scripts/active_workspace.sh`)
-(defpoll count_workspaces :interval "1s" `~/.config/eww/widgets/hud/scripts/count_workspaces.sh`)
+;; (defpoll kb_layout :interval "1s" `~/.config/eww/widgets/hud/scripts/layout.sh`)
+(defvar kb_layout "N/A")
+(defvar workspace "1")
+(defvar count_workspaces "10")
 ;; battery
-;; (defpoll bat_status :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh`)
-;; (defpoll bat_time :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh time`)
-;; (defpoll bat_color :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh color`)
 (defvar bat-status "")
 (defvar bat-color "#000000")
 (defvar bat-time " ")
 ;; sound
-;; (defpoll vol :interval "2s" `~/.config/eww/widgets/hud/scripts/volume_updater.sh`)
 (defvar vol "0")
 (defvar vol-mute true)
 (defvar vol-icon " ")
@@ -32,7 +29,6 @@
 (defvar vol-update "~/.config/eww/widgets/hud/scripts/volume_updater.sh {}")
 (defvar vol-toggle-mute "~/.config/eww/widgets/hud/scripts/volume_updater.sh toggle")
 ;; brightness
-;; (defpoll br :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness_updater.sh`)
 (defvar br "0")
 (defvar br-icon "󰃚 ")
 (defvar br-color "#ff0000")
