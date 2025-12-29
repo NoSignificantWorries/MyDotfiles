@@ -17,18 +17,23 @@
 (defpoll workspace :interval "1s" `~/.config/eww/widgets/hud/scripts/active_workspace.sh`)
 (defpoll count_workspaces :interval "1s" `~/.config/eww/widgets/hud/scripts/count_workspaces.sh`)
 ;; battery
-(defpoll bat_status :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh`)
-(defpoll bat_time :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh time`)
-(defpoll bat_color :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh color`)
+;; (defpoll bat_status :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh`)
+;; (defpoll bat_time :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh time`)
+;; (defpoll bat_color :interval "60s" `~/.config/eww/widgets/hud/scripts/bat_status.sh color`)
+(defvar bat-status "")
+(defvar bat-color "#000000")
+(defvar bat-time " ")
 ;; sound
-(defpoll vol :interval "2s" `~/.config/eww/widgets/hud/scripts/volume_updater.sh`)
+;; (defpoll vol :interval "2s" `~/.config/eww/widgets/hud/scripts/volume_updater.sh`)
+(defvar vol "0")
 (defvar vol-mute true)
 (defvar vol-icon " ")
 (defvar vol-color "#ff0000")
 (defvar vol-update "~/.config/eww/widgets/hud/scripts/volume_updater.sh {}")
 (defvar vol-toggle-mute "~/.config/eww/widgets/hud/scripts/volume_updater.sh toggle")
 ;; brightness
-(defpoll br :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness_updater.sh`)
+;; (defpoll br :interval "2s" `~/.config/eww/widgets/hud/scripts/brightness_updater.sh`)
+(defvar br "0")
 (defvar br-icon "󰃚 ")
 (defvar br-color "#ff0000")
 (defvar br-update "~/.config/eww/widgets/hud/scripts/brightness_updater.sh {}")
@@ -161,7 +166,7 @@
       :orientation "h"
       :class "battery"
       :space-evenly false
-      :style "background: ${bat_color}"
+      :style "background: ${bat-color}"
       (revealer
         :transition "slideleft"
         :duration 200
@@ -171,13 +176,13 @@
           :space-evenly false
           (label
             :class "bat"
-            :text "${bat_time}"
-            :style "color: ${bat_color}"
+            :text "${bat-time}"
+            :style "color: ${bat-color}"
           )
         )
       )
       (label
-        :text "${bat_status}"
+        :text "${bat-status}"
       )
     )
   )
