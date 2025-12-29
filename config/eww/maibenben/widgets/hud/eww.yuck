@@ -34,27 +34,13 @@
 (defvar br-color "#ff0000")
 (defvar br-update "~/.config/eww/widgets/hud/scripts/brightness_updater.sh {}")
 
+(defvar workspaces "(box :orientation 'h')")
+
 
 (defwidget kb-layout []
   (label
     :text "${kb_layout}"
     :class "kb_layout"
-  )
-)
-
-(defwidget workspaces []
-  (box
-    :class "workspace"
-    :spacing 6
-    :space-evenly false
-    (label
-      :text "${workspace}"
-      :class "current-workspace"
-    )
-    (label
-      :text "+${count_workspaces - 1}"
-      :class "workspacesp"
-    )
   )
 )
 
@@ -66,7 +52,7 @@
     :space-evenly false
     :halign "start"
     (kb-layout)
-    (workspaces)
+    (literal :content {workspaces})
   )
 )
 
@@ -235,7 +221,7 @@
           :space-evenly false
           (button
             :onclick {vol-toggle-mute}
-            (label 
+            (label
               :class "volume"
               :text "${vol-icon} ${vol}%"
               :style "background: ${vol-color};"

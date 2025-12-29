@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import signal
 import asyncio
 import subprocess
@@ -103,12 +104,16 @@ async def bat_loop():
         bat = bat.split(", ")
         status = "Charging" in bat[0]
         percent = int(bat[1][:-1])
-        time = bat[-1].split(" ")[0].split(":")
-        H, M = time[0], time[1]
-        if status:
-            time = f"{H}h {M}m to full"
+        if len(bat) > 2:
+            time = bat[-1].split(" ")[0].split(":")
+            print(bat)
+            H, M = time[0], time[1]
+            if status:
+                time = f"{H}h {M}m to full"
+            else:
+                time = f"{H}h {M}m to empty"
         else:
-            time = f"{H}h {M}m to empty"
+            time = "Full"
         idx = round(percent / 100 * 9)
         bat_color = BAT_COLORS[idx]
         bat_icon = BAT_ICONS_CHARGING[idx] if status else BAT_ICONS_NORMAL[idx]
@@ -160,6 +165,22 @@ async def vol_br_loop():
         await asyncio.sleep(1)
 
 
+def parse_worspaces(ws, workspaces, active_workspaces):
+    workspaces_line = ""
+    items = []
+    for w in workspaces:
+        cmd = f"hyprctl dispatch workspace {w}"
+        if w == ws:
+            items.append(f"(button :class \"activebtn\" :onclick `{cmd}` (label :class \"activews\" :text \"{w}\"))")
+        elif w in active_workspaces:
+            items.append(f"(button :class \"fullbtn\" :onclick `{cmd}` (label :class \"fullws\" :text \"{w}\"))")
+        else:
+            items.append(f"(button :class \"normalbtn\" :onclick `{cmd}` (label :class \"normalws\" :text \"{w}\"))")
+    workspaces_line = f"(box :orientation 'h' :space-evenly false :class \"workspaces\" {' '.join(items)})"
+
+    return workspaces_line
+
+
 async def hyprland_events():
     his = os.environ.get('HYPRLAND_INSTANCE_SIGNATURE')
     if not his:
@@ -171,12 +192,29 @@ async def hyprland_events():
     reader, writer = await asyncio.open_unix_connection(socket_path)
 
     try:
-        preserved_workspaces = ["1", "2", "3", "4", "5"]
+        devices_res = subprocess.run(["hyprctl", "devices", "-j"], capture_output=True, text=True)
+        devices_text = devices_res.stdout
+        devices = json.loads(devices_text)
+        keyboards = devices["keyboards"]
+        for kb in keyboards:
+            if kb["main"]:
+                print(kb)
+                kb_layout = kb["active_keymap"]
+                if kb_layout in KB_LAYOUTS.keys():
+                    kb_layout = KB_LAYOUTS[kb_layout]
+                EwwUpdater.update("kb_layout", kb_layout)
+                break
+
+        base_workspaces = {"1", "2", "3", "4", "5"}
+        workspaces = base_workspaces.copy()
+        current_workspace = "1"
+        workspaces_line = parse_worspaces(current_workspace, workspaces, [])
+        EwwUpdater.update("workspaces", workspaces_line)
         while True:
             data = await reader.readline()
             event = data.decode().strip()
             print(event)
-            event, value = event.split(">>")
+            event, value = event.split(">>", 1)
             match event:
                 case "activelayout":
                     new_layout = value.split(",")[-1]
@@ -184,8 +222,16 @@ async def hyprland_events():
                         new_layout = KB_LAYOUTS[new_layout]
                     EwwUpdater.update("kb_layout", new_layout)
                 case "workspace":
-                    active_workspace = value
-                    EwwUpdater.update("workspace", active_workspace)
+                    current_workspace = value
+
+                    workspaces_data = await CmdRunner.get_output("hyprctl workspaces -j")
+                    workspaces_js = json.loads(workspaces_data)
+                    current_workspaces = [str(ws["id"]) for ws in workspaces_js if str(ws["id"]) != current_workspace]
+                    workspaces = sorted(base_workspaces | set(current_workspaces + [current_workspace]))
+
+                    workspaces_line = parse_worspaces(current_workspace, workspaces, current_workspaces)
+                    print(workspaces_line)
+                    EwwUpdater.update("workspaces", workspaces_line)
     except asyncio.CancelledError:
         pass
     finally:
@@ -201,9 +247,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    result = subprocess.run(["hyprctl", "workspaces", "-j"], capture_output=True, text=True)
-    print(result.stdout)
-
     try:
         asyncio.run(main())
     finally:

@@ -21,33 +21,55 @@
     padding-right: 4px;
   }
 
-  .workspace {
-    color: #000000;
-    background: colors.$lavender;
-    border-radius: 5px;
-
-    margin-top: 4px;
+  .workspaces {
+    margin-top: 6px;
     margin-bottom: 4px;
+    padding-left: 8px;
+  }
 
+  .normalws {
+    color: colors.$text;
+  }
+  .normalbtn {
     padding-left: 6px;
     padding-right: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  .normalbtn:hover {
+    background: colors.$base;
+    border-radius: 5px;
   }
 
-  .current-workspace {
-    color: #000000;
+  .fullws {
+    color: colors.$peach;
+  }
+  .fullbtn {
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  .fullbtn:hover {
+    background: rgba(colors.$peach, 0.4);
+    border-radius: 5px;
+  }
+
+  .activews {
+    color: colors.$green;
     font-weight: bold;
   }
-
-  .workspacesp {
-    color: colors.$text;
-    background: colors.$surface0;
+  .activebtn {
+    border: 1px solid colors.$green;
     border-radius: 5px;
-
-    margin-top: 2px;
-    margin-bottom: 2px;
-
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  .activebtn:hover {
+    background: rgba(colors.$green, 0.4);
+    border-radius: 5px;
   }
 
   .datetime {
