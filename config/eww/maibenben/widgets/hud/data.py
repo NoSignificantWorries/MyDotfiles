@@ -208,7 +208,7 @@ async def hyprland_events():
         base_workspaces = {"1", "2", "3", "4", "5"}
         workspaces = base_workspaces.copy()
         current_workspace = "1"
-        workspaces_line = parse_worspaces(current_workspace, workspaces, [])
+        workspaces_line = parse_worspaces(current_workspace, sorted(workspaces), [])
         EwwUpdater.update("workspaces", workspaces_line)
         while True:
             data = await reader.readline()
@@ -230,7 +230,6 @@ async def hyprland_events():
                     workspaces = sorted(base_workspaces | set(current_workspaces + [current_workspace]))
 
                     workspaces_line = parse_worspaces(current_workspace, workspaces, current_workspaces)
-                    print(workspaces_line)
                     EwwUpdater.update("workspaces", workspaces_line)
     except asyncio.CancelledError:
         pass
