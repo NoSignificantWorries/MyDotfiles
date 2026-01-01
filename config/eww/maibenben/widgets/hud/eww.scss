@@ -6,12 +6,15 @@
 }
 
 .hud-window {
-    background: #000000;
+  margin-top: 3px;
+  background: transparent;
+  padding-left: 8px;
+  padding-right: 8px;
 
   .kb_layout {
-    margin-left: 8px;
-    color: colors.$lavender;
-    background: colors.$mantle;
+    color: colors.$crust;
+    background: colors.$lavender;
+    border: 1px solid rgba(colors.$crust, 1.0);
     border-radius: 5px;
 
     margin-top: 2px;
@@ -19,16 +22,24 @@
 
     padding-left: 4px;
     padding-right: 4px;
+
+    font-weight: bold;
   }
 
   .workspaces {
-    margin-top: 6px;
-    margin-bottom: 4px;
-    padding-left: 8px;
+    background: colors.$mauve;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    border-radius: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   .normalws {
-    color: colors.$text;
+    color: colors.$base;
   }
   .normalbtn {
     padding-left: 6px;
@@ -37,30 +48,35 @@
     margin-right: 2px;
   }
   .normalbtn:hover {
-    background: colors.$base;
+    background: colors.$lavender;
+    border: 1px solid colors.$base;
     border-radius: 5px;
   }
 
   .fullws {
-    color: colors.$peach;
+    color: colors.$base;
   }
   .fullbtn {
+    background: rgba(colors.$peach, 0.8);
+    border: 1px solid rgba(colors.$base, 1.0);
+    border-radius: 50%;
     padding-left: 6px;
     padding-right: 6px;
     margin-left: 2px;
     margin-right: 2px;
   }
   .fullbtn:hover {
-    background: rgba(colors.$peach, 0.4);
+    background: rgba(colors.$peach, 1.0);
     border-radius: 5px;
   }
 
   .activews {
-    color: colors.$green;
+    color: colors.$crust;
     font-weight: bold;
   }
   .activebtn {
-    border: 1px solid colors.$green;
+    background: rgba(colors.$green, 0.8);
+    border: 1px solid colors.$crust;
     border-radius: 5px;
     padding-left: 6px;
     padding-right: 6px;
@@ -68,12 +84,13 @@
     margin-right: 2px;
   }
   .activebtn:hover {
-    background: rgba(colors.$green, 0.4);
+    background: rgba(colors.$green, 1.0);
     border-radius: 5px;
   }
 
   .datetime {
     background: colors.$teal;
+    border: 1px solid rgba(colors.$crust, 1.0);
     margin-top: 3px;
     margin-bottom: 3px;
 
@@ -82,11 +99,11 @@
     border-radius: 5px;
   }
   .time {
-    color: #000000;
+    color: colors.$crust;
     font-weight: bold;
   }
   .date {
-    background: #000000;
+    background: colors.$crust;
     color: colors.$peach;
     font-weight: bold;
     margin: 3px 4px 3px 4px;
@@ -95,7 +112,7 @@
     padding-right: 4px;
   }
   .day_name {
-    background: #000000;
+    background: colors.$crust;
     color: colors.$mauve;
     font-weight: bold;
     margin: 3px 4px 3px 4px;
@@ -104,12 +121,33 @@
     padding-right: 4px;
   }
 
+  .tray-box {
+    background: colors.$yellow;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+  .tray-icon {
+    color: colors.$crust;
+    font-weight: bold;
+  }
   .tray {
+    background: colors.$crust;
+    border-radius: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-right: 6px;
+
     menu {
-      background: #000000;
+      background: colors.$base;
+      border: 1px solid colors.$blue;
       color: colors.$text;
-      border-radius: 10px;
-      padding: 5px;
+      border-radius: 8px;
+      padding: 10px 5px 10px 5px;
     }
     menuitem {
       color: colors.$text;
@@ -125,8 +163,9 @@
   }
 
   .volume {
-    color: #000000;
+    color: colors.$crust;
     background: colors.$sky;
+    border: 1px solid colors.$crust;
     border-radius: 5px;
 
     margin-top: 4px;
@@ -137,7 +176,7 @@
   }
 
   .volume-val {
-    background: #000000;
+    background: colors.$crust;
     color: colors.$sky;
     border-radius: 3px;
     margin-top: 2px;
@@ -149,9 +188,9 @@
   }
 
   .battery {
-    margin-right: 8px;
-    color: #000000;
+    color: colors.$crust;
     background: colors.$peach;
+    border: 1px solid colors.$crust;
     border-radius: 5px;
 
     margin-top: 4px;
@@ -162,7 +201,7 @@
   }
 
   .bat {
-    background: #000000;
+    background: colors.$crust;
     color: colors.$peach;
     border-radius: 3px;
     margin-right: 6px;
@@ -174,13 +213,15 @@
   }
 }
 
+
 .volume-window {
   background: transparent;
 
   .content {
-    background: #000000;
-    padding: 15px 0px 15px 8px;
-    border-radius: 10px 0px 0px 10px;
+    background: rgba(colors.$base, 0.8);
+    padding: 15px 8px 15px 8px;
+    margin-right: 6px;
+    border-radius: 10px;
   }
 
 
@@ -195,13 +236,13 @@
   .volume-slider scale trough highlight {
     all: unset;
     background-color: colors.$green;
-    color: #000000;
+    color: colors.$crust;
     border-radius: 10px;
   }
 
   .volume-slider scale trough {
     all: unset;
-    background-color: colors.$base;
+    background-color: colors.$crust;
     border-radius: 50px;
     min-height: 200px;
     min-width: 10px;
@@ -213,14 +254,15 @@
   background: transparent;
 
   .content {
-    background: #000000;
-    padding: 15px 8px 15px 0px;
-    border-radius: 0px 10px 10px 0px;
+    background: rgba(colors.$base, 0.8);
+    padding: 15px 8px 15px 8px;
+    margin-left: 6px;
+    border-radius: 10px;
   }
 
 
   .brightness {
-    color: #000000;
+    color: colors.$crust;
     background: colors.$peach;
     padding: 2px 5px 2px 5px;
     border-radius: 5px;
@@ -236,7 +278,7 @@
 
   .brightness-slider scale trough {
     all: unset;
-    background-color: colors.$base;
+    background-color: colors.$crust;
     border-radius: 50px;
     min-height: 200px;
     min-width: 10px;

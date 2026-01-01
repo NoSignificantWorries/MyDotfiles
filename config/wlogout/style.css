@@ -11,8 +11,7 @@ window {
 
 button {
   color: @text;
-  /* background-color: alpha(@base, 0.5); */
-  background-color: #000000;
+  background-color: alpha(@crust, 0.8);
   outline-style: none;
   background-repeat: no-repeat;
   background-position: center;

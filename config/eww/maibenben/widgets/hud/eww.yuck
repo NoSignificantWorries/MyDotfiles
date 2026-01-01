@@ -6,6 +6,9 @@
 (defvar volume-state false)
 (defvar brightness-state false)
 
+(defvar tray_reveal_state false)
+(defvar tray_opened false)
+
 ;; datetime
 (defpoll time :interval "60s" `date +%H:%M`)
 (defpoll day :interval "60s" `date +%d`)
@@ -13,7 +16,6 @@
 (defpoll year :interval "60s" `date +%Y`)
 (defpoll day_name :interval "60s" `date +%A`)
 ;; scripts
-;; (defpoll kb_layout :interval "1s" `~/.config/eww/widgets/hud/scripts/layout.sh`)
 (defvar kb_layout "N/A")
 (defvar workspace "1")
 (defvar count_workspaces "10")
@@ -170,6 +172,38 @@
   )
 )
 
+(defwidget tray []
+  (eventbox
+    :onhover "sleep 0.5 | eww update -c ${eww} tray_reveal_state=true"
+    :onhoverlost "sleep 0.5 | eww update -c ${eww} tray_reveal_state=false"
+    (box
+      :orientation "h"
+      :class "tray-box"
+      :space-evenly false
+      (revealer
+        :transition "slideleft"
+        :duration 200
+        :reveal {tray_reveal_state || tray_opened}
+        (box
+          :orientation "h"
+          :space-evenly false
+          (systray
+            :class "tray"
+            :icon-size 14
+            :spacing 6
+          )
+        )
+      )
+      (button
+        :onclick "eww update -c ${eww} tray_opened=true"
+        :onrightclick "eww update -c ${eww} tray_opened=false"
+        :class "tray-icon"
+        "󱊖 "
+      )
+    )
+  )
+)
+
 (defwidget right-group []
   (box
     :class "right-group"
@@ -177,11 +211,7 @@
     :spacing 6
     :halign "end"
     :space-evenly false
-    (systray
-      :class "tray"
-      :icon-size 14
-      :spacing 5
-    )
+    (tray)
     (volume-widget)
     (battery-widget)
   )
@@ -219,6 +249,7 @@
           :orientation "v"
           :valign "center"
           :space-evenly false
+          :style "border: 1px solid ${vol-color}"
           (button
             :onclick {vol-toggle-mute}
             (label
@@ -265,7 +296,8 @@
           :orientation "v"
           :valign "center"
           :space-evenly false
-          (label 
+          :style "border: 1px solid ${br-color}"
+          (label
             :class "brightness"
             :text "${br-icon} ${br}%"
             :style "background: ${br-color};"
@@ -294,6 +326,7 @@
 (defwindow volume-window
   :monitor 0
   :windowtype "normal"
+  :namespace "hud"
   :geometry (geometry
     :y "3%"
     :x "0px"
@@ -312,6 +345,7 @@
 (defwindow brightness-window
   :monitor 0
   :windowtype "normal"
+  :namespace "hud"
   :geometry (geometry
     :y "3%"
     :x "0px"
@@ -331,6 +365,7 @@
   :exclusive true
   :monitor 0
   :windowtype "dock"
+  :namespace "hud"
   :geometry (geometry
     :y "0%"
     :x "0%"
