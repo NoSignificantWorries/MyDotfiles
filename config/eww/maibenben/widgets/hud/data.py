@@ -221,6 +221,13 @@ async def hyprland_events():
                     if new_layout in KB_LAYOUTS.keys():
                         new_layout = KB_LAYOUTS[new_layout]
                     EwwUpdater.update("kb_layout", new_layout)
+                case "submap":
+                    if len(value) > 0:
+                        EwwUpdater.update("submap", value)
+                        EwwUpdater.update("is_submap", "true")
+                    else:
+                        EwwUpdater.update("submap", "")
+                        EwwUpdater.update("is_submap", "false")
                 case "workspace":
                     current_workspace = value
 

@@ -5,9 +5,7 @@
 (defvar volume_reveal_state false)
 (defvar volume-state false)
 (defvar brightness-state false)
-
-(defvar tray_reveal_state false)
-(defvar tray_opened false)
+(defvar systray-state true)
 
 ;; datetime
 (defpoll time :interval "60s" `date +%H:%M`)
@@ -35,6 +33,9 @@
 (defvar br-icon "󰃚 ")
 (defvar br-color "#ff0000")
 (defvar br-update "~/.config/eww/widgets/hud/scripts/brightness_updater.sh {}")
+;; submap
+(defvar submap "")
+(defvar is_submap false)
 
 (defvar workspaces "(box :orientation 'h')")
 
@@ -43,6 +44,22 @@
   (label
     :text "${kb_layout}"
     :class "kb_layout"
+  )
+)
+
+(defwidget submap []
+  (revealer
+    :transition "slideright"
+    :duration 300
+    :reveal {is_submap}
+    (box
+      :orientation "h"
+      :space-evenly false
+      (label
+        :text {submap}
+        :class "submap"
+      )
+    )
   )
 )
 
@@ -55,6 +72,7 @@
     :halign "start"
     (kb-layout)
     (literal :content {workspaces})
+    (submap)
   )
 )
 
@@ -87,7 +105,7 @@
       )
       (revealer
         :transition "slideright"
-        :duration 200
+        :duration 300
         :reveal {date_reveal_state}
         (box
           :class "dates"
@@ -126,7 +144,7 @@
       )
       (revealer
         :transition "slideright"
-        :duration 200
+        :duration 300
         :reveal {!vol-mute}
         (box
           :orientation "h"
@@ -153,7 +171,7 @@
       :style "background: ${bat-color}"
       (revealer
         :transition "slideleft"
-        :duration 200
+        :duration 300
         :reveal {bat_reveal_state}
         (box
           :orientation "h"
@@ -173,33 +191,28 @@
 )
 
 (defwidget tray []
-  (eventbox
-    :onhover "sleep 0.5 | eww update -c ${eww} tray_reveal_state=true"
-    :onhoverlost "sleep 0.5 | eww update -c ${eww} tray_reveal_state=false"
-    (box
-      :orientation "h"
-      :class "tray-box"
-      :space-evenly false
-      (revealer
-        :transition "slideleft"
-        :duration 200
-        :reveal {tray_reveal_state || tray_opened}
-        (box
-          :orientation "h"
-          :space-evenly false
-          (systray
-            :class "tray"
-            :icon-size 14
-            :spacing 6
-          )
+  (box
+    :orientation "h"
+    :class "tray-box"
+    :space-evenly false
+    (revealer
+      :transition "slideleft"
+      :duration 300
+      :reveal {systray-state}
+      (box
+        :orientation "h"
+        :space-evenly false
+        (systray
+          :class "tray"
+          :icon-size 14
+          :spacing 6
         )
       )
-      (button
-        :onclick "eww update -c ${eww} tray_opened=true"
-        :onrightclick "eww update -c ${eww} tray_opened=false"
-        :class "tray-icon"
-        "󱊖 "
-      )
+    )
+    (button
+      :onclick "eww update -c ${eww} systray-state=${!systray-state}"
+      :class "tray-icon"
+      "󱊖 "
     )
   )
 )

@@ -88,6 +88,18 @@
     border-radius: 5px;
   }
 
+  .submap {
+    color: colors.$crust;
+    background: colors.$red;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    border-radius: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-weight: bold;
+  }
+
   .datetime {
     background: colors.$teal;
     border: 1px solid rgba(colors.$crust, 1.0);
