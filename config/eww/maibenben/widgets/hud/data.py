@@ -26,32 +26,9 @@ with open(pid_file, 'w') as f:
 CONFIG = Path("~/.config/eww/widgets/hud").expanduser()
 
 VOL_ICONS = ["", "", "", ""]
-VOL_COLORS = [
-    "#6c7086",
-    "#005f56",
-    "#007f66",
-    "#009f76",
-    "#00bf86",
-    "#00df96",
-    "#00ffa6",
-    "#40ffb6",
-    "#80ffc6",
-    "#b0ffd6",
-    "#e0ffe6"
-]
+MIC_ICONS = ["", ""]
+VOL_COLORS = [ "#6c7086", "#00df96" ]
 BR_ICONS = ["󰃜", "󰃝", "󰃞", "󰃠"]
-BR_COLORS = [
-    "#1a4a8c",
-    "#2060a3",
-    "#2676ba",
-    "#2c8cd1",
-    "#32a2e8",
-    "#38b8ff",
-    "#5ec6ff",
-    "#84d4ff",
-    "#aae2ff",
-    "#d0f0ff"
-]
 BAT_ICONS_CHARGING = ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂋", "󰂅"]
 BAT_ICONS_NORMAL = ["󱃍", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
 BAT_COLORS = [
@@ -127,10 +104,13 @@ async def bat_loop():
 async def vol_br_loop():
     last_muted = None
     last_vol = None
+    last_muted_mic = None
+    last_mic = None
     last_br = None
     while True:
-        vol, br = await asyncio.gather(
+        vol, mic, br = await asyncio.gather(
             CmdRunner.get_output("wpctl get-volume @DEFAULT_AUDIO_SINK@"),
+            CmdRunner.get_output("wpctl get-volume @DEFAULT_AUDIO_SOURCE@"),
             CmdRunner.get_output("brightnessctl -m"),
         )
         muted = "[MUTED]" in vol
@@ -141,7 +121,7 @@ async def vol_br_loop():
                 vol_color = VOL_COLORS[0]
                 vol_icon = VOL_ICONS[0]
             else:
-                vol_color = VOL_COLORS[round(vol / 100 * 9 + 1)]
+                vol_color = VOL_COLORS[1]
                 vol_icon = VOL_ICONS[round(vol / 100 * 2 + 1)]
             EwwUpdater.update("vol-mute", "true" if muted else "false")
             EwwUpdater.update("vol-icon", vol_icon)
@@ -151,13 +131,29 @@ async def vol_br_loop():
             last_muted = muted
             last_vol = vol
 
+        muted = "[MUTED]" in mic
+        mic = mic.split(" ")
+        mic = round(float(mic[1]) * 100)
+        if last_mic != mic or last_muted_mic is last_muted_mic:
+            if muted:
+                mic_color = VOL_COLORS[0]
+                mic_icon = MIC_ICONS[0]
+            else:
+                mic_color = VOL_COLORS[1]
+                mic_icon = MIC_ICONS[1]
+            EwwUpdater.update("mic-mute", "true" if muted else "false")
+            EwwUpdater.update("mic-icon", mic_icon)
+            EwwUpdater.update("mic-color", mic_color)
+            EwwUpdater.update("mic", str(mic))
+
+            last_muted_mic = muted
+            last_mic = mic
+
         br = br.split(",")
         br = int(br[3][:-1])
         if last_br != br:
-            br_color = BR_COLORS[round(br / 100 * 9)]
             br_icon = BR_ICONS[round(br / 100 * 3)]
             EwwUpdater.update("br", str(br))
-            EwwUpdater.update("br-color", br_color)
             EwwUpdater.update("br-icon", br_icon)
 
             last_br = br

@@ -230,7 +230,8 @@
   background: transparent;
 
   .content {
-    background: rgba(colors.$base, 0.8);
+    background: rgba(colors.$base, 0.6);
+    border: 1px solid rgba(colors.$crust, 1.0);
     padding: 15px 8px 15px 8px;
     margin-right: 6px;
     border-radius: 10px;
@@ -238,8 +239,9 @@
 
 
   .volume {
-    color: #000000;
+    color: colors.$crust;
     background: colors.$green;
+    border: 1px solid rgba(colors.$crust, 1.0);
     padding: 2px 5px 2px 5px;
     border-radius: 5px;
     margin-bottom: 8px;
@@ -249,10 +251,37 @@
     all: unset;
     background-color: colors.$green;
     color: colors.$crust;
+    border: 1px solid rgba(colors.$crust, 1.0);
     border-radius: 10px;
   }
 
   .volume-slider scale trough {
+    all: unset;
+    background-color: colors.$crust;
+    border-radius: 50px;
+    min-height: 200px;
+    min-width: 10px;
+  }
+
+
+  .micro {
+    color: colors.$crust;
+    background: colors.$green;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+
+  .micro-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$green;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    color: colors.$crust;
+    border-radius: 10px;
+  }
+
+  .micro-slider scale trough {
     all: unset;
     background-color: colors.$crust;
     border-radius: 50px;
@@ -266,7 +295,8 @@
   background: transparent;
 
   .content {
-    background: rgba(colors.$base, 0.8);
+    background: rgba(colors.$base, 0.6);
+    border: 1px solid rgba(colors.$crust, 1.0);
     padding: 15px 8px 15px 8px;
     margin-left: 6px;
     border-radius: 10px;
@@ -275,7 +305,8 @@
 
   .brightness {
     color: colors.$crust;
-    background: colors.$peach;
+    background: colors.$yellow;
+    border: 1px solid rgba(colors.$crust, 1.0);
     padding: 2px 5px 2px 5px;
     border-radius: 5px;
     margin-bottom: 8px;
@@ -283,7 +314,8 @@
 
   .brightness-slider scale trough highlight {
     all: unset;
-    background-color: colors.$peach;
+    background-color: colors.$yellow;
+    border: 1px solid rgba(colors.$crust, 1.0);
     color: #000000;
     border-radius: 10px;
   }

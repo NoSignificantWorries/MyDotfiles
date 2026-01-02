@@ -28,10 +28,16 @@
 (defvar vol-color "#ff0000")
 (defvar vol-update "~/.config/eww/widgets/hud/scripts/volume_updater.sh {}")
 (defvar vol-toggle-mute "~/.config/eww/widgets/hud/scripts/volume_updater.sh toggle")
+;; micro
+(defvar mic "0")
+(defvar mic-mute true)
+(defvar mic-icon " ")
+(defvar mic-color "#ff0000")
+(defvar mic-update "~/.config/eww/widgets/hud/scripts/micro_updater.sh {}")
+(defvar mic-toggle-mute "~/.config/eww/widgets/hud/scripts/micro_updater.sh toggle")
 ;; brightness
 (defvar br "0")
 (defvar br-icon "󰃚 ")
-(defvar br-color "#ff0000")
 (defvar br-update "~/.config/eww/widgets/hud/scripts/brightness_updater.sh {}")
 ;; submap
 (defvar submap "")
@@ -262,27 +268,60 @@
           :orientation "v"
           :valign "center"
           :space-evenly false
-          :style "border: 1px solid ${vol-color}"
-          (button
-            :onclick {vol-toggle-mute}
-            (label
-              :class "volume"
-              :text "${vol-icon} ${vol}%"
-              :style "background: ${vol-color};"
+          (box
+            :orientation "h"
+            :spacing 6
+            :space-evenly true
+            :halign "fill"
+            (button
+              :onclick {vol-toggle-mute}
+              (label
+                :class "volume"
+                :text "${vol-icon} ${vol}%"
+                :style "background: ${vol-color};"
+              )
+            )
+            (button
+              :onclick {mic-toggle-mute}
+              (label
+                :class "micro"
+                :text "${mic-icon} ${mic}%"
+                :style "background: ${mic-color};"
+              )
             )
           )
           (box
-            :orientation "v"
-            :space-evenly false
-            :class "volume-slider"
-            (scale
+            :orientation "h"
+            :space-evenly true
+            :spacing 6
+            :halign "fill"
+            (box
               :orientation "v"
-              :flipped true
-              :value {vol}
-              :onchange {vol-update}
-              :max 101
-              :min 0
-              :css ".volume-slider scale trough highlight { background-color: ${vol-color}; }"
+              :space-evenly false
+              :class "volume-slider"
+              (scale
+                :orientation "v"
+                :flipped true
+                :value {vol}
+                :onchange {vol-update}
+                :max 101
+                :min 0
+                :css ".volume-slider scale trough highlight { background-color: ${vol-color}; }"
+              )
+            )
+            (box
+              :orientation "v"
+              :space-evenly false
+              :class "micro-slider"
+              (scale
+                :orientation "v"
+                :flipped true
+                :value {mic}
+                :onchange {mic-update}
+                :max 101
+                :min 0
+                :css ".micro-slider scale trough highlight { background-color: ${mic-color}; }"
+              )
             )
           )
         )
@@ -309,11 +348,9 @@
           :orientation "v"
           :valign "center"
           :space-evenly false
-          :style "border: 1px solid ${br-color}"
           (label
             :class "brightness"
             :text "${br-icon} ${br}%"
-            :style "background: ${br-color};"
           )
           (box
             :orientation "v"
@@ -326,7 +363,6 @@
               :onchange {br-update}
               :max 101
               :min 0
-              :css ".brightness-slider scale trough highlight { background-color: ${br-color}; }"
             )
           )
         )

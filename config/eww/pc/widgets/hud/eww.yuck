@@ -193,10 +193,10 @@
           :space-evenly false
           (button
             :onclick {vol-toggle-mute}
-            (label 
+            (label
               :class "volume"
               :text "${vol-icon} ${vol}%"
-              :style "background: ${vol-color};"
+              ;; :style "background: ${vol-color};"
             )
           )
           (box
@@ -210,7 +210,7 @@
               :onchange {vol-update}
               :max 101
               :min 0
-              :css ".volume-slider scale trough highlight { background-color: ${vol-color}; }"
+              ;; :css ".volume-slider scale trough highlight { background-color: ${vol-color}; }"
             )
           )
         )
