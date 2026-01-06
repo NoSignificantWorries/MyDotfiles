@@ -88,6 +88,53 @@
     border-radius: 5px;
   }
 
+
+  .system-hud {
+    background: transparent;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .cpu-hud {
+    color: colors.$crust;
+    background: colors.$green;
+
+    border-radius: 5px;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    padding-left: 6px;
+    padding-right: 6px;
+
+    font-size: 12;
+    font-weight: bold;
+  }
+  .ram-hud {
+    color: colors.$crust;
+    background: colors.$green;
+
+    border-radius: 5px;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    padding-left: 6px;
+    padding-right: 6px;
+
+    font-size: 12;
+    font-weight: bold;
+  }
+  .temp-hud {
+    background: colors.$green;
+
+    border-radius: 5px;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    padding-left: 6px;
+    padding-right: 6px;
+
+    color: colors.$crust;
+    font-size: 12;
+    font-weight: bold;
+  }
+
+
   .submap {
     color: colors.$crust;
     background: colors.$red;
@@ -132,6 +179,35 @@
     padding-left: 4px;
     padding-right: 4px;
   }
+
+
+  .player {
+    background-size: cover;
+    background-position: left;
+    background: rgba(colors.$base, 0.8);
+    border: 1px solid rgba(colors.$crust, 1.0);
+    border-radius: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: 2px;
+  }
+  .player-status {
+  }
+  .player-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$text;
+    color: colors.$crust;
+    border-radius: 2px;
+  }
+
+  .player-slider scale trough {
+    all: unset;
+    background-color: colors.$crust;
+    border-radius: 2px;
+    min-height: 3px;
+    min-width: 76px;
+  }
+
 
   .tray-box {
     background: colors.$yellow;

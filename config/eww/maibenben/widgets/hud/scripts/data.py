@@ -7,7 +7,7 @@ import subprocess
 from pathlib import Path
 
 
-pid_file = os.path.expanduser("~/.config/eww/widgets/hud/data.pid")
+pid_file = os.path.expanduser("~/.config/eww/widgets/hud/scripts/data.pid")
 
 def cleanup(signum, frame):
     print("Получен SIGTERM, завершаем...")
@@ -25,10 +25,6 @@ with open(pid_file, 'w') as f:
 
 CONFIG = Path("~/.config/eww/widgets/hud").expanduser()
 
-VOL_ICONS = ["", "", "", ""]
-MIC_ICONS = ["", ""]
-VOL_COLORS = [ "#6c7086", "#00df96" ]
-BR_ICONS = ["󰃜", "󰃝", "󰃞", "󰃠"]
 BAT_ICONS_CHARGING = ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂋", "󰂅"]
 BAT_ICONS_NORMAL = ["󱃍", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
 BAT_COLORS = [
@@ -99,66 +95,6 @@ async def bat_loop():
         EwwUpdater.update("bat-time", time)
 
         await asyncio.sleep(30)
-
-
-async def vol_br_loop():
-    last_muted = None
-    last_vol = None
-    last_muted_mic = None
-    last_mic = None
-    last_br = None
-    while True:
-        vol, mic, br = await asyncio.gather(
-            CmdRunner.get_output("wpctl get-volume @DEFAULT_AUDIO_SINK@"),
-            CmdRunner.get_output("wpctl get-volume @DEFAULT_AUDIO_SOURCE@"),
-            CmdRunner.get_output("brightnessctl -m"),
-        )
-        muted = "[MUTED]" in vol
-        vol = vol.split(" ")
-        vol = round(float(vol[1]) * 100)
-        if last_vol != vol or last_muted is last_muted:
-            if muted:
-                vol_color = VOL_COLORS[0]
-                vol_icon = VOL_ICONS[0]
-            else:
-                vol_color = VOL_COLORS[1]
-                vol_icon = VOL_ICONS[round(vol / 100 * 2 + 1)]
-            EwwUpdater.update("vol-mute", "true" if muted else "false")
-            EwwUpdater.update("vol-icon", vol_icon)
-            EwwUpdater.update("vol-color", vol_color)
-            EwwUpdater.update("vol", str(vol))
-
-            last_muted = muted
-            last_vol = vol
-
-        muted = "[MUTED]" in mic
-        mic = mic.split(" ")
-        mic = round(float(mic[1]) * 100)
-        if last_mic != mic or last_muted_mic is last_muted_mic:
-            if muted:
-                mic_color = VOL_COLORS[0]
-                mic_icon = MIC_ICONS[0]
-            else:
-                mic_color = VOL_COLORS[1]
-                mic_icon = MIC_ICONS[1]
-            EwwUpdater.update("mic-mute", "true" if muted else "false")
-            EwwUpdater.update("mic-icon", mic_icon)
-            EwwUpdater.update("mic-color", mic_color)
-            EwwUpdater.update("mic", str(mic))
-
-            last_muted_mic = muted
-            last_mic = mic
-
-        br = br.split(",")
-        br = int(br[3][:-1])
-        if last_br != br:
-            br_icon = BR_ICONS[round(br / 100 * 3)]
-            EwwUpdater.update("br", str(br))
-            EwwUpdater.update("br-icon", br_icon)
-
-            last_br = br
-
-        await asyncio.sleep(1)
 
 
 def parse_worspaces(ws, workspaces, active_workspaces):
@@ -243,7 +179,6 @@ async def hyprland_events():
 
 async def main():
     tasks = [asyncio.create_task(hyprland_events()),
-             asyncio.create_task(vol_br_loop()),
              asyncio.create_task(bat_loop())]
     await asyncio.gather(*tasks)
 

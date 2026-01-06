@@ -22,27 +22,29 @@
 (defvar bat-color "#000000")
 (defvar bat-time " ")
 ;; sound
-(defvar vol "0")
+(defpoll vol :interval "3s" `~/.config/eww/widgets/hud/scripts/volume_updater.sh`)
 (defvar vol-mute true)
 (defvar vol-icon " ")
 (defvar vol-color "#ff0000")
 (defvar vol-update "~/.config/eww/widgets/hud/scripts/volume_updater.sh {}")
 (defvar vol-toggle-mute "~/.config/eww/widgets/hud/scripts/volume_updater.sh toggle")
 ;; micro
-(defvar mic "0")
+(defpoll mic :interval "3s" `~/.config/eww/widgets/hud/scripts/micro_updater.sh`)
 (defvar mic-mute true)
 (defvar mic-icon " ")
 (defvar mic-color "#ff0000")
 (defvar mic-update "~/.config/eww/widgets/hud/scripts/micro_updater.sh {}")
 (defvar mic-toggle-mute "~/.config/eww/widgets/hud/scripts/micro_updater.sh toggle")
 ;; brightness
-(defvar br "0")
+(defpoll br :interval "3s" `~/.config/eww/widgets/hud/scripts/brightness_updater.sh`)
 (defvar br-icon "󰃚 ")
 (defvar br-update "~/.config/eww/widgets/hud/scripts/brightness_updater.sh {}")
 ;; submap
 (defvar submap "")
 (defvar is_submap false)
-
+;; system
+(defpoll sysinfo :interval "2s" `~/.config/eww/widgets/hud/scripts/system.py`)
+;; workspaces
 (defvar workspaces "(box :orientation 'h')")
 
 
@@ -50,6 +52,33 @@
   (label
     :text "${kb_layout}"
     :class "kb_layout"
+  )
+)
+
+(defwidget system []
+  (box
+    :orientation "h"
+    :class "system-hud"
+    :space-evenly false
+    :spacing 2
+    (button
+      :class "cpu-hud"
+      :onclick ""
+      :style "background: ${sysinfo.cpu.color}"
+      " ${round(sysinfo.cpu.val, 0)}%"
+    )
+    (button
+      :class "ram-hud"
+      :onclick ""
+      :style "background: ${sysinfo.ram.color}"
+      " ${round(sysinfo.ram.val, 0)}%"
+    )
+    (button
+      :class "temp-hud"
+      :onclick ""
+      :style "background: ${sysinfo.temp.color}"
+      "${round(sysinfo.temp.val, 0)}󰔄"
+    )
   )
 )
 
@@ -78,6 +107,7 @@
     :halign "start"
     (kb-layout)
     (literal :content {workspaces})
+    (system)
     (submap)
   )
 )
@@ -137,6 +167,34 @@
   )
 )
 
+
+(defwidget tray []
+  (box
+    :orientation "h"
+    :class "tray-box"
+    :space-evenly false
+    (revealer
+      :transition "slideleft"
+      :duration 300
+      :reveal {systray-state}
+      (box
+        :orientation "h"
+        :space-evenly false
+        (systray
+          :class "tray"
+          :icon-size 14
+          :spacing 6
+        )
+      )
+    )
+    (button
+      :onclick "eww update -c ${eww} systray-state=${!systray-state}"
+      :class "tray-icon"
+      "󱊖 "
+    )
+  )
+)
+
 (defwidget volume-widget []
   (button
     :onclick {vol-toggle-mute}
@@ -192,33 +250,6 @@
       (label
         :text "${bat-status}"
       )
-    )
-  )
-)
-
-(defwidget tray []
-  (box
-    :orientation "h"
-    :class "tray-box"
-    :space-evenly false
-    (revealer
-      :transition "slideleft"
-      :duration 300
-      :reveal {systray-state}
-      (box
-        :orientation "h"
-        :space-evenly false
-        (systray
-          :class "tray"
-          :icon-size 14
-          :spacing 6
-        )
-      )
-    )
-    (button
-      :onclick "eww update -c ${eww} systray-state=${!systray-state}"
-      :class "tray-icon"
-      "󱊖 "
     )
   )
 )
