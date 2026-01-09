@@ -22,6 +22,7 @@ $env.EDITOR = "nvim"
 $env.VISUAL = "nvim"
 
 $env.PATH = ($env.PATH | prepend "~/.npm-global/bin")
+$env.PATH = ($env.PATH | prepend "~/.cargo/bin")
 
 $env.DISPLAY = ":0"
 

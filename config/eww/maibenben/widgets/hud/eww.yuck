@@ -8,7 +8,8 @@
 (defvar systray-state true)
 
 ;; datetime
-(defpoll time :interval "60s" `date +%H:%M`)
+(defpoll h :interval "60s" `date +%H`)
+(defpoll m :interval "60s" `date +%M`)
 (defpoll day :interval "60s" `date +%d`)
 (defpoll month :interval "60s" `date +%m`)
 (defpoll year :interval "60s" `date +%Y`)
@@ -136,7 +137,7 @@
         )
       )
       (label
-        :text " ${time}"
+        :text " ${h}:${m}"
         :class "time"
       )
       (revealer

@@ -14,7 +14,7 @@ if [ -f "$pid_file" ]; then
 fi
 
 eww daemon 2>/dev/null
-eww --force-wayland open-many -c "$config" hud-window volume-window brightness-window 2>/dev/null
+eww --force-wayland open-many -c "$config" hud-window volume-window brightness-window basic-dash-window 2>/dev/null
 
 python3 -u "$HOME/.config/eww/widgets/hud/scripts/data.py" > /dev/null 2>&1 &
 python_pid=$!
