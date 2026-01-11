@@ -1,0 +1,81 @@
+{
+  "providers": {
+    "base": {
+      "installer": "pacman -S",
+      "groups": ["sys", "Hyprland", "Sound", "Qt-GTK", "SDDM"]
+    },
+    "main": {
+      "installer": "paru -S",
+      "groups": ["fonts", "styling", "sys-utils", "DE-elements"]
+    }
+  },
+  "install": {
+    "sys": {
+      "pack": ["git", "curl", "wget", "base-devel", "unzip", "tar", "7zip"],
+      "com": ["sudo usermod -aG input,fprint $USER"]
+    },
+    "Hyprland": {
+      "pack": [
+        "mesa",
+        "kitty",
+        "rofi",
+        "niri",
+        "swaync",
+        "wl-clipboard",
+        "cliphist"
+      ]
+    },
+    "Sound": {
+      "pack": [
+        "pipewire",
+        "pipewire-alsa",
+        "pipewire-pulse",
+        "pipewire-jack",
+        "wireplumber"
+      ]
+    },
+    "Qt-GTK": {
+      "pack": [
+        "qt5-wayland",
+        "qt6-wayland",
+        "qt6-svg",
+        "qt6-declarative",
+        "qt5-quickcontrols2",
+        "gtk3",
+        "gtk4",
+        "xdg-desktop-portal",
+        "xdg-desktop-portal-gtk"
+      ]
+    },
+    "SDDM": {
+      "pack": ["sddm"],
+      "com": [
+        "sudo systemctl enable sddm.service",
+        "sudo systemctl start sddm.service"
+      ]
+    },
+    "fonts": {
+      "pack": [
+        "fontconfig",
+        "ttf-jetbrains-mono-nerd",
+        "woff2-font-awesome",
+        "woff2-fira-code",
+        "noto-fonts-emoji",
+        "ttf-iosevka"
+      ],
+      "cmd": ["fc-cache -f -v"]
+    },
+    "styling": {
+      "pack": ["qt5ct", "qt6ct", "nwg-look", "kvantum", "lxappearance"]
+    },
+    "sys-utils": {
+      "pack": ["bluez", "bluez-utils", "brightnessctl", "openssh"]
+    },
+    "DE-elements": {
+      "pack": ["wlogout"]
+    },
+    "drivers": {
+      "pack": ["opentabletdriver-git"]
+    }
+  }
+}

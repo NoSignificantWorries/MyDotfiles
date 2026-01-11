@@ -25,7 +25,7 @@ install = [
 commands = ["sudo usermod -aG input,fprint $USER"]
 
 [Sound]
-install =[ 
+install =[
   "pipewire",
   "pipewire-alsa",
   "pipewire-pulse",
