@@ -15,7 +15,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.nixos-pc = import ./home/dmitry/home.nix;
+          home-manager.users.dmitry = import ./home/dmitry/home.nix;
         }
       ];
     };
