@@ -3,6 +3,7 @@
 
 (defvar sound-control-opened false)
 (defvar datetime-control-opened false)
+(defvar sys-control-opened false)
 
 (defvar volume-toggled false)
 
@@ -47,7 +48,7 @@
 ;; system
 (defpoll sysinfo :interval "2s" `~/.config/eww/widgets/hud/scripts/system.py`)
 ;; workspaces
-(defvar workspaces "(box :orientation 'h')")
+(defvar workspaces-json `[]`)
 
 
 ;;#######################
@@ -104,13 +105,22 @@
         :transition "slidup"
         :duration 300
         :reveal {volume-toggled}
-        (basic-sound
-          :class "micro-val"
-          :onclick {mic-toggle-mute}
-          :color {mic-color}
-          :icon {mic-icon}
-          :value "${mic}%"
-          :state {!mic-mute}
+        (box
+          :orientation "v"
+          :spacing 4
+          :space-evenly false
+          (basic-sound
+            :class "micro-val"
+            :onclick {mic-toggle-mute}
+            :color {mic-color}
+            :icon {mic-icon}
+            :value "${mic}%"
+            :state {!mic-mute}
+          )
+          (label
+            :class "br-val"
+            :text "${br-icon} ${br}%"
+          )
         )
       )
     )
@@ -176,7 +186,27 @@
     :space-evenly false
     :spacing 4
     :valign "center"
-    (literal :content {workspaces})
+    (overlay
+      (label
+        :class "workspaces-back"
+        :height {32 * workspaces-json.count}
+        :text " "
+      )
+      (box
+        :class "workspaces"
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :spacing 2
+        (for wsp in {workspaces-json.data}
+          (button
+            :class {wsp.active ? "activebtn" : (wsp.occupied ? "fullbtn" : "normalbtn")}
+            :onclick `${wsp.cmd}`
+            {wsp.text}
+          )
+        )
+      )
+    )
   )
 )
 
@@ -218,7 +248,10 @@
     :valign "end"
     :spacing 6
     (systray :class "tray" :icon-size 24 :spacing 4)
-    (system)
+    (eventbox
+      :onrightclick "eww ${sys-control-opened ? 'close' : 'open'} -c ${eww} sys-control-window | eww update -c ${eww} sys-control-opened=${!sys-control-opened}"
+      (system)
+    )
   )
 )
 
@@ -254,13 +287,6 @@
 )
 
 
-(defwidget volume-control-group []
-  (box
-    :orientation "v"
-    (label :class "text" :text "text")
-  )
-)
-
 ;;##################################
 ;;##    BATTERY CONTROL WINDOW    ##
 ;;##################################
@@ -284,6 +310,92 @@
 ;;################################
 ;;##    SOUND CONTROL WINDOW    ##
 ;;################################
+(defwidget sound-content []
+  (box
+    :class "vol-content"
+    :orientation "v"
+    :valign "center"
+    :space-evenly false
+    (button
+      :onclick {vol-toggle-mute}
+      (label
+        :class "volume"
+        :text "${vol-icon} ${vol}%"
+        :style "background: ${vol-color};"
+      )
+    )
+    (box
+      :orientation "v"
+      :space-evenly false
+      :class "volume-slider"
+      (scale
+        :orientation "v"
+        :flipped true
+        :value {vol}
+        :onchange {vol-update}
+        :max 101
+        :min 0
+        :css ".volume-slider scale trough highlight { background-color: ${vol-color}; }"
+      )
+    )
+  )
+)
+(defwidget micro-content []
+  (box
+    :class "mic-content"
+    :orientation "v"
+    :valign "center"
+    :space-evenly false
+    (button
+      :onclick {mic-toggle-mute}
+      (label
+        :class "micro"
+        :text "${mic-icon} ${mic}%"
+        :style "background: ${mic-color};"
+      )
+    )
+    (box
+      :orientation "v"
+      :space-evenly false
+      :class "micro-slider"
+      (scale
+        :orientation "v"
+        :flipped true
+        :value {mic}
+        :onchange {mic-update}
+        :max 101
+        :min 0
+        :css ".micro-slider scale trough highlight { background-color: ${mic-color}; }"
+      )
+    )
+  )
+)
+(defwidget brightness-content []
+  (box
+    :class "br-content"
+    :orientation "v"
+    :valign "center"
+    :space-evenly false
+    (label
+      :class "br"
+      :text "${br-icon} ${br}%"
+    )
+    (box
+      :orientation "v"
+      :space-evenly false
+      :class "br-slider"
+      (scale
+        :orientation "v"
+        :flipped true
+        :value {br}
+        :onchange {br-update}
+        :max 101
+        :min 0
+      )
+    )
+  )
+)
+
 (defwindow sound-control-window
   :monitor 0
   :windowtype "normal"
@@ -296,7 +408,14 @@
   :resizable false
   (eventbox
     :onhoverlost "eww close -c ${eww} sound-control-window | eww update -c ${eww} sound-control-opened=false"
-    (volume-control-group)
+    (box
+      :orientation "h"
+      :spacing 5
+      :space-evenly false
+      (brightness-content)
+      (micro-content)
+      (sound-content)
+    )
   )
 )
 
@@ -313,7 +432,7 @@
       :space-evenly false
       :halign "fill"
       (label :class "time" :text " ${h}:${m}" :hexpand true)
-      (label :class "day" :text " ${day_name_full}" :hexpand true)
+(label :class "day" :text " ${day_name_full}" :hexpand true)
       (label :class "date" :text " ${day}/${month}/${year}" :hexpand true)
     )
     (box
@@ -356,6 +475,90 @@
   (eventbox
     :onhoverlost "eww close -c ${eww} datetime-control-window | eww update -c ${eww} datetime-control-opened=false"
     (datetime-control-group)
+  )
+)
+
+
+;;#################################
+;;##    SYSTEM CONTROL WINDOW    ##
+;;#################################
+(defwidget sys-progress [class value icon scale color]
+  (box
+    :class {class}
+    (circular-progress
+      :class "${class}-progress"
+      :value {value}
+      :start-at 25.0
+      :thickness 10
+      :clockwise true
+      :width 80
+      :height 80
+      :style "color: ${color};"
+      (label :class "label" :text "${icon} ${round(value, 0)}${scale}" :style "color: ${color};")
+    )
+  )
+)
+
+(defwidget sys-control-group []
+  (box
+    :orientation "v"
+    :spacing 5
+    :space-evenly false
+    (box
+      :orientation "h"
+      :spacing 5
+      :space-evenly false
+      (sys-progress
+        :class "cpu"
+        :value {sysinfo.cpu.val}
+        :icon ""
+        :scale "%"
+        :color {sysinfo.cpu.color}
+      )
+      (sys-progress
+        :class "ram"
+        :value {sysinfo.ram.val}
+        :icon ""
+        :scale "%"
+        :color {sysinfo.ram.color}
+      )
+    )
+    (box
+      :orientation "h"
+      :spacing 5
+      :space-evenly false
+      (sys-progress
+        :class "temp"
+        :value {sysinfo.temp.val}
+        :icon ""
+        :scale "󰔄"
+        :color {sysinfo.temp.color}
+      )
+      (sys-progress
+        :class "disk"
+        :value {sysinfo.disk.val}
+        :icon "󰋊"
+        :scale "%"
+        :color {sysinfo.disk.color}
+      )
+    )
+  )
+)
+
+
+(defwindow sys-control-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "bar"
+  :geometry (geometry
+    :y "5px"
+    :x "5px"
+    :anchor "right bottom"
+  )
+  :resizable false
+  (eventbox
+    :onhoverlost "eww close -c ${eww} sys-control-window | eww update -c ${eww} sys-control-opened=false"
+    (sys-control-group)
   )
 )
 

@@ -98,19 +98,30 @@ async def bat_loop():
 
 
 def parse_worspaces(ws, workspaces, active_workspaces):
-    workspaces_line = ""
-    items = []
+    json_workspaces = []
     for w in workspaces:
         cmd = f"hyprctl dispatch workspace {w}"
         if w == ws:
-            items.append(f"(button :class \"activebtn\" :onclick `{cmd}` (label :class \"activews\" :text \"{w}\"))")
+            active = True
+            occupied = False
         elif w in active_workspaces:
-            items.append(f"(button :class \"fullbtn\" :onclick `{cmd}` (label :class \"fullws\" :text \"{w}\"))")
+            active = False
+            occupied = True
         else:
-            items.append(f"(button :class \"normalbtn\" :onclick `{cmd}` (label :class \"normalws\" :text \"{w}\"))")
-    workspaces_line = f"(box :orientation 'v' :space-evenly false :class \"workspaces\" {' '.join(items)})"
+            active = False
+            occupied = False
+        json_workspaces.append({
+                "active": active,
+                "occupied": occupied,
+                "cmd": cmd,
+                "text": w
+            })
+    json_workspaces = {
+        "count": len(json_workspaces),
+        "data": json_workspaces
+    }
 
-    return workspaces_line
+    return json_workspaces
 
 
 async def hyprland_events():
@@ -140,8 +151,8 @@ async def hyprland_events():
         base_workspaces = {"1", "2", "3", "4", "5"}
         workspaces = base_workspaces.copy()
         current_workspace = "1"
-        workspaces_line = parse_worspaces(current_workspace, sorted(workspaces), [])
-        EwwUpdater.update("workspaces", workspaces_line)
+        workspaces_json = parse_worspaces(current_workspace, sorted(workspaces), [])
+        EwwUpdater.update("workspaces-json", json.dumps(workspaces_json))
         while True:
             data = await reader.readline()
             event = data.decode().strip()
@@ -168,8 +179,8 @@ async def hyprland_events():
                     current_workspaces = [str(ws["id"]) for ws in workspaces_js if str(ws["id"]) != current_workspace]
                     workspaces = sorted(base_workspaces | set(current_workspaces + [current_workspace]))
 
-                    workspaces_line = parse_worspaces(current_workspace, workspaces, current_workspaces)
-                    EwwUpdater.update("workspaces", workspaces_line)
+                    workspaces_json = parse_worspaces(current_workspace, workspaces, current_workspaces)
+                    EwwUpdater.update("workspaces-json", json.dumps(workspaces_json))
     except asyncio.CancelledError:
         pass
     finally:

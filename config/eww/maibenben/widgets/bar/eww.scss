@@ -6,7 +6,7 @@
 }
 
 @mixin block-style($border-color: colors.$blue) {
-  background: rgba(colors.$base, 0.65);
+  background: rgba(colors.$base, 0.80);
   border-radius: 8px;
   padding: 4px 0px 4px 0px;
   border: 1px solid rgba($border-color, 1.0);
@@ -58,50 +58,52 @@
   }
 
 
-  .workspaces {
+  .workspaces-back {
     @include block-style();
+    margin-left: 8px;
   }
 
-  .normalws {
-    @include special-font($size: 13pt);
+  .workspaces {
+    background: transparent;
   }
+
   .normalbtn {
-    margin-left: 14px;
-    margin-right: 14px;
+    @include special-font($color: colors.$subtext1, $size: 13pt);
+    background: colors.$mantle;
+    border: 1px solid colors.$blue;
+    border-radius: 4px;
+    margin-right: 6px;
+    margin-left: 6px;
+    transition: all 0.1s ease;
   }
   .normalbtn:hover {
-    border: 1px solid colors.$lavender;
-    border-radius: 5px;
+    margin-left: 0px;
   }
 
-  .fullws {
-    @include special-font($color: colors.$crust, $size: 13pt);
-  }
   .fullbtn {
-    background: rgba(colors.$peach, 0.8);
-    border: 1px solid rgba(colors.$base, 1.0);
-    border-radius: 50%;
-    margin-left: 14px;
-    margin-right: 14px;
+    @include special-font($color: colors.$peach, $size: 13pt);
+    background: colors.$mantle;
+    border: 1px solid colors.$blue;
+    border-radius: 4px;
+    margin-right: 6px;
+    margin-left: 6px;
+    transition: all 0.1s ease;
   }
   .fullbtn:hover {
-    background: rgba(colors.$peach, 1.0);
-    border-radius: 5px;
+    margin-left: 0px;
   }
 
-  .activews {
-    @include special-font($color: colors.$crust, $weight: bold, $size: 13pt);
-  }
   .activebtn {
-    background: rgba(colors.$green, 0.8);
-    border: 1px solid colors.$crust;
-    border-radius: 5px;
-    margin-left: 14px;
-    margin-right: 14px;
+    @include special-font($color: colors.$green, $weight: bold, $size: 13pt);
+    background: colors.$crust;
+    border: 1px solid colors.$blue;
+    border-radius: 5px 4px 4px 5px;
+    margin-right: 6px;
+    transition: all 0.1s ease;
   }
   .activebtn:hover {
-    background: rgba(colors.$green, 1.0);
-    border-radius: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
   .tray {
@@ -154,7 +156,12 @@
   .micro-val {
     @include special-font($weight: bold);
   }
+
+  .br-val {
+    @include special-font($color: colors.$yellow, $weight: bold);
+  }
 }
+
 
 .bat-control-window {
   background: transparent;
@@ -167,11 +174,92 @@
   }
 }
 
+
 .sound-control-window {
   background: transparent;
 
-  .text {
+  .vol-content {
     @include block-style();
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .volume {
+    color: colors.$crust;
+    background: colors.$green;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+  .volume-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$green;
+    color: colors.$crust;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    border-radius: 10px;
+  }
+  .volume-slider scale trough {
+    all: unset;
+    background-color: colors.$crust;
+    border-radius: 50px;
+    min-height: 200px;
+    min-width: 10px;
+  }
+
+  .mic-content {
+    @include block-style();
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .micro {
+    color: colors.$crust;
+    background: colors.$green;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+  .micro-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$green;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    color: colors.$crust;
+    border-radius: 10px;
+  }
+  .micro-slider scale trough {
+    all: unset;
+    background-color: colors.$crust;
+    border-radius: 50px;
+    min-height: 200px;
+    min-width: 10px;
+  }
+
+  .br-content {
+    @include block-style();
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .br {
+    color: colors.$crust;
+    background: colors.$yellow;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+  .br-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$yellow;
+    border: 1px solid rgba(colors.$crust, 1.0);
+    color: #000000;
+    border-radius: 10px;
+  }
+  .br-slider scale trough {
+    all: unset;
+    background-color: colors.$crust;
+    border-radius: 50px;
+    min-height: 200px;
+    min-width: 10px;
   }
 }
 
@@ -238,6 +326,49 @@
     }
 
   }
+}
 
+
+.sys-control-window {
+  .cpu {
+    background: rgba(colors.$base, 0.80);
+    border-radius: 8px;
+    padding: 6px;
+    border: 1px solid rgba(colors.$blue, 1.0);
+  }
+  .cpu-progress {
+    background-color: colors.$crust;
+    border-radius: 10px;
+  }
+  .ram {
+    background: rgba(colors.$base, 0.80);
+    border-radius: 8px;
+    padding: 6px;
+    border: 1px solid rgba(colors.$blue, 1.0);
+  }
+  .ram-progress {
+    background-color: colors.$crust;
+    border-radius: 10px;
+  }
+  .temp {
+    background: rgba(colors.$base, 0.80);
+    border-radius: 8px;
+    padding: 6px;
+    border: 1px solid rgba(colors.$blue, 1.0);
+  }
+  .temp-progress {
+    background-color: colors.$crust;
+    border-radius: 10px;
+  }
+  .disk {
+    background: rgba(colors.$base, 0.80);
+    border-radius: 8px;
+    padding: 6px;
+    border: 1px solid rgba(colors.$blue, 1.0);
+  }
+  .disk-progress {
+    background-color: colors.$crust;
+    border-radius: 10px;
+  }
 }
 
