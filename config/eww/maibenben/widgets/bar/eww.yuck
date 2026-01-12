@@ -1,0 +1,361 @@
+(defvar eww "~/.config/eww/widgets/bar")
+
+
+(defvar sound-control-opened false)
+(defvar datetime-control-opened false)
+
+(defvar volume-toggled false)
+
+
+;; datetime
+(defpoll h :interval "60s" `date +%H`)
+(defpoll m :interval "60s" `date +%M`)
+(defpoll day :interval "60s" `date +%d`)
+(defpoll month :interval "60s" `date +%m`)
+(defpoll year :interval "60s" `date +%Y`)
+(defpoll day_name :interval "60s" `date +%a`)
+(defpoll day_name_full :interval "60s" :run-while {datetime-control-opened} `date +%A`)
+(defpoll time_shift :interval "60s" :run-while {datetime-control-opened} `date +%:z`)
+(defpoll timezone :interval "60s" :run-while {datetime-control-opened} `timedatectl show --property=Timezone --value`)
+;; scripts
+(defvar kb_layout "N/A")
+;; battery
+(defvar bat-status "󱉝 ?%")
+(defvar bat-color "#ff0000")
+(defvar bat-time "00m 00h")
+;; sound
+(defpoll vol :interval "3s" `~/.config/eww/widgets/bar/scripts/volume_updater.sh`)
+(defvar vol-mute true)
+(defvar vol-icon " ")
+(defvar vol-color "#ff0000")
+(defvar vol-update "~/.config/eww/widgets/bar/scripts/volume_updater.sh {}")
+(defvar vol-toggle-mute "~/.config/eww/widgets/bar/scripts/volume_updater.sh toggle")
+;; micro
+(defpoll mic :interval "3s" :run-while {sound-control-opened || volume-toggled} `~/.config/eww/widgets/bar/scripts/micro_updater.sh`)
+(defvar mic-mute true)
+(defvar mic-icon " ")
+(defvar mic-color "#ff0000")
+(defvar mic-update "~/.config/eww/widgets/bar/scripts/micro_updater.sh {}")
+(defvar mic-toggle-mute "~/.config/eww/widgets/bar/scripts/micro_updater.sh toggle")
+;; brightness
+(defpoll br :interval "3s" `~/.config/eww/widgets/bar/scripts/brightness_updater.sh`)
+(defvar br-icon "󰃚 ")
+(defvar br-update "~/.config/eww/widgets/bar/scripts/brightness_updater.sh {}")
+;; submap
+(defvar submap "")
+(defvar is_submap false)
+;; system
+(defpoll sysinfo :interval "2s" `~/.config/eww/widgets/hud/scripts/system.py`)
+;; workspaces
+(defvar workspaces "(box :orientation 'h')")
+
+
+;;#######################
+;;##    TOP WIDGETS    ##
+;;#######################
+
+(defwidget basic-sound [class onclick color icon value state]
+  (button
+    :onclick {onclick}
+    (box
+      :orientation "h"
+      :space-evenly false
+      :halign "center"
+      (label
+        :class {class}
+        :style "color: ${color};"
+        :text "${icon} "
+      )
+      (revealer
+        :transition "slideright"
+        :duration 300
+        :reveal {state}
+        (box :orientation "h" :space-evenly false
+          (label
+            :class {class}
+            :text {value}
+            :style "color: ${color};"
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget volume-widget []
+  (eventbox
+    :onhover "eww update -c ${eww} volume-toggled=true"
+    :onhoverlost "eww update -c ${eww} volume-toggled=false"
+    :onrightclick "eww ${sound-control-opened ? 'close' : 'open'} -c ${eww} sound-control-window | eww update -c ${eww} sound-control-opened=${!sound-control-opened}"
+    (box :class "sound"
+      :orientation "v"
+      :space-evenly false
+      ;; speaker widget
+      (basic-sound
+        :class "volume-val"
+        :onclick {vol-toggle-mute}
+        :color {vol-color}
+        :icon {vol-icon}
+        :value "${vol}%"
+        :state {!vol-mute}
+      )
+      ;; micro widget
+      (revealer
+        :transition "slidup"
+        :duration 300
+        :reveal {volume-toggled}
+        (basic-sound
+          :class "micro-val"
+          :onclick {mic-toggle-mute}
+          :color {mic-color}
+          :icon {mic-icon}
+          :value "${mic}%"
+          :state {!mic-mute}
+        )
+      )
+    )
+  )
+)
+
+(defwidget battery []
+  (eventbox
+    :onhover "eww open -c ${eww} bat-control-window"
+    :onhoverlost "eww close -c ${eww} bat-control-window"
+    (box
+      :class "bat-block"
+      :orientation "v"
+      :space-evenly false
+      (label :class "bat-status" :text {bat-status} :style "color: ${bat-color};")
+    )
+  )
+)
+
+(defwidget datetime []
+    (eventbox
+      :onrightclick "eww ${datetime-control-opened ? 'close' : 'open'} -c ${eww} datetime-control-window | eww update -c ${eww} datetime-control-opened=${!datetime-control-opened}"
+      (box
+        :orientation "v"
+        :space-evenly false
+        :spacing 4
+        (box
+          :class "time-block"
+          :orientation "v"
+          :space-evenly false
+          (label :class "time" :text {h})
+          (label :class "time" :text {m})
+        )
+        (box
+          :class "date-block"
+          :orientation "v"
+          :space-evenly false
+          (label :class "day" :text {day_name})
+          (label :class "date" :text "${day}/${month}/${year}")
+        )
+      )
+    )
+)
+
+
+(defwidget top-group []
+  (box
+    :class "top-group"
+    :orientation "v"
+    :space-evenly false
+    :spacing 4
+    (battery)
+    (volume-widget)
+    (datetime)
+    (label :class "kb-layout" :text {kb_layout})
+  )
+)
+
+(defwidget center-group []
+  (box
+    :class "center-group"
+    :orientation "v"
+    :space-evenly false
+    :spacing 4
+    :valign "center"
+    (literal :content {workspaces})
+  )
+)
+
+;;##########################
+;;##    BOTTOM WIDGETS    ##
+;;##########################
+(defwidget system []
+  (box
+    :orientation "v"
+    :class "system"
+    :space-evenly false
+    :spacing 2
+    (button
+      :class "cpu"
+      :onclick ""
+      :style "color: ${sysinfo.cpu.color}"
+      " ${round(sysinfo.cpu.val, 0)}%"
+    )
+    (button
+      :class "ram"
+      :onclick ""
+      :style "color: ${sysinfo.ram.color}"
+      " ${round(sysinfo.ram.val, 0)}%"
+    )
+    (button
+      :class "temp"
+      :onclick ""
+      :style "color: ${sysinfo.temp.color}"
+      "${round(sysinfo.temp.val, 0)}󰔄"
+    )
+  )
+)
+
+(defwidget bottom-group []
+  (box
+    :class "top-group"
+    :orientation "v"
+    :space-evenly false
+    :valign "end"
+    :spacing 6
+    (systray :class "tray" :icon-size 24 :spacing 4)
+    (system)
+  )
+)
+
+(defwidget layout []
+  (box
+    :orientation "v"
+    :space-evenly true
+    :valign "fill"
+    (top-group)
+    (center-group)
+    (bottom-group)
+  )
+)
+
+;;##########################
+;;##    SIDEBAR WINDOW    ##
+;;##########################
+(defwindow bar-window
+  :exclusive true
+  :monitor 0
+  :windowtype "dock"
+  :namespace "bar"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :width "60px"
+    :height "100%"
+    :anchor "right center"
+  )
+  :resizable false
+  :reserve (struts :side "right" :distance "60")
+  (layout)
+)
+
+
+(defwidget volume-control-group []
+  (box
+    :orientation "v"
+    (label :class "text" :text "text")
+  )
+)
+
+;;##################################
+;;##    BATTERY CONTROL WINDOW    ##
+;;##################################
+(defwindow bat-control-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "bar"
+  :geometry (geometry
+    :y "0.4%"
+    :x "5px"
+    :anchor "right top"
+  )
+  :resizable false
+  (box
+    :orientation "v"
+    (label :class "bat-time" :text {bat-time} :style "color: ${bat-color};")
+  )
+)
+
+
+;;################################
+;;##    SOUND CONTROL WINDOW    ##
+;;################################
+(defwindow sound-control-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "bar"
+  :geometry (geometry
+    :y "3.2%"
+    :x "5px"
+    :anchor "right top"
+  )
+  :resizable false
+  (eventbox
+    :onhoverlost "eww close -c ${eww} sound-control-window | eww update -c ${eww} sound-control-opened=false"
+    (volume-control-group)
+  )
+)
+
+
+(defwidget datetime-control-group []
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 4
+    (box
+      :orientation "h"
+      :spacing 4
+      :hexpand true
+      :space-evenly false
+      :halign "fill"
+      (label :class "time" :text " ${h}:${m}" :hexpand true)
+      (label :class "day" :text " ${day_name_full}" :hexpand true)
+      (label :class "date" :text " ${day}/${month}/${year}" :hexpand true)
+    )
+    (box
+      :orientation "h"
+      :space-evenly false
+      :spacing 4
+      :hexpand true
+      :halign "fill"
+      (label :class "timezone" :text "${timezone}" :hexpand true)
+      (label :class "timeshift" :text "${time_shift}" :hexpand true)
+    )
+    (box
+      :orientation "v"
+      :space-evenly false
+      :class "calendar"
+      (calendar
+        :class "cal"
+        :day {day}
+        :month {month}
+        :year {year}
+      )
+    )
+  )
+)
+
+
+;;###################################
+;;##    DATETIME CONTROL WINDOW    ##
+;;###################################
+(defwindow datetime-control-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "bar"
+  :geometry (geometry
+    :y "6%"
+    :x "5px"
+    :anchor "right top"
+  )
+  :resizable false
+  (eventbox
+    :onhoverlost "eww close -c ${eww} datetime-control-window | eww update -c ${eww} datetime-control-opened=false"
+    (datetime-control-group)
+  )
+)
+

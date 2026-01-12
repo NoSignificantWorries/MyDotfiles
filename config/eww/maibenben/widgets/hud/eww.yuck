@@ -16,8 +16,6 @@
 (defpoll day_name :interval "60s" `date +%A`)
 ;; scripts
 (defvar kb_layout "N/A")
-(defvar workspace "1")
-(defvar count_workspaces "10")
 ;; battery
 (defvar bat-status "")
 (defvar bat-color "#000000")
