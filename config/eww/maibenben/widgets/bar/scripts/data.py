@@ -168,9 +168,11 @@ async def hyprland_events():
                     if len(value) > 0:
                         EwwUpdater.update("submap", value)
                         EwwUpdater.update("is_submap", "true")
+                        subprocess.run(['eww', 'open', '-c', CONFIG, 'submap-window'], stdout=subprocess.DEVNULL)
                     else:
                         EwwUpdater.update("submap", "")
                         EwwUpdater.update("is_submap", "false")
+                        subprocess.run(['eww', 'close', '-c', CONFIG, 'submap-window'], stdout=subprocess.DEVNULL)
                 case "workspace":
                     current_workspace = value
 

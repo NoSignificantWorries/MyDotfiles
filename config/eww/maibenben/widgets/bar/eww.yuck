@@ -46,7 +46,7 @@
 (defvar submap "")
 (defvar is_submap false)
 ;; system
-(defpoll sysinfo :interval "2s" `~/.config/eww/widgets/hud/scripts/system.py`)
+(defpoll sysinfo :interval "2s" `~/.config/eww/widgets/bar/scripts/system.py`)
 ;; workspaces
 (defvar workspaces-json `[]`)
 
@@ -247,7 +247,7 @@
     :space-evenly false
     :valign "end"
     :spacing 6
-    (systray :class "tray" :icon-size 24 :spacing 4)
+    (systray :orientation "v" :class "tray" :icon-size 24 :spacing 4)
     (eventbox
       :onrightclick "eww ${sys-control-opened ? 'close' : 'open'} -c ${eww} sys-control-window | eww update -c ${eww} sys-control-opened=${!sys-control-opened}"
       (system)
@@ -491,8 +491,8 @@
       :start-at 25.0
       :thickness 10
       :clockwise true
-      :width 80
-      :height 80
+      :width 120
+      :height 120
       :style "color: ${color};"
       (label :class "label" :text "${icon} ${round(value, 0)}${scale}" :style "color: ${color};")
     )
@@ -507,7 +507,6 @@
     (box
       :orientation "h"
       :spacing 5
-      :space-evenly false
       (sys-progress
         :class "cpu"
         :value {sysinfo.cpu.val}
@@ -516,30 +515,45 @@
         :color {sysinfo.cpu.color}
       )
       (sys-progress
-        :class "ram"
-        :value {sysinfo.ram.val}
-        :icon ""
-        :scale "%"
-        :color {sysinfo.ram.color}
-      )
-    )
-    (box
-      :orientation "h"
-      :spacing 5
-      :space-evenly false
-      (sys-progress
         :class "temp"
         :value {sysinfo.temp.val}
         :icon ""
         :scale "󰔄"
         :color {sysinfo.temp.color}
       )
-      (sys-progress
-        :class "disk"
-        :value {sysinfo.disk.val}
-        :icon "󰋊"
-        :scale "%"
-        :color {sysinfo.disk.color}
+    )
+    (box
+      :orientation "h"
+      :spacing 5
+      (box
+        :class "ram-group"
+        :orientation "v"
+        :spacing 2
+        :space-evenly false
+        (sys-progress
+          :class "ram"
+          :value {sysinfo.ram.val}
+          :icon ""
+          :scale "%"
+          :color {sysinfo.ram.color}
+        )
+        (label :class "sys-text" :text "total: ${round(sysinfo.ram.totalGB, 2)} Gb")
+        (label :class "sys-text" :text "used: ${round(sysinfo.ram.usedGB, 2)} Gb")
+      )
+      (box
+        :class "disk-group"
+        :orientation "v"
+        :spacing 2
+        :space-evenly false
+        (sys-progress
+          :class "disk"
+          :value {sysinfo.disk.val}
+          :icon "󰋊"
+          :scale "%"
+          :color {sysinfo.disk.color}
+        )
+        (label :class "sys-text" :text "total: ${round(sysinfo.disk.totalGB, 2)} Gb")
+        (label :class "sys-text" :text "used: ${round(sysinfo.disk.usedGB, 2)} Gb")
       )
     )
   )
@@ -559,6 +573,27 @@
   (eventbox
     :onhoverlost "eww close -c ${eww} sys-control-window | eww update -c ${eww} sys-control-opened=false"
     (sys-control-group)
+  )
+)
+
+;;#########################
+;;##    SUBMAP WINDOW    ##
+;;#########################
+(defwindow submap-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "submap"
+  :geometry (geometry
+    :y "0%"
+    :x "47.5%"
+    :anchor "left top"
+  )
+  :stacking "overlay"
+  :resizable false
+  (box
+    :orientation "h"
+    :space-evenly false
+    (label :class "submap" :text {submap})
   )
 )
 

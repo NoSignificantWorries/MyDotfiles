@@ -7,7 +7,5 @@ img=$(zenity --file-selection --file-filter="Images | *.jpg *.png *.jpeg" --titl
 [ -z "$img" ] && exit 1
 
 ln -sf "${img}" "${wallpaper}"
-hyprctl hyprpaper unload all
-hyprctl hyprpaper preload "${wallpaper}"
-hyprctl hyprpaper wallpaper ",${wallpaper}"
+swww img "${wallpaper}" --transition-type wipe
 

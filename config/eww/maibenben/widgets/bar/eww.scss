@@ -330,6 +330,10 @@
 
 
 .sys-control-window {
+  .sys-text {
+    color: colors.$text;
+  }
+
   .cpu {
     background: rgba(colors.$base, 0.80);
     border-radius: 8px;
@@ -340,7 +344,7 @@
     background-color: colors.$crust;
     border-radius: 10px;
   }
-  .ram {
+  .ram-group {
     background: rgba(colors.$base, 0.80);
     border-radius: 8px;
     padding: 6px;
@@ -349,6 +353,7 @@
   .ram-progress {
     background-color: colors.$crust;
     border-radius: 10px;
+    margin-bottom: 6px;
   }
   .temp {
     background: rgba(colors.$base, 0.80);
@@ -360,7 +365,7 @@
     background-color: colors.$crust;
     border-radius: 10px;
   }
-  .disk {
+  .disk-group {
     background: rgba(colors.$base, 0.80);
     border-radius: 8px;
     padding: 6px;
@@ -369,6 +374,22 @@
   .disk-progress {
     background-color: colors.$crust;
     border-radius: 10px;
+    margin-bottom: 6px;
+  }
+}
+
+
+.submap-window {
+  margin-top: 5px;
+
+  .submap {
+    color: colors.$crust;
+    background: rgba(colors.$red, 0.8);
+    border-radius: 5px;
+    border: 1px solid colors.$crust;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
   }
 }
 
