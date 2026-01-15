@@ -1,0 +1,8 @@
+(pkgs [
+  bottom
+])
+
+(links [
+  bottom.toml
+])
+

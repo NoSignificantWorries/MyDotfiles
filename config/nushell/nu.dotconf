@@ -1,0 +1,14 @@
+(pkgs [
+  nushell
+])
+
+(links [
+  catppuccin.nu
+  config.nu
+  env.nu
+])
+
+(install [
+  "chsh -s $(which nu)"
+])
+

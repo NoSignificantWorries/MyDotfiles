@@ -1,0 +1,8 @@
+(pkgs [
+  mpv
+])
+
+(links [
+  mpv.conf
+])
+

@@ -1,0 +1,15 @@
+(pkgs [
+  wlogout
+])
+
+(copy [
+  icons/*
+])
+
+(links [
+  layout
+  logout_menu.sh
+  style.css
+  theme.css
+])
+

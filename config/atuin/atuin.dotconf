@@ -1,0 +1,10 @@
+(pkgs [
+  atuin
+])
+
+(links [
+  themes/*
+  atuin-receipt.json
+  config.toml
+])
+

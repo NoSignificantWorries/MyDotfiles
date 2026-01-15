@@ -12,5 +12,5 @@
 [Chmod](https://github.com/yazi-rs/plugins/tree/main/chmod.yazi)
 [Lazygit](https://github.com/Lil-Dank/lazygit.yazi)
 [Size of directory](https://github.com/pirafrank/what-size.yazi)
-[Git](https://github.com/yazi-rs/plugins/tree/main/git.yazi)\
+[Git](https://github.com/yazi-rs/plugins/tree/main/git.yazi)
 

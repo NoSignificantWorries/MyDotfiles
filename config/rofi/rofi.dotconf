@@ -1,0 +1,12 @@
+(pkgs [
+  rofi
+])
+
+(links [
+  {menu: [
+    launch.sh
+    menu.rasi
+  ]}
+  themes/catppuccin-mocha.rasi
+])
+
