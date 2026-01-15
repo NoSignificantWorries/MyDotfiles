@@ -1,0 +1,53 @@
+(add-atom base (install "sudo pacman -S $pkg") (update "sudo pacman -Suuy"))
+(add-atom aur (install "paru -S $pkg") (update "paru -Suuy"))
+
+(add-stage "Basic"
+  (base [
+    git
+    wget
+    curl
+    base-devel
+  ])
+  (cmd [
+    "sudo usermod -aG input $USER"
+  ])
+)
+
+(path
+  (alias "config" "~/.config")
+  (alias "scripts" "~/.scripts")
+  (alias "icons" "~/.icons")
+)
+
+(add-stage "Links"
+  (tree p"icons"
+    (copy p"desktop/")
+    (copy p"notify/")
+  )
+  (tree p"scripts"
+    (tree p"bluetooth"
+      (link p"toggle_bluetooth.sh")
+    )
+    (tree p"network"
+      (link p"toggle_wifi.sh")
+    )
+    (link p"battery_allert.sh")
+    (link p"fzf_preview.sh")
+    (link p"screen_rec.sh")
+  )
+  (tree p"config"
+    (link p"vimrc" p"~/.$n")
+    (link p"mimeapps.list")
+    (link p"tmux.conf" p"~/.$n")
+    (link p"starship.toml")
+
+    (tree p"wlogout"
+      (copy p"icons/")
+      (link p"layout")
+      (link p"logout_menu.sh")
+      (link p"style.css")
+      (link p"theme.css")
+    )
+  )
+)
+
