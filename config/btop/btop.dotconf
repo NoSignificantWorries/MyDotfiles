@@ -1,9 +1,0 @@
-(pkgs [
-  btop
-])
-
-(links [
-  themes/*
-  btop.conf
-])
-

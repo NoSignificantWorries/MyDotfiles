@@ -1,7 +1,0 @@
-(links [
-  {starship.toml: ~/.config/starship/starship.toml}
-  {tmux.conf: ~/.tmux.conf}
-  {vimrc: ~/.vimrc}
-  mimeapps.list
-])
-

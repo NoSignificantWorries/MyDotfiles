@@ -1,9 +1,0 @@
-(pkgs [
-  {base kitty}
-])
-
-(links [
-  kitty.conf
-  theme.conf
-])
-

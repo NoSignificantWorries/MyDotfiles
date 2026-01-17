@@ -1,9 +1,0 @@
-(pkgs [
-  lsd
-])
-
-(links [
-  colors.yaml
-  config.yaml
-])
-
