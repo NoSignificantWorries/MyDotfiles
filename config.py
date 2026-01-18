@@ -5,7 +5,7 @@ base = Provider((lambda pkg: f"sudo pacman -S {pkg}"), "sudo pacman -Suuy", "sud
 aur = Provider((lambda pkg: f"paru -S {pkg}"), "paru -Suuy", "paru -Qqe")
 
 version = "maibenben"
-Node.dry_run = True
+# Node.dry_run = False
 Node.tmp_only = False
 Node.with_tmp_dir = True
 Node.params = {
@@ -247,11 +247,11 @@ config = Stage("Config",
                                               Link("system.py"),
                                               Link("data.py"),
                                               ),
+                                         Link("eww.scss"),
+                                         Link("eww.yuck"),
+                                         Link("kill.sh"),
+                                         Link("launch.sh")
                                          ),
-                                    Link("eww.scss"),
-                                    Link("eww.yuck"),
-                                    Link("kill.sh"),
-                                    Link("launch.sh")
                                     ),
                                ),
                           ),
@@ -271,8 +271,8 @@ config = Stage("Config",
 
 config.compile()
 
-print(config.actions)
-print(config.compilation)
+# print(config.actions)
+# print(config.compilation)
 
 config.go()
 

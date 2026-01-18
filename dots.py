@@ -44,13 +44,16 @@ class Node:
     def go(self):
         for label, params in Node.compilation:
             func = Node.actions.get(label)
-            if func:
-                if isinstance(params, (List, Tuple)):
-                    func(*params)
-                else:
-                    func(params)
+            if Node.dry_run:
+                print(label, params)
             else:
-                pass
+                if func:
+                    if isinstance(params, (List, Tuple)):
+                        func(*params)
+                    else:
+                        func(params)
+                else:
+                    pass
 
     def compile(self) -> None:
         raise NotImplementedError("Error")
@@ -135,11 +138,13 @@ class Tree(Node):
 
 
 def check_file_and_delete(path: Path) -> None:
-    if path.exists() and path.is_dir():
-        shutil.rmtree(path)
-    if path.exists() or path.is_symlink():
-        path.unlink()
-    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        if path.is_symlink():
+            path.unlink()
+        elif path.is_dir() and not path.is_symlink():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
 
 
 class Link(Node):
@@ -152,6 +157,7 @@ class Link(Node):
 
         def action(source, target):
             check_file_and_delete(target)
+            target.parent.mkdir(parents=True, exist_ok=True)
             target.symlink_to(source)
 
         Node.actions.update({self.action_label: action})
@@ -186,11 +192,13 @@ class Link(Node):
                         else:
                             pass
                     else:
+                        print(source, tmp_target)
                         Node.compilation.append((self.action_label, [source, tmp_target]))
                 else:
                     pass
             else:
                 if source != target:
+                    print(source, target)
                     Node.compilation.append((self.action_label, [source, target]))
                 else:
                     pass
@@ -205,6 +213,7 @@ class Copy(Link):
 
         def action(source, target):
             check_file_and_delete(target)
+            target.parent.mkdir(parents=True, exist_ok=True)
             source.copy(target)
 
         Node.actions.update({self.action_label: action})
