@@ -88,7 +88,9 @@
 }
 
 .notification-action {
-  border: 2px solid @border-green;
+  background: @cc-bg;
+  border-radius: 8px;
+  border: 1px solid @border-color;
 }
 
 .notification-default-action:hover,
