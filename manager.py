@@ -1,4 +1,5 @@
 import shutil
+import subprocess
 from pathlib import Path
 from typing import Callable, List, Optional, Tuple, Union
 
@@ -12,11 +13,37 @@ def pth(path: Union[Path, str]) -> Path:
 
 
 def run_cmd(command: str):
-    pass
+    result = subprocess.run(command.split(" "),
+            capture_output=True,
+            text=True,
+            check=False
+    )
+    if result.stdout:
+        print(result.stdout)
+    if result.returncode != 0:
+        raise subprocess.CalledProcessError(result.returncode, result.stderr)
+
+
+def run_popen(command: str):
+    process = subprocess.Popen(
+            command.split(" "),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+            universal_newlines=True
+    )
+
+    for line in iter(process.stdout.readline, ''):
+            print(line, end='', flush=True)
+
+    returncode = process.wait()
+    if returncode != 0:
+        raise subprocess.CalledProcessError(returncode, "Error")
 
 
 def check_file_and_delete(path: Path) -> None:
-    if path.exists():
+    if path.exists() or path.is_symlink():
         if path.is_symlink():
             path.unlink()
         elif path.is_dir() and not path.is_symlink():
@@ -33,7 +60,6 @@ def run_link(src: Path, dst: Path):
     src = prepare_path(src)
     dst = prepare_path(dst)
     check_file_and_delete(dst)
-    # check_file_and_delete(dst.parent)
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.symlink_to(src)
 
@@ -42,7 +68,6 @@ def run_copy(src: Path, dst: Path):
     src = prepare_path(src)
     dst = prepare_path(dst)
     check_file_and_delete(dst)
-    # check_file_and_delete(dst.parent)
     dst.parent.mkdir(parents=True, exist_ok=True)
     src.copy(dst)
 
@@ -51,11 +76,18 @@ class Node:
     dry_run = True
     tmp_only = True
     with_tmp_dir = True
+    actions_enabled = {
+        "cmd": True,
+        "link": True,
+        "copy": True,
+        "popen": True
+    }
 
     actions = {
         "cmd": run_cmd,
         "link": run_link,
-        "copy": run_copy
+        "copy": run_copy,
+        "popen": run_popen
     }
     compilation = []
 
@@ -80,7 +112,7 @@ class Node:
             if Node.dry_run:
                 print(label, params)
             else:
-                if func:
+                if func and self.actions_enabled.get(label):
                     if isinstance(params, (List, Tuple)):
                         func(*params)
                     else:
@@ -215,5 +247,4 @@ class Copy(Link):
             self.compilation.append(("copy", (self.src, self.dst)))
 
         self.action = action
-
 

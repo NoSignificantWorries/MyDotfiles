@@ -1,13 +1,16 @@
 from manager import Node, Stage, Tree, Link, Copy, Provider, Cmd, Fork
 
 
-base = Provider(((lambda pkg: f"sudo pacman -S {pkg}"), "sudo pacman -Suuy"))
-aur = Provider(((lambda pkg: f"paru -S {pkg}"), "paru -Suuy"))
+base = Provider(((lambda pkg: f"sudo pacman -S {pkg} --noconfirm"), "sudo pacman -Suuy"))
+aur = Provider(((lambda pkg: f"paru -S {pkg} --noconfirm"), "paru -Suuy"))
 
 version = "maibenben"
-# Node.dry_run = False
+Node.dry_run = False
 Node.tmp_only = False
 Node.with_tmp_dir = True
+
+Node.actions_enabled["cmd"] = False
+Node.actions_enabled["popen"] = False
 
 config = Stage(("Config",), [
     Stage(("Packages",), [
