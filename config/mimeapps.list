@@ -19,6 +19,7 @@ x-scheme-handler/anytype=anytype.desktop
 inode/directory=org.geeqie.Geeqie.desktop
 image/png=org.geeqie.Geeqie.desktop
 x-scheme-handler/gitkraken=GitKraken.desktop
+application/x-ms-dos-executable;application/x-wine-extension-msp;application/x-msi;application/x-msdos-program;text/win-bat;=PortProton.desktop
 
 [Added Associations]
 text/plain=nvim.desktop;

@@ -1,6 +1,6 @@
 import shutil
 from pathlib import Path
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, List, Optional, Tuple, Union, Dict, Type
 
 
 def p(path: Union[Path, str]) -> List[str]:
@@ -35,10 +35,13 @@ class Node:
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.parent = None
         self.nodes = []
+        self.params = []
         for arg in args:
             if isinstance(arg, Node):
                 arg.parent = self
                 self.nodes.append(arg)
+            else:
+                self.params.append(arg)
         self.kwargs = kwargs
 
     def go(self):
@@ -65,22 +68,62 @@ class Node:
             node.compile()
 
 
+def match_params(obj: Node, params: List[Any], schedule: Dict[int, List[Tuple[Any, ...]]]) -> None:
+    if obj is None:
+        raise TypeError("Object mustn't be a None")
+    if not isinstance(obj, Node):
+        raise TypeError(f"Wrong type of object ({type(obj).__name__}. It must be Node)")
+    n = len(params)
+    for m, param_list in schedule.items():
+        if m <= 0:
+            pass
+        if m != len(param_list):
+            pass
+        if n == m:
+            for param, param_matching in zip(params, param_list):
+                if isinstance(param_matching, Tuple):
+                    name, val_type = param_matching
+                    if isinstance(val_type, Type):
+                        if isinstance(param, val_type):
+                            setattr(obj, name, param)
+                        else:
+                            pass
+                    else:
+                        pass
+                else:
+                    pass
+            break
+
+
 class Stage(Node):
-    def __init__(self, label: str, *args, **kwargs) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.label = label
+        self.label = None
+        self.schedule = { 0: [], 1: [("label", str)] }
+        match_params(self, self.params, self.schedule)
 
     def compile(self) -> None:
-        self.compile_subnodes()
+        def hook(n):
+            n.parent = self.parent
+        self.compile_subnodes(hook)
 
 
 class Provider(Node):
-    def __init__(self, installer: Callable, updater: str, get_installed: str, batch_size: int = 6, *args, **kwargs) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.installer = installer
-        self.get_installed = get_installed
-        self.updater = updater
-        self.batch_size = batch_size
+        self.installer = None
+        self.get_installed = None
+        self.updater = None
+        self.batch_size = 6
+        self.schedule = {
+            3: [("installer", Callable), ("updater", str), ("get_installed", str)],
+            4: [("installer", Callable), ("updater", str), ("get_installed", str), ("batch_size", int)]
+        }
+        match_params(self, self.params, self.schedule)
+
+        if not (self.installer or self.get_installed or self.updater):
+            raise TypeError("Error")
+
         self.list_of_pkgs = []
 
     def pkgs(self, pkgs_list: List[str]):
@@ -98,7 +141,9 @@ class Provider(Node):
 class Cmd(Node):
     def __init__(self, commands: List[str], *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.commands = commands
+        self.commands = []
+        self.schedule = { 1: [("commands", list)] }
+        match_params(self, self.params, self.schedule)
 
     def compile(self) -> None:
         for cmd in self.commands:
@@ -108,9 +153,10 @@ class Cmd(Node):
 
 class Fork(Node):
     def __init__(self, rule: bool, optionA: Union[Tuple[Node, ...], Node], optionB: Union[Tuple[Node, ...], Node]) -> None:
-        self.nodes = optionA if rule else optionB
-        if not isinstance(self.nodes, Tuple):
-            self.nodes = (self.nodes,)
+        args = optionA if rule else optionB
+        if not isinstance(args, Tuple):
+            args = (args,)
+        super().__init__(*args, **{})
 
     def compile(self) -> None:
         def hook(n):
@@ -119,16 +165,24 @@ class Fork(Node):
 
 
 class Tree(Node):
-    def __init__(self, root: Union[Path, str], target_root: Union[Path, str] = "", *args, **kwargs) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        if isinstance(target_root, Node):
-            args = (target_root, *args)
-            target_root = ""
-        self.root = p(root)
-        if target_root != "":
-            self.target_root = p(target_root)
-        else:
+        self.root = None
+        self.target_root = None
+
+        self.schedule = {
+            1: [("root", str)],
+            2: [("root", str), ("target_root", str)]
+        }
+
+        match_params(self, self.params, self.schedule)
+
+        if self.target_root is None:
             self.target_root = self.root
+        if not (self.root or self.target_root):
+            raise TypeError("Error")
+        self.root = p(self.root)
+        self.target_root = p(self.target_root)
 
     def compile(self) -> None:
         if isinstance(self.parent, Tree):
@@ -148,10 +202,22 @@ def check_file_and_delete(path: Path) -> None:
 
 
 class Link(Node):
-    def __init__(self, source: Union[Path, str], target: Union[Path, str] = "", *args, **kwargs) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.source = p(source)
-        self.target = p(target) if target != "" else self.source
+        self.source = None
+        self.target = None
+
+        self.schedule = {
+            1: [("source", str)],
+            2: [("source", str), ("target", str)]
+        }
+
+        match_params(self, self.params, self.schedule)
+
+        if self.target is None:
+            self.target = self.source
+        if not (self.source or self.target):
+            raise TypeError("Error")
 
         self.action_label = "link"
 
@@ -208,8 +274,8 @@ class Link(Node):
 
 
 class Copy(Link):
-    def __init__(self, source: Union[Path, str], target: Union[Path, str] = "", *args, **kwargs) -> None:
-        super().__init__(source, target, *args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         self.action_label = "copy"
 
         def action(source, target):
