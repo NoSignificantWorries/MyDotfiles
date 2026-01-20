@@ -72,8 +72,8 @@ alias gp = git push
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 
-atuin init nu | save -f ~/.local/share/atuin.nu
-source ~/.local/share/atuin/init.nu
-zoxide init nushell | save -f ~/.zoxide.nu
-source ~/.zoxide.nu
+# atuin init nu | save -f ~/.config/nushell/.atuin.nu
+source ~/.config/nushell/.atuin.nu
+# zoxide init nushell | save -f ~/.config/nushell/.zoxide.nu
+source ~/.config/nushell/.zoxide.nu
 

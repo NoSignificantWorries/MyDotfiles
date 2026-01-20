@@ -23,8 +23,6 @@ def check_file_and_delete(path: Path) -> None:
             shutil.rmtree(path)
         else:
             path.unlink()
-    else:
-        raise FileNotFoundError("File not found")
 
 def prepare_path(path: Path) -> Path:
     path = path.expanduser()
@@ -35,7 +33,7 @@ def run_link(src: Path, dst: Path):
     src = prepare_path(src)
     dst = prepare_path(dst)
     check_file_and_delete(dst)
-    check_file_and_delete(dst.parent)
+    # check_file_and_delete(dst.parent)
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.symlink_to(src)
 
@@ -44,7 +42,7 @@ def run_copy(src: Path, dst: Path):
     src = prepare_path(src)
     dst = prepare_path(dst)
     check_file_and_delete(dst)
-    check_file_and_delete(dst.parent)
+    # check_file_and_delete(dst.parent)
     dst.parent.mkdir(parents=True, exist_ok=True)
     src.copy(dst)
 
