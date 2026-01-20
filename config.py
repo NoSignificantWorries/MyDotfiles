@@ -206,11 +206,13 @@ config = Stage(("Config",), [
                     Tree(("widgets",), [
                         Tree(("bar",), [
                             Tree(("scripts",), [
-                                Link("brightness_update.sh"),
-                                Link("micro_update.sh"),
-                                Link("volume_update.sh"),
+                                Link("brightness_updater.sh"),
+                                Link("micro_updater.sh"),
+                                Link("volume_updater.sh"),
                                 Link("system.py"),
                                 Link("data.py"),
+                                Link("weather.py"),
+                                Link("api.key"),
                             ]),
                             Link("eww.scss"),
                             Link("eww.yuck"),

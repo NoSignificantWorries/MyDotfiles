@@ -4,6 +4,7 @@
 (defvar sound-control-opened false)
 (defvar datetime-control-opened false)
 (defvar sys-control-opened false)
+(defvar weather-data-opened false)
 
 (defvar volume-toggled false)
 
@@ -49,6 +50,8 @@
 (defpoll sysinfo :interval "2s" `~/.config/eww/widgets/bar/scripts/system.py`)
 ;; workspaces
 (defvar workspaces-json `[]`)
+;; weather
+(defpoll weather-info :interval "2m" `~/.config/eww/widgets/bar/scripts/weather.py`)
 
 
 ;;#######################
@@ -141,28 +144,28 @@
 )
 
 (defwidget datetime []
-    (eventbox
-      :onrightclick "eww ${datetime-control-opened ? 'close' : 'open'} -c ${eww} datetime-control-window | eww update -c ${eww} datetime-control-opened=${!datetime-control-opened}"
+  (eventbox
+    :onrightclick "eww ${datetime-control-opened ? 'close' : 'open'} -c ${eww} datetime-control-window | eww update -c ${eww} datetime-control-opened=${!datetime-control-opened}"
+    (box
+      :orientation "v"
+      :space-evenly false
+      :spacing 4
       (box
+        :class "time-block"
         :orientation "v"
         :space-evenly false
-        :spacing 4
-        (box
-          :class "time-block"
-          :orientation "v"
-          :space-evenly false
-          (label :class "time" :text {h})
-          (label :class "time" :text {m})
-        )
-        (box
-          :class "date-block"
-          :orientation "v"
-          :space-evenly false
-          (label :class "day" :text {day_name})
-          (label :class "date" :text "${day}/${month}/${year}")
-        )
+        (label :class "time" :text {h})
+        (label :class "time" :text {m})
+      )
+      (box
+        :class "date-block"
+        :orientation "v"
+        :space-evenly false
+        (label :class "day" :text {day_name})
+        (label :class "date" :text "${day}/${month}/${year}")
       )
     )
+  )
 )
 
 
@@ -235,7 +238,35 @@
       :class "temp"
       :onclick ""
       :style "color: ${sysinfo.temp.color}"
-      "${round(sysinfo.temp.val, 0)}󰔄"
+      "${sysinfo.temp.icon} ${round(sysinfo.temp.val, 0)}󰔄"
+    )
+  )
+)
+
+(defwidget weather []
+  (eventbox
+    :onrightclick "eww ${weather-data-opened ? 'close' : 'open'} -c ${eww} weather-data-window | eww update -c ${eww} weather-data-opened=${!weather-data-opened}"
+    (box
+      :orientation "v"
+      :class "weather"
+      :spacing 2
+      :space-evenly false
+      :visible {weather-info.data}
+      (box
+        :class "weather-icon"
+        :orientation "v"
+        :space-evenly false
+        (label :class "icon" :text "${weather-info.icon}")
+        (label :class "label" :text "${weather-info.label}")
+      )
+      (box
+        :class "weather-data"
+        :orientation "v"
+        :space-evenly false
+        (label :class "temp" :text "${weather-info.temp.real.i} ${round(weather-info.temp.real.t, 0)}󰔄")
+        (label :class "temp" :text "${weather-info.temp.feels.i} ${round(weather-info.temp.feels.t, 0)}󰔄")
+        (label :class "speed" :text " ${weather-info.wind.speed}m/s")
+      )
     )
   )
 )
@@ -251,6 +282,16 @@
     (eventbox
       :onrightclick "eww ${sys-control-opened ? 'close' : 'open'} -c ${eww} sys-control-window | eww update -c ${eww} sys-control-opened=${!sys-control-opened}"
       (system)
+    )
+    (revealer
+        :transition "slidup"
+        :duration 300
+        :reveal {weather-info.data}
+      (box
+        :orientation "v"
+        :space-evenly false
+        (weather)
+      )
     )
   )
 )
@@ -432,7 +473,7 @@
       :space-evenly false
       :halign "fill"
       (label :class "time" :text " ${h}:${m}" :hexpand true)
-(label :class "day" :text " ${day_name_full}" :hexpand true)
+      (label :class "day" :text " ${day_name_full}" :hexpand true)
       (label :class "date" :text " ${day}/${month}/${year}" :hexpand true)
     )
     (box
@@ -573,6 +614,34 @@
   (eventbox
     :onhoverlost "eww close -c ${eww} sys-control-window | eww update -c ${eww} sys-control-opened=false"
     (sys-control-group)
+  )
+)
+
+
+;;##########################
+;;##    WEATHER WINDOW    ##
+;;##########################
+(defwidget weather-data-group []
+  (box
+    :orientation "v"
+    :space-evenly false
+    (label :class "content" :text "weather")
+  )
+)
+
+(defwindow weather-data-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "bar"
+  :geometry (geometry
+    :y "5px"
+    :x "5px"
+    :anchor "right bottom"
+  )
+  :resizable false
+  (eventbox
+    :onhoverlost "eww close -c ${eww} weather-data-window | eww update -c ${eww} weather-data-opened=false"
+    (weather-data-group)
   )
 )
 

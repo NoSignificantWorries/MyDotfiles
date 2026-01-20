@@ -145,6 +145,33 @@
     }
   }
 
+  .weather {
+    @include  block-style();
+
+    .weather-icon {
+    }
+
+    .icon {
+      @include special-font($color: colors.$sky, $size: 16pt);
+    }
+    .label {
+      @include special-font($color: colors.$sky, $weight: bold, $size: 11pt);
+    }
+
+    .weather-data {
+      margin-left: 6px;
+      margin-right: 6px;
+    }
+
+    .temp {
+      @include special-font($color: colors.$peach, $size: 9pt);
+    }
+    .speed {
+      @include special-font($color: colors.$lavender, $size: 9pt);
+    }
+
+  }
+
   .sound {
     @include block-style();
   }
@@ -375,6 +402,13 @@
     background-color: colors.$crust;
     border-radius: 10px;
     margin-bottom: 6px;
+  }
+}
+
+
+.weather-data-window {
+  .content {
+    @include block-style();
   }
 }
 
