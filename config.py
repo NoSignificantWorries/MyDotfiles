@@ -209,6 +209,7 @@ config = Stage(("Config",), [
                                 Link("brightness_updater.sh"),
                                 Link("micro_updater.sh"),
                                 Link("volume_updater.sh"),
+                                Link("battary_data.sh"),
                                 Link("system.py"),
                                 Link("data.py"),
                                 Link("weather.py"),
