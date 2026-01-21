@@ -22,7 +22,8 @@
 ;; scripts
 (defvar kb_layout "N/A")
 ;; battery
-(defpoll bat :interval "1m" `~/.config/eww/widgets/bar/scripts/battary_data.py`)
+(defpoll bat :interval "30s" `~/.config/eww/widgets/bar/scripts/battary_data.sh`)
+;; (defvar bat "n/a")
 (defvar bat-icon "󱉝")
 (defvar bat-color "#ff0000")
 (defvar bat-time "N/A")
@@ -133,7 +134,7 @@
 
 (defwidget battery []
   (eventbox
-    :onhover "eww open -c ${eww} bat-control-window | ${eww}/scripts/battary_data.sh update"
+    :onhover "eww open -c ${eww} bat-control-window | ${eww}/scripts/battary_data.sh"
     :onhoverlost "eww close -c ${eww} bat-control-window"
     (box
       :class "bat-block"
@@ -668,9 +669,18 @@
       :hexpand true
       :halign "fill"
       :spacing 4
-      (label :class "pressure" :text " ${weather-info.pressure}hPa" :hexpand true)
+      (label :class "pressure" :text " ${weather-info.pressure} hPa" :hexpand true)
       (label :class "humidity" :text " ${weather-info.humidity}%" :hexpand true)
-      (label :class "visibility" :text "󰣰 ${weather-info.visibility}km" :hexpand true)
+      (label :class "visibility" :text "󰣰 ${weather-info.visibility} km" :hexpand true)
+    )
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (label :class "sunrise" :text " ${weather-info.sun.rise}" :hexpand true)
+      (label :class "sunset" :text " ${weather-info.sun.set}" :hexpand true)
     )
   )
 )

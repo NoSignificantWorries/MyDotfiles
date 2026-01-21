@@ -37,22 +37,20 @@ ICON="${BAT_ICONS_NORMAL[${idx}]}"
 if [ "$STATE" = "Full" ]; then
   TIME="Full"
 else
-  HOURS=$(echo "$DATA" | grep -oP '\K\d{2}(?=:)' | head -1)
-  MINUTES=$(echo "$DATA" | grep -oP '\K\d{2}(?=:\d{2} remaining)' | head -1)
+  time_str=$(echo "$DATA" | grep -oP '\d{2}:\d{2}:\d{2}')
+  H=$(echo "$time_str" | cut -d: -f1)
+  M=$(echo "$time_str" | cut -d: -f2)
   if [ "$STATE" = "Charging" ]; then
-    TIME="${HOURS}h ${MINUTES}m to full"
+    TIME="${H}h ${M}m to full"
     ICON="${BAT_ICONS_CHARGING[${idx}]}"
   else
-    TIME="${HOURS}h ${MINUTES}m to empty"
+    TIME="${H}h ${M}m to empty"
   fi
 fi
 
 eww update -c "$eww" bat-time="$TIME"
 eww update -c "$eww" bat-icon="$ICON"
 eww update -c "$eww" bat-color="${BAT_COLORS[${idx}]}"
-if [ -n "$1" ]; then
-  eww update -c "$eww" bat="$PERCENT"
-else
-  echo "$PERCENT"
-fi
+eww update -c "$eww" bat="$PERCENT"
+echo "$PERCENT"
 

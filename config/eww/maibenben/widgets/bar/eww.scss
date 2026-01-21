@@ -412,7 +412,7 @@
   }
 
   .icon {
-    @include special-font($color: colors.$sky, $size: 18pt);
+    @include special-font($color: colors.$sky, $size: 18pt, $weight: bold);
   }
 
   .label {
@@ -457,6 +457,20 @@
   .visibility {
     @include block-style();
     @include special-font($color: colors.$green, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .sunrise {
+    @include block-style();
+    @include special-font($color: colors.$pink, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .sunset {
+    @include block-style();
+    @include special-font($color: colors.$red, $weight: bold);
     padding-left: 5px;
     padding-right: 5px;
   }
