@@ -407,8 +407,58 @@
 
 
 .weather-data-window {
-  .content {
+  .weather {
     @include block-style();
+  }
+
+  .icon {
+    @include special-font($color: colors.$sky, $size: 18pt);
+  }
+
+  .label {
+    @include special-font($color: colors.$sky, $weight: bold, $size: 10pt);
+  }
+
+  .temp-real {
+    @include block-style();
+    @include special-font($color: colors.$peach, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .wind {
+    @include block-style();
+    @include special-font($color: colors.$lavender, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .temp-feels {
+    @include block-style();
+    @include special-font($color: colors.$yellow, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .pressure {
+    @include block-style();
+    @include special-font($color: colors.$flamingo, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .humidity {
+    @include block-style();
+    @include special-font($color: colors.$blue, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .visibility {
+    @include block-style();
+    @include special-font($color: colors.$green, $weight: bold);
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 

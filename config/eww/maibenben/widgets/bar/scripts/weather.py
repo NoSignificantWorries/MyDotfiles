@@ -110,6 +110,13 @@ def get_weather_icon(weather_id, icon_code):
     return ICONS[time_of_day].get("cloudy", "")
 
 
+def wind_degrees_to_direction(degrees):
+    directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+                  "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+    index = round(degrees % 360 / 22.5)
+    return directions[index % 16]
+
+
 response = requests.get(URL)
 
 if response.status_code == 200:
@@ -124,6 +131,9 @@ if response.status_code == 200:
     tr_icon = match_icon(temp_real)
     temp_feels = round(data["main"]["feels_like"], 1)
     tf_icon = match_icon(temp_feels)
+
+    orient = data["wind"]["deg"] if "wind" in data and "deg" in data["wind"] else 0
+    orient = wind_degrees_to_direction(orient)
 
     weather = {
         "data": True,
@@ -144,9 +154,9 @@ if response.status_code == 200:
         "humidity": data["main"]["humidity"],
         "wind": {
             "speed": data["wind"]["speed"] if "wind" in data else 0,
-            "orient": data["wind"]["deg"] if "wind" in data and "deg" in data["wind"] else 0
+            "orient": orient
         },
-        "visibility": data.get("visibility", 10000) / 1000,
+        "visibility": round(data.get("visibility", 10000) / 1000, 1),
         "sun": {
             "rise": datetime.fromtimestamp(data["sys"]["sunrise"]).strftime("%H:%M"),
             "set": datetime.fromtimestamp(data["sys"]["sunset"]).strftime("%H:%M")

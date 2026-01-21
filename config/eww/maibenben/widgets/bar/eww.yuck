@@ -22,9 +22,10 @@
 ;; scripts
 (defvar kb_layout "N/A")
 ;; battery
-(defvar bat-status "󱉝 ?%")
+(defpoll bat :interval "1m" `~/.config/eww/widgets/bar/scripts/battary_data.py`)
+(defvar bat-icon "󱉝")
 (defvar bat-color "#ff0000")
-(defvar bat-time "00m 00h")
+(defvar bat-time "N/A")
 ;; sound
 (defpoll vol :interval "3s" `~/.config/eww/widgets/bar/scripts/volume_updater.sh`)
 (defvar vol-mute true)
@@ -132,13 +133,13 @@
 
 (defwidget battery []
   (eventbox
-    :onhover "eww open -c ${eww} bat-control-window"
+    :onhover "eww open -c ${eww} bat-control-window | ${eww}/scripts/battary_data.sh update"
     :onhoverlost "eww close -c ${eww} bat-control-window"
     (box
       :class "bat-block"
       :orientation "v"
       :space-evenly false
-      (label :class "bat-status" :text {bat-status} :style "color: ${bat-color};")
+      (label :class "bat-status" :text "${bat-icon} ${bat}%" :style "color: ${bat-color};")
     )
   )
 )
@@ -461,6 +462,9 @@
 )
 
 
+;;###################################
+;;##    DATETIME CONTROL WINDOW    ##
+;;###################################
 (defwidget datetime-control-group []
   (box
     :orientation "v"
@@ -500,9 +504,6 @@
 )
 
 
-;;###################################
-;;##    DATETIME CONTROL WINDOW    ##
-;;###################################
 (defwindow datetime-control-window
   :monitor 0
   :windowtype "normal"
@@ -625,7 +626,52 @@
   (box
     :orientation "v"
     :space-evenly false
-    (label :class "content" :text "weather")
+    :spacing 4
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (box
+        :class "weather"
+        :orientation "v"
+        :space-evenly false
+        :hexpand true
+        :halign "fill"
+        :spacing 4
+        (label :class "icon" :text "${weather-info.icon}" :hexpand true)
+        (label :class "label" :text "${weather-info.label}" :hexpand true)
+      )
+      (box
+        :class "main-info"
+        :orientation "v"
+        :space-evenly false
+        :hexpand true
+        :halign "fill"
+        :spacing 4
+        (label :class "wind" :text " ${weather-info.wind.speed}m/s ${weather-info.wind.orient}" :hexpand true)
+        (label :class "temp-real" :text "${weather-info.temp.real.i} ${weather-info.temp.real.t}󰔄" :hexpand true)
+      )
+    )
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (label :class "temp-feels" :text "Feels like: ${weather-info.temp.feels.i} ${weather-info.temp.feels.t}󰔄" :hexpand true)
+    )
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (label :class "pressure" :text " ${weather-info.pressure}hPa" :hexpand true)
+      (label :class "humidity" :text " ${weather-info.humidity}%" :hexpand true)
+      (label :class "visibility" :text "󰣰 ${weather-info.visibility}km" :hexpand true)
+    )
   )
 )
 
@@ -634,7 +680,7 @@
   :windowtype "normal"
   :namespace "bar"
   :geometry (geometry
-    :y "5px"
+    :y "60px"
     :x "5px"
     :anchor "right bottom"
   )

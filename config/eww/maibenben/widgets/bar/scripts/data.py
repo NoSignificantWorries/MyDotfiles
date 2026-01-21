@@ -25,20 +25,6 @@ with open(pid_file, 'w') as f:
 
 CONFIG = Path("~/.config/eww/widgets/bar").expanduser()
 
-BAT_ICONS_CHARGING = ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂋", "󰂅"]
-BAT_ICONS_NORMAL = ["󱃍", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
-BAT_COLORS = [
-    "#ed8796",
-    "#ea909e",
-    "#e799a6",
-    "#e3a3af",
-    "#e0acb8",
-    "#d0b7a2",
-    "#c0c28c",
-    "#b1cd76",
-    "#a1d860",
-    "#91e34a"
-]
 
 KB_LAYOUTS = {
     "Russian": "RU 🇷🇺",
@@ -68,33 +54,6 @@ class CmdRunner:
             return text
         except:
             return "N/A"
-
-
-async def bat_loop():
-    while True:
-        bat = await CmdRunner.get_output("acpi -b")
-
-        bat = bat.split(", ")
-        status = "Charging" in bat[0]
-        percent = int(bat[1][:-1])
-        if len(bat) > 2:
-            time = bat[-1].split(" ")[0].split(":")
-            print(bat)
-            H, M = time[0], time[1]
-            if status:
-                time = f"{H}h {M}m to full"
-            else:
-                time = f"{H}h {M}m to empty"
-        else:
-            time = "Full"
-        idx = round(percent / 100 * 9)
-        bat_color = BAT_COLORS[idx]
-        bat_icon = BAT_ICONS_CHARGING[idx] if status else BAT_ICONS_NORMAL[idx]
-        EwwUpdater.update("bat-status", f"{bat_icon} {percent}%")
-        EwwUpdater.update("bat-color", bat_color)
-        EwwUpdater.update("bat-time", time)
-
-        await asyncio.sleep(30)
 
 
 def parse_worspaces(ws, workspaces, active_workspaces):
@@ -191,8 +150,7 @@ async def hyprland_events():
 
 
 async def main():
-    tasks = [asyncio.create_task(hyprland_events()),
-             asyncio.create_task(bat_loop())]
+    tasks = [asyncio.create_task(hyprland_events())]
     await asyncio.gather(*tasks)
 
 
