@@ -1,0 +1,164 @@
+@use "/home/dmitry/.config/eww/colors/catppuccin-mocha.scss" as colors;
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 11pt;
+    color: colors.$text;
+}
+
+@mixin special-font($color: colors.$text, $family: "Iosevka", $weight: normal, $size: 11pt) {
+  color: $color;
+  font-family: $family;
+  font-weight: $weight;
+  font-size: $size;
+}
+
+.panel-window {
+  background: transparent;
+
+  /* .left {
+    background: #0000ff;
+  }
+  .center {
+    background: #ff0000;
+  }
+  .right {
+    background: #00ff00;
+  } */
+  .menu-icon {
+    font-weight: bold;
+    font-size: 13pt;
+  }
+  .menu-button {
+    border-radius: 3px;
+
+    padding-left: 6px;
+    padding-right: 8px;
+
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    transition: all 0.1s ease;
+  }
+  .menu-button:hover {
+    background: rgba(colors.$crust, 0.6);
+  }
+
+  .activebtn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 8px;
+
+    border-radius: 50%;
+    transition: all 0.1s ease;
+  }
+  .activebtn:hover {
+    background: rgba(colors.$crust, 0.6);
+  }
+  .normalbtn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 8px;
+
+    color: colors.$surface2;
+    border-radius: 50%;
+    transition: all 0.1s ease;
+  }
+  .normalbtn:hover {
+    background: rgba(colors.$crust, 0.6);
+  }
+  .fullbtn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 8px;
+
+    color: colors.$subtext0;
+    border-radius: 50%;
+    transition: all 0.1s ease;
+  }
+  .fullbtn:hover {
+    background: rgba(colors.$crust, 0.6);
+  }
+
+  .day {
+  }
+  .date {
+  }
+  .number {
+  }
+  .time {
+  }
+
+  .noti-icon {
+    font-weight: bold;
+    font-size: 13pt;
+  }
+  .noti-button {
+    border-radius: 3px;
+
+    padding-left: 6px;
+    padding-right: 11px;
+
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    transition: all 0.1s ease;
+  }
+  .noti-button:hover {
+    background: rgba(colors.$crust, 0.6);
+  }
+
+
+  .tray {
+    menu {
+      background: rgba(colors.$base, 0.4);
+      color: colors.$text;
+      border-radius: 8px;
+      padding: 10px 5px 10px 5px;
+    }
+    menuitem {
+      color: colors.$text;
+      border-radius: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+      transition: all 0.1s ease;
+    }
+    menuitem:hover {
+      background: rgba(colors.$crust, 0.6);
+      color: colors.$blue;
+    }
+  }
+
+  .tweak-icon {
+  }
+  .tweak-button {
+    border-radius: 3px;
+
+    padding-left: 6px;
+    padding-right: 10px;
+
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    transition: all 0.1s ease;
+  }
+  .tweak-button:hover {
+    background: rgba(colors.$crust, 0.6);
+  }
+
+  .bat-time {
+    margin-right: 8px;
+    font-size: 9pt;
+  }
+}
+
+.panel {
+  background: rgba(colors.$base, 0.3);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+

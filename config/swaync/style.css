@@ -1,4 +1,6 @@
-@define-color cc-bg rgba(30, 30, 46, 0.92);
+@define-color cc-bg rgba(30, 30, 46, 0.6);
+@define-color dark-text #a6adc8;
+@define-color dark-bg rgba(17, 17, 27, 0.6);
 
 @define-color noti-border-color #dcd7ba;
 @define-color noti-bg #1e1e2e;
@@ -60,7 +62,7 @@
 .notification {
   background-color: @cc-bg;
   border-radius: 6px;
-  border: 1px solid @border-color;
+  /* border: 1px solid @border-color; */
   margin: 3px -2px 3px 0;
 }
 
@@ -88,9 +90,9 @@
 }
 
 .notification-action {
-  background: @cc-bg;
+  background: @dark-bg;
   border-radius: 8px;
-  border: 1px solid @border-color;
+  /* border: 1px solid @border-color; */
 }
 
 .notification-default-action:hover,
@@ -100,24 +102,24 @@
 }
 
 .inline-reply-entry {
-  background: @noti-bg-darker;
+  background: @dark-bg;
   color: @text-color;
   caret-color: @text-color;
-  border: 1px solid @noti-border-color;
+  /* border: 1px solid @noti-border-color; */
 }
 
 .inline-reply-button {
   margin-top: 4px;
   margin-left: 4px;
-  background: @noti-bg;
-  border: 1px solid @noti-border-color;
+  background: @dark-bg;
+  /* border: 1px solid @noti-border-color; */
   color: @text-color;
 }
 
 .inline-reply-button:disabled {
   background: transparent;
   color: @text-color-disabled;
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
 }
 
 .inline-reply-button:hover {
@@ -128,7 +130,7 @@
   font-size: 14pt;
   font-weight: 700;
   background: transparent;
-  color: @border-color;
+  color: @dark-text;
   text-shadow: none;
 }
 
@@ -151,7 +153,7 @@
 
 .control-center {
   background: @cc-bg;
-  border: 1px solid @border-color;
+  /* border: 1px solid @border-color; */
   border-radius: 8px;
 }
 
@@ -190,10 +192,10 @@
 .widget-buttons-grid>flowbox>flowboxchild>button {
   margin: 3px;
   padding: 4px 10px;
-  background: @cc-bg;
+  background: @dark-bg;
   color: @text-color;
   border-radius: 6px;
-  border: 1px solid @border-color;
+  /* border: 1px solid @border-color; */
   transition: background-color 0.15s ease-in-out;
 }
 
@@ -205,7 +207,7 @@
 .widget-buttons-grid>flowbox>flowboxchild>button:checked {
   background: @green-base;
   color: @cc-bg;
-  border: 1px solid @green-base;
+  /* border: 1px solid @green-base; */
 }
 
 .widget-mpris {

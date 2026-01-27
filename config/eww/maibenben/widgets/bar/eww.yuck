@@ -23,7 +23,6 @@
 (defvar kb_layout "N/A")
 ;; battery
 (defpoll bat :interval "30s" `~/.config/eww/widgets/bar/scripts/battary_data.sh`)
-;; (defvar bat "n/a")
 (defvar bat-icon "󱉝")
 (defvar bat-color "#ff0000")
 (defvar bat-time "N/A")

@@ -1,0 +1,177 @@
+(defvar eww "~/.config/eww/widgets/panel")
+
+;; datetime
+(defpoll h :interval "60s" `date +%H`)
+(defpoll m :interval "60s" `date +%M`)
+(defpoll day :interval "60s" `date +%d`)
+(defpoll month :interval "60s" `date +%m`)
+(defpoll month_name :interval "60s" `date +%b`)
+(defpoll year :interval "60s" `date +%Y`)
+(defpoll day_name :interval "60s" `date +%a`)
+(defpoll day_name_full :interval "60s" :run-while {datetime-control-opened} `date +%A`)
+(defpoll time_shift :interval "60s" :run-while {datetime-control-opened} `date +%:z`)
+(defpoll timezone :interval "60s" :run-while {datetime-control-opened} `timedatectl show --property=Timezone --value`)
+;; battery
+(defpoll bat :interval "30s" `~/.config/eww/widgets/panel/scripts/battary_data.sh`)
+(defvar bat-icon "󱉝")
+(defvar bat-time "N/A")
+(defvar battery-show-time false)
+;; layout
+(defvar kb_layout "N/A")
+;; workspaces
+(defvar workspaces-json `[]`)
+
+
+(defwidget menu-button []
+  (button
+    :class "menu-button"
+    :onclick ""
+    (label :class "menu-icon" :text "")
+  )
+)
+
+
+(defwidget workspaces []
+  (box
+    :class "workspaces"
+    :orientation "h"
+    :space-evenly false
+    ;; :valign "center"
+    (for wsp in {workspaces-json.data}
+      (button
+        :class {wsp.active ? "activebtn" : (wsp.occupied ? "fullbtn" : "normalbtn")}
+        :onclick `${wsp.cmd}`
+        {wsp.active ? "" : (wsp.occupied ? "" : "")}
+      )
+    )
+  )
+)
+
+(defwidget datetime []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :spacing 7
+    (box
+      :orientation "h"
+      :space-evenly false
+      :spacing 4
+      (label :class "day" :text "${day_name}")
+      (label :class "date" :text "${month_name}")
+      (label :class "number" :text "${day}")
+    )
+    (label :class "time" :text "${h}:${m}")
+  )
+)
+
+(defwidget notifications []
+  (button
+    :class "noti-button"
+    :onclick "swaync-client --open-panel"
+    (label :class "noti-icon" :text "")
+  )
+)
+
+(defwidget tweaks []
+  (button
+    :class "tweak-button"
+    :onclick ""
+    (label :class "tweak-icon" :text "")
+  )
+)
+
+(defwidget battery []
+  (eventbox
+    :onhover "eww update -c ${eww} battery-show-time=true | ${eww}/scripts/battary_data.sh"
+    :onhoverlost "eww update -c ${eww} battery-show-time=false"
+    (box
+      :orientation "h"
+      :space-evenly false
+      (revealer
+        :transition "slideleft"
+        :duration 300
+        :reveal {battery-show-time}
+        (label :class "bat-time" :text {bat-time})
+      )
+      (box
+        :orientation "h"
+        :hexpand true
+        :halign "fill"
+        :space-evenly false
+        :spacing 3
+        (label :text "${bat-icon}")
+        (label :text "${bat}%")
+      )
+    )
+  )
+)
+
+(defwidget left-group []
+  (box
+    :class "left"
+    :orientation "h"
+    :space-evenly false
+    :spacing 10
+    :halign "start"
+    (menu-button)
+    (label :text {kb_layout})
+    (workspaces)
+  )
+)
+(defwidget center-group []
+  (box
+    :class "center"
+    :orientation "h"
+    :space-evenly false
+    :spacing 6
+    :halign "center"
+    (datetime)
+    (notifications)
+  )
+)
+(defwidget right-group []
+  (box
+    :class "right"
+    :orientation "h"
+    :space-evenly false
+    :spacing 10
+    :halign "end"
+    (systray :orientation "h" :class "tray" :icon-size 16 :spacing 6)
+    (tweaks)
+    (battery)
+  )
+)
+
+(defwidget layout []
+  (box
+    :orientation "h"
+    (left-group)
+    (center-group)
+    (right-group)
+  )
+)
+
+;;##########################
+;;##    SIDEBAR WINDOW    ##
+;;##########################
+(defwindow panel-window
+  :exclusive true
+  :monitor 0
+  :windowtype "dock"
+  :namespace "panel"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :width "100%"
+    :height "30px"
+    :anchor "top center"
+  )
+  :resizable false
+  :reserve (struts :side "top" :distance "30")
+  (box
+    :class "panel"
+    :halign "fill"
+    (layout)
+  )
+)
+
