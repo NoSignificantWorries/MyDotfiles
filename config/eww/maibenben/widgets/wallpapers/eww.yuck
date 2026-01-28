@@ -1,0 +1,64 @@
+(defvar eww "~/.config/eww/widgets/wallpapers")
+
+(defpoll img_grid :interval "10s" `~/.config/eww/widgets/wallpapers/main.py`)
+
+
+(defwidget layout []
+  (box
+    :orientation "h"
+    :space-evenly false
+    (scroll
+      :hscroll false
+      :vscroll true
+      (box
+        :orientation "v"
+        :space-evenly false
+        (for row in {img_grid.rows}
+          (box
+            :orientation "h"
+            :halign "center"
+            :valign "center"
+            :space-evenly false
+            (for img in {row}
+              (button
+                :class "btn-${img.name}"
+                :valign "center"
+                :halign "center"
+                :css ".btn-${img.name} { margin: 12px; } .btn-${img.name}:hover { transition: all 0.3s ease; background: #9399b2; border-radius: 8px; padding: 5px; margin: 7px; &:active { background: #313244; } }"
+                :onclick "${eww}/wallpaper_select.sh ${img.from} ${img.tumb} ${img.name} | eww close-all -c ${eww}"
+                (box
+                  :class "img-container"
+                  :orientation "v"
+                  :spacing 6
+                  :space-evenly false
+                  (box :class "img-button" :style "background-image: url('${img.tumb}');")
+                  (label :text "${img.name}")
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+
+(defwindow wallpapers-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "wallpapers"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :width "600px"
+    :height "700px"
+    :anchor "center center"
+  )
+  :resizable false
+  (box
+    :class "wallpapers"
+    (layout)
+  )
+)
+

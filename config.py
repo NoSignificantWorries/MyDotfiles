@@ -204,7 +204,7 @@ config = Stage(("Config",), [
                 Tree((f"eww/{version}", "eww"), [
                     Link("colors/catppuccin-mocha.scss"),
                     Tree(("widgets",), [
-                        Tree(("bar",), [
+                        Tree(("panel",), [
                             Tree(("scripts",), [
                                 Link("brightness_updater.sh"),
                                 Link("micro_updater.sh"),

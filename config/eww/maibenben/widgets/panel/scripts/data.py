@@ -7,7 +7,7 @@ import subprocess
 from pathlib import Path
 
 
-pid_file = os.path.expanduser("~/.config/eww/widgets/panel/scripts/data.pid")
+pid_file = Path("~/.config/eww/widgets/panel/scripts/data.pid").expanduser()
 
 def cleanup(signum, frame):
     print("Получен SIGTERM, завершаем...")

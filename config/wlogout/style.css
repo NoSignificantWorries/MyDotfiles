@@ -23,7 +23,7 @@ button {
 }
 
 button:focus {
-  border: solid @lavender 2px;
+  border: solid @text 2px;
   background-size: 30%;
 }
 
@@ -32,8 +32,8 @@ button:hover {
   border-radius: 30px;
   animation: gradient_f 20s ease-in infinite;
   transition: all 0.3s cubic-bezier(.55,0.0,.28,1.682);
-  color: @mauve;
-  border: solid @mauve 3px;
+  /* color: @mauve; */
+  /* border: solid @mauve 3px; */
 }
 
 button:hover#lock {

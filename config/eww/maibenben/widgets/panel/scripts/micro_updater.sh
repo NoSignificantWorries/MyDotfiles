@@ -3,7 +3,7 @@
 MIC_ICONS=( "" "" )
 VOL_COLORS=( "#6c7086" "#00df96" )
 
-eww="$HOME/.config/eww/widgets/bar"
+eww="$HOME/.config/eww/widgets/panel"
 
 if [ -n "$1" ]; then
   case "$1" in

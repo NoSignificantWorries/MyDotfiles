@@ -66,6 +66,10 @@
   margin: 3px -2px 3px 0;
 }
 
+.notification-image {
+      border-radius: 12px !important;
+}
+
 .close-button {
   background: @red-base;
   color: @cc-bg;

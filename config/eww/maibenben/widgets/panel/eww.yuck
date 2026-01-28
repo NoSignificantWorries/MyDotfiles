@@ -16,12 +16,47 @@
 (defvar bat-icon "󱉝")
 (defvar bat-time "N/A")
 (defvar battery-show-time false)
+;; player
+(defpoll player-listener :interval "2s" `~/.config/eww/widgets/panel/scripts/player_status.sh`)
+(defvar player-status false)
+(defvar playing false)
+(defvar player-loop "None")
+(defvar player-shuffle false)
+(defvar player-all-time 8000000)
+(defpoll player-time-now :interval "1s" :run-while {playing} `playerctl position`)
+(defpoll player-cover :interval "2s" :run-while {player_status} `~/.config/eww/widgets/panel/scripts/player.sh`)
+(defvar player-title "N/A")
+;; nitifications
+(defvar noti-dnd-state false)
+(defpoll noti-listenera :interval "2m" `~/.config/eww/widgets/panel/scripts/swaync_update_dnd.sh`)
+(defpoll noti-count :interval "1s" `swaync-client -c`)
+;; sound
+(defpoll vol :interval "3s" `~/.config/eww/widgets/panel/scripts/volume_updater.sh`)
+(defvar vol-mute true)
+(defvar vol-icon " ")
+(defvar vol-color "#ff0000")
+(defvar vol-update "~/.config/eww/widgets/panel/scripts/volume_updater.sh {}")
+(defvar vol-toggle-mute "~/.config/eww/widgets/panel/scripts/volume_updater.sh toggle")
+;; micro
+(defpoll mic :interval "3s" `~/.config/eww/widgets/panel/scripts/micro_updater.sh`)
+(defvar mic-mute true)
+(defvar mic-icon " ")
+(defvar mic-color "#ff0000")
+(defvar mic-update "~/.config/eww/widgets/panel/scripts/micro_updater.sh {}")
+(defvar mic-toggle-mute "~/.config/eww/widgets/panel/scripts/micro_updater.sh toggle")
+;; brightness
+(defpoll br :interval "3s" `~/.config/eww/widgets/panel/scripts/brightness_updater.sh`)
+(defvar br-icon "󰃚 ")
+(defvar br-update "~/.config/eww/widgets/panel/scripts/brightness_updater.sh {}")
 ;; layout
 (defvar kb_layout "N/A")
 ;; workspaces
 (defvar workspaces-json `[]`)
 
 
+;;#################
+;;##    PANEL    ##
+;;#################
 (defwidget menu-button []
   (button
     :class "menu-button"
@@ -30,13 +65,11 @@
   )
 )
 
-
 (defwidget workspaces []
   (box
     :class "workspaces"
     :orientation "h"
     :space-evenly false
-    ;; :valign "center"
     (for wsp in {workspaces-json.data}
       (button
         :class {wsp.active ? "activebtn" : (wsp.occupied ? "fullbtn" : "normalbtn")}
@@ -48,19 +81,22 @@
 )
 
 (defwidget datetime []
-  (box
-    :orientation "h"
-    :space-evenly false
-    :spacing 7
+  (eventbox
+    :onhover "eww open -c ${eww} datetime-window"
     (box
       :orientation "h"
       :space-evenly false
-      :spacing 4
-      (label :class "day" :text "${day_name}")
-      (label :class "date" :text "${month_name}")
-      (label :class "number" :text "${day}")
+      :spacing 7
+      (box
+        :orientation "h"
+        :space-evenly false
+        :spacing 4
+        (label :class "day" :text "${day_name}")
+        (label :class "date" :text "${month_name}")
+        (label :class "number" :text "${day}")
+      )
+      (label :class "time" :text "${h}:${m}")
     )
-    (label :class "time" :text "${h}:${m}")
   )
 )
 
@@ -68,14 +104,15 @@
   (button
     :class "noti-button"
     :onclick "swaync-client --open-panel"
-    (label :class "noti-icon" :text "")
+    :onrightclick "swaync-client -d | ${eww}/scripts/swaync_update_dnd.sh"
+    (label :class "noti-icon" :text {noti-dnd-state ? (noti-count > 0 ? "" : "") : (noti-count > 0 ? "" : "")})
   )
 )
 
 (defwidget tweaks []
   (button
     :class "tweak-button"
-    :onclick ""
+    :onclick "eww open -c ${eww} control-window"
     (label :class "tweak-icon" :text "")
   )
 )
@@ -98,7 +135,7 @@
         :hexpand true
         :halign "fill"
         :space-evenly false
-        :spacing 3
+        :spacing 5
         (label :text "${bat-icon}")
         (label :text "${bat}%")
       )
@@ -151,9 +188,9 @@
   )
 )
 
-;;##########################
-;;##    SIDEBAR WINDOW    ##
-;;##########################
+;;########################
+;;##    PANEL WINDOW    ##
+;;########################
 (defwindow panel-window
   :exclusive true
   :monitor 0
@@ -175,3 +212,237 @@
   )
 )
 
+
+;;###################
+;;##    CONTROL    ##
+;;###################
+(defwidget custom-slider [class orientation value onchange]
+  (box
+    :class {class}
+    :orientation {orientation}
+    :halign "fill"
+    :space-evenly true
+    (scale
+      :orientation {orientation}
+      :flipped false
+      :value {value}
+      :onchange {onchange}
+      :max 101
+      :min 0
+      :hexpand true
+      :halign "fill"
+    )
+  )
+)
+
+(defwidget brightness []
+  (box
+    :class "brightness"
+    :orientation "v"
+    :spacing 6
+    :space-evenly false
+    (label :text "Brightness" :halign "start")
+    (box
+      :class "brightness-box"
+      :orientation "h"
+      :spacing 3
+      :space-evenly false
+      :halign "fill"
+      (label :text "${br-icon}")
+      (label :text "${br}%")
+      (custom-slider
+        :class "brightness-slider"
+        :orientation "h"
+        :onchange {br-update}
+        :value {br}
+      )
+    )
+  )
+)
+(defwidget sound []
+  (box
+    :class "sound"
+    :orientation "v"
+    :spacing 6
+    :space-evenly false
+    (label :text "Sound" :halign "start")
+    (box
+      :class "speaker-box"
+      :orientation "h"
+      :spacing 8
+      :space-evenly false
+      (button :onclick {vol-toggle-mute} "${vol-icon}")
+      (label :text "${vol}%")
+      (custom-slider
+        :class "speaker-slider"
+        :orientation "h"
+        :onchange {vol-update}
+        :value {vol}
+      )
+    )
+    (box
+      :class "micro-box"
+      :orientation "h"
+      :spacing 6
+      :space-evenly false
+      (button :onclick {mic-toggle-mute} "${mic-icon}")
+      (label :text "${mic}%")
+      (custom-slider
+        :class "micro-slider"
+        :orientation "h"
+        :onchange {mic-update}
+        :value {mic}
+      )
+    )
+  )
+)
+
+(defwidget player-widget []
+  (box
+    :class "player"
+    :orientation "h"
+    :spacing 6
+    :space-evenly false
+    (eventbox
+      :onrightclick "playerctl stop"
+      (box
+        :class "player-image"
+        :orientation "h"
+        :space-evenly false
+        :style "background-image: url('${player-cover}');"
+      )
+    )
+    (box
+      :orientation "v"
+      :spacing 4
+      :space-evenly false
+      (label :class "player-title" :text "${player-title}")
+      (custom-slider
+        :class "player-slider"
+        :orientation "h"
+        :onchange "${eww}/scripts/player_set_time.sh ${player-all-time / 1000000} {}"
+        :value {round(player-time-now / (player-all-time / 1000000) * 100, 0)}
+      )
+      (box
+        :class "player-buttons"
+        :orientation "h"
+        :halign "fill"
+        :space-evenly true
+        (button :class "player-btn"
+          :onclick "playerctl shuffle toggle | ${eww}/scripts/player.sh"
+          {player-shuffle ? "" : "󰒞"}
+        )
+        (button :class "player-btn"
+          :onclick "playerctl previous | ${eww}/scripts/player.sh"
+          ""
+        )
+        (button :class "player-btn"
+          :onclick "playerctl play-pause | ${eww}/scripts/player.sh"
+          {playing ? "" : ""}
+        )
+        (button :class "player-btn"
+          :onclick "playerctl next | ${eww}/scripts/player.sh"
+          ""
+        )
+        (button :class "player-btn"
+          :onclick "${eww}/scripts/player_toggle.sh | ${eww}/scripts/player.sh"
+          {player-loop == "None" ? "󰑗" : (player-loop == "Track" ? "󰑘" : "󰑖")}
+        )
+      )
+    )
+  )
+)
+
+(defwidget control-layout []
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 8
+    (brightness)
+    (sound)
+    (revealer
+      :transition "slidedown"
+      :duration 300
+      :reveal {player-status}
+      (player-widget)
+    )
+  )
+)
+
+;;##########################
+;;##    CONTROL WINDOW    ##
+;;##########################
+(defwindow control-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "panel"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :anchor "top right"
+  )
+  :resizable false
+  (eventbox
+    :onhoverlost "eww close -c ${eww} control-window"
+    (box
+      :class "control"
+      :halign "fill"
+      (control-layout)
+    )
+  )
+)
+
+
+;;####################
+;;##    DATETIME    ##
+;;####################
+(defwidget datetime-layout []
+  (box
+    :orientation "v"
+    :spacing 6
+    :space-evenly false
+    (box
+      :class "timezone-header"
+      :orientation "h"
+      :spacing 4
+      :space-evenly false
+      (label :class "timezone" :text "${timezone}" :hexpand true)
+      (label :class "timeshift" :text "${time_shift}" :hexpand true)
+    )
+    (box
+      :class "cal-box"
+      :orientation "h"
+      :space-evenly false
+      (calendar
+        :class "cal"
+        :day {day}
+        :month {month}
+        :year {year}
+      )
+    )
+  )
+)
+
+
+;;###########################
+;;##    DATETIME WINDOW    ##
+;;###########################
+(defwindow datetime-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "panel"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :anchor "top center"
+  )
+  :resizable false
+  (eventbox
+    :onhoverlost "eww close -c ${eww} datetime-window"
+    (box
+      :class "datetime"
+      :halign "fill"
+      (datetime-layout)
+    )
+  )
+)

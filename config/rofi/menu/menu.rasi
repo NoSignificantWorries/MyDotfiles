@@ -18,18 +18,16 @@ transparency:                "real";
 location:                    south;
 anchor:                      center;
 fullscreen:                  false;
-width:                       600px;
+width:                       800px;
 height:                      600px;
                              x-offset:                    0px;
                              y-offset:                    0px;
 
 enabled:                     true;
-margin:                      0px;
+margin:                      0px 0px 20px 0px;
 padding:                     0px;
-                             border-radius:               30px 30px 0px 0px;
-                             background-color:            white / 10%;
-                             border: 1px solid;
-                             border-color:                @base;
+                             border-radius:               30px;
+                             background-color:            rgba(30, 30, 46, 0.6);
 cursor:                      "default";
 }
 
@@ -56,7 +54,7 @@ padding:                     10px;
                              border-radius:               10px;
                              // border-color:                @overlay0;
                              // border-color:                @mauve;
-                             background-color:            black / 15%;
+                             background-color:            black / 25%;
                              text-color:                  @text;
 children:                    [ "prompt", "entry" ];
 }
@@ -85,7 +83,7 @@ placeholder:                 "Search";
 /*****----- Listview -----*****/
 listview {
 enabled:                     true;
-columns:                     4;
+columns:                     6;
 cycle:                       true;
 dynamic:                     false;
 scrollbar:                   false;
