@@ -1,7 +1,6 @@
 #!/bin/sh
 
 VOL_ICONS=( "" "" "" "" )
-VOL_COLORS=( "#6c7086" "#00df96" )
 
 eww="$HOME/.config/eww/widgets/panel"
 
@@ -21,11 +20,9 @@ muted=$(echo "$out" | grep -c 'MUTED')
 vol=$(echo "$out" | awk '{print $2*100}')
 if [ $muted -gt 0 ]; then
   eww update -c "$eww" vol-mute=true
-  eww update -c "$eww" vol-color=${VOL_COLORS[0]}
   index=0
 else
   eww update -c "$eww" vol-mute=false
-  eww update -c "$eww" vol-color=${VOL_COLORS[1]}
   if [ $vol -eq 0 ]; then
     index=0
   elif [ $vol -le 33 ]; then

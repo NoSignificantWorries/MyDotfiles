@@ -6,7 +6,7 @@ from pathlib import Path
 QUALITY=90
 SIZE=256
 
-ROW_LEN = 4
+ROW_LEN = 2
 IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.webp', '.bmp', '.gif', '.svg'}
 
 

@@ -5,7 +5,7 @@ import requests
 from pathlib import Path
 from datetime import datetime
 
-with open(Path("~/.config/eww/widgets/bar/scripts/api.key").expanduser()) as file:
+with open(Path("~/.config/eww/widgets/panel/scripts/api.key").expanduser()) as file:
     KEY = file.read().strip()
 
 CITY = "Novosibirsk"

@@ -168,6 +168,14 @@
   }
 
   // Battery
+  .bat {}
+  .bat-icon-normal {}
+  .bat-icon-low {
+    color: colors.$peach;
+  }
+  .bat-icon-critical {
+    color: #ee0000;
+  }
   .bat-time {
     margin-right: 8px;
     font-size: 9pt;
@@ -245,6 +253,15 @@
     min-width: 200px;
   }
 
+  // Weather
+  .weather {
+    background: rgba(colors.$crust, 0.6);
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: 8px;
+    border-radius: 10px;
+  }
+
   // Player
   .player {
     background: rgba(colors.$crust, 0.6);
@@ -289,7 +306,7 @@
   background: rgba(colors.$base, 0.6);
   border-radius: 10px;
   margin: 10px;
-  padding: 4px;
+  padding: 10px 4px 4px 4px;
 }
 
 // Datetime window

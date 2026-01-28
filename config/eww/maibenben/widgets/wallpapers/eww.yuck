@@ -1,31 +1,28 @@
 (defvar eww "~/.config/eww/widgets/wallpapers")
 
-(defpoll img_grid :interval "10s" `~/.config/eww/widgets/wallpapers/main.py`)
+(defpoll img_grid :interval "2m" `cat /tmp/wallpapers/data.json`)
 
 
 (defwidget layout []
-  (box
-    :orientation "h"
-    :space-evenly false
     (scroll
-      :hscroll false
-      :vscroll true
+      :hscroll true
+      :vscroll false
       (box
-        :orientation "v"
-        :space-evenly false
+        :orientation "h"
+        :space-evenly true
         (for row in {img_grid.rows}
           (box
-            :orientation "h"
+            :orientation "v"
             :halign "center"
             :valign "center"
-            :space-evenly false
+            :space-evenly true
             (for img in {row}
               (button
                 :class "btn-${img.name}"
                 :valign "center"
                 :halign "center"
                 :css ".btn-${img.name} { margin: 12px; } .btn-${img.name}:hover { transition: all 0.3s ease; background: #9399b2; border-radius: 8px; padding: 5px; margin: 7px; &:active { background: #313244; } }"
-                :onclick "${eww}/wallpaper_select.sh ${img.from} ${img.tumb} ${img.name} | eww close-all -c ${eww}"
+                :onclick "${eww}/wallpaper_select.sh ${img.from} ${img.tumb} ${img.name}"
                 (box
                   :class "img-container"
                   :orientation "v"
@@ -40,7 +37,6 @@
         )
       )
     )
-  )
 )
 
 
@@ -51,13 +47,33 @@
   :geometry (geometry
     :y "0%"
     :x "0%"
-    :width "600px"
-    :height "700px"
+    :width "800px"
     :anchor "center center"
   )
   :resizable false
   (box
     :class "wallpapers"
+    :orientation "v"
+    :space-evenly false
+    (box
+      :orientation "h"
+      :spacing 8
+      :space-evenly false
+      :halign "fill"
+      (label
+        :class "title"
+        :text "Choose Wallpaper"
+        :halign "start"
+        :hexpand true
+      )
+      (button
+        :class "refresh"
+        :halign "end"
+        :hexpand true
+        :onclick "${eww}/reload.sh"
+        " Refresh"
+      )
+    )
     (layout)
   )
 )

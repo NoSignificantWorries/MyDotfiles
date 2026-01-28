@@ -1,7 +1,6 @@
 #!/bin/sh
 
 MIC_ICONS=( "" "" )
-VOL_COLORS=( "#6c7086" "#00df96" )
 
 eww="$HOME/.config/eww/widgets/panel"
 
@@ -21,11 +20,9 @@ muted=$(echo "$out" | grep -c 'MUTED')
 mic=$(echo "$out" | awk '{print $2*100}')
 if [ $muted -gt 0 ]; then
   eww update -c "$eww" mic-mute=true
-  eww update -c "$eww" mic-color=${VOL_COLORS[0]}
   index=0
 else
   eww update -c "$eww" mic-mute=false
-  eww update -c "$eww" mic-color=${VOL_COLORS[1]}
   index=1
 fi
 

@@ -52,6 +52,8 @@
 (defvar kb_layout "N/A")
 ;; workspaces
 (defvar workspaces-json `[]`)
+;; weather
+(defpoll weather-info :interval "2m" `~/.config/eww/widgets/panel/scripts/weather.py`)
 
 
 ;;#################
@@ -136,8 +138,8 @@
         :halign "fill"
         :space-evenly false
         :spacing 5
-        (label :text "${bat-icon}")
-        (label :text "${bat}%")
+        (label :class "bat-icon-${bat <= 10 ? "critical" : (bat <= 20 ? "low" : "normal")}" :text "${bat-icon}")
+        (label :class "bat" :text "${bat}%")
       )
     )
   )
@@ -297,6 +299,68 @@
   )
 )
 
+(defwidget weather []
+  (box
+    :class "weather"
+    :orientation "v"
+    :space-evenly false
+    :spacing 4
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (box
+        :orientation "v"
+        :space-evenly false
+        :hexpand true
+        :halign "fill"
+        :spacing 4
+        (label :class "icon" :text "${weather-info.icon}" :hexpand true)
+        (label :class "label" :text "${weather-info.label}" :hexpand true)
+      )
+      (box
+        :class "main-info"
+        :orientation "v"
+        :space-evenly false
+        :hexpand true
+        :halign "fill"
+        :spacing 4
+        (label :class "wind" :text " ${weather-info.wind.speed}m/s ${weather-info.wind.orient}" :hexpand true)
+        (label :class "temp-real" :text "${weather-info.temp.real.i} ${weather-info.temp.real.t}󰔄" :hexpand true)
+      )
+    )
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (label :class "temp-feels" :text "Feels like: ${weather-info.temp.feels.i} ${weather-info.temp.feels.t}󰔄" :hexpand true)
+    )
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (label :class "pressure" :text " ${weather-info.pressure} hPa" :hexpand true)
+      (label :class "humidity" :text " ${weather-info.humidity}%" :hexpand true)
+      (label :class "visibility" :text "󰣰 ${weather-info.visibility} km" :hexpand true)
+    )
+    (box
+      :orientation "h"
+      :space-evenly false
+      :hexpand true
+      :halign "fill"
+      :spacing 4
+      (label :class "sunrise" :text " ${weather-info.sun.rise}" :hexpand true)
+      (label :class "sunset" :text " ${weather-info.sun.set}" :hexpand true)
+    )
+  )
+)
+
 (defwidget player-widget []
   (box
     :class "player"
@@ -360,6 +424,7 @@
     :spacing 8
     (brightness)
     (sound)
+    (weather)
     (revealer
       :transition "slidedown"
       :duration 300
@@ -446,3 +511,4 @@
     )
   )
 )
+
