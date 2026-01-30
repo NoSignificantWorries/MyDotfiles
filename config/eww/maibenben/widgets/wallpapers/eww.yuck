@@ -1,6 +1,6 @@
 (defvar eww "~/.config/eww/widgets/wallpapers")
 
-(defpoll img_grid :interval "2m" `cat /tmp/wallpapers/data.json`)
+(defpoll img_grid :interval "2m" `cat ~/.cache/wallpapers/data.json`)
 
 
 (defwidget layout []

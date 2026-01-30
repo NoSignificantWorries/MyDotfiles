@@ -1,0 +1,11 @@
+[Unit]
+Description=Hyprland
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/start-hyprland
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+

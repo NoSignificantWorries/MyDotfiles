@@ -25,8 +25,8 @@ def get_files(root):
 
 
 def main():
-    tmp_dir = Path("/tmp/wallpapers").expanduser()
-    tmp_file = Path("/tmp/wallpapers/data.json").expanduser()
+    tmp_dir = Path("~/.cache/wallpapers").expanduser()
+    tmp_file = Path("~/.cache/wallpapers/data.json").expanduser()
     tmp_dir.mkdir(parents=True, exist_ok=True)
     wallpaper_folder = Path("~/Pictures/Wallpapers").expanduser()
 
