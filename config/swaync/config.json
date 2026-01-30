@@ -51,10 +51,6 @@
           "command": "hyprlock"
         },
         {
-          "label": "󰍃",
-          "command": "hyprctl dispatch exit 0"
-        },
-        {
           "label": "󰆴",
           "command": "swaync-client -C"
         },
