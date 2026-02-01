@@ -1,0 +1,12 @@
+[
+  {
+    "icon": "",
+    "path": "~/Hyprdots_main",
+    "name": "Dotfiles"
+  },
+  {
+    "icon": "󱘗",
+    "path": "~/Projects/RustSteps",
+    "name": "Rust"
+  }
+]

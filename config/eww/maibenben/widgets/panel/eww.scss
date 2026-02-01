@@ -355,3 +355,65 @@
   padding: 8px;
 }
 
+
+// Menu window
+.main-menu-window {
+  background: transparent;
+
+  .folder-btn {
+    padding-left: 2px;
+    padding-right: 2px;
+    transition: all 0.1s ease;
+    border-bottom: 1px solid transparent;
+    .text {
+      transition: all 0.1s ease;
+    }
+
+    &:hover {
+      border-bottom: 1px solid colors.$text;
+    }
+
+    &:active {
+      .text {
+        color: colors.$surface2;
+      }
+      border-bottom: 1px solid colors.$subtext0;
+    }
+  }
+
+  .spacer {
+    border-bottom: 1px solid colors.$subtext1;
+  }
+
+  .project-btn {
+    padding-left: 2px;
+    padding-right: 2px;
+    transition: all 0.1s ease;
+    border-bottom: 1px solid transparent;
+    .text {
+      transition: all 0.1s ease;
+    }
+    .path-text {
+      color: colors.$subtext0;
+    }
+
+    &:hover {
+      border-bottom: 1px solid colors.$text;
+    }
+
+    &:active {
+      .text {
+        color: colors.$surface2;
+      }
+      border-bottom: 1px solid colors.$subtext0;
+    }
+  }
+
+}
+.main-menu {
+  background: rgba(colors.$base, 0.6);
+  border-radius: 10px;
+  margin: 10px;
+  padding: 8px;
+}
+

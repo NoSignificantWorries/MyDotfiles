@@ -1,0 +1,17 @@
+[
+  {
+    "icon": "󱂵",
+    "path": "~/",
+    "name": "Home"
+  },
+  {
+    "icon": "󰉏",
+    "path": "~/Pictures",
+    "name": "Pictures"
+  },
+  {
+    "icon": "󰉍",
+    "path": "~/Downloads",
+    "name": "Downloads"
+  }
+]

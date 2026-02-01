@@ -62,7 +62,7 @@
 (defwidget menu-button []
   (button
     :class "menu-button"
-    :onclick ""
+    :onclick "eww open -c ${eww} --toggle main-menu-window"
     (label :class "menu-icon" :text "")
   )
 )
@@ -511,4 +511,92 @@
     )
   )
 )
+
+
+;;################
+;;##    MENU    ##
+;;################
+(defvar file-manager "nemo")
+(defpoll folders-data :interval "10s" `cat ~/.config/eww/widgets/folders.json`)
+(defvar gui-app "neovide")
+(defvar tui-app "kitty -e nvim --cmd")
+(defpoll projects-data :interval "10s" `cat ~/.config/eww/widgets/projects.json`)
+
+(defwidget folders []
+  (box
+    :class "folders"
+    :orientation "v"
+    :space-evenly false
+    :halign "start"
+    (for pth in {folders-data}
+      (button
+        :class "folder-btn"
+        :onclick "${file-manager} ${pth.path} &"
+        :halign "start"
+        :hexpand true
+        (label :class "text" :text "${pth.icon} ${pth.name}")
+      )
+    )
+  )
+)
+(defwidget projects []
+  (box
+    :class "projects"
+    :orientation "v"
+    :space-evenly false
+    :halign "start"
+    (for pth in {projects-data}
+      (button
+        :class "project-btn"
+        :onclick "${tui-app} 'cd ${pth.path}' &"
+        :onrightclick "${gui-app} ${pth.path} &"
+        :halign "start"
+        :hexpand true
+        (box
+          :orientation "h"
+          :spacing 6
+          :space-evenly false
+          (label :class "text" :text "${pth.icon} ${pth.name}")
+          (label :class "path-text" :text "${pth.path}")
+        )
+      )
+    )
+  )
+)
+
+(defwidget main-menu-layout []
+  (box
+    :orientation "v"
+    :spacing 6
+    :space-evenly false
+    (folders)
+    (box :class "spacer")
+    (projects)
+  )
+)
+
+
+;;#######################
+;;##    MENU WINDOW    ##
+;;#######################
+(defwindow main-menu-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "panel"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :anchor "top left"
+  )
+  :resizable false
+  (eventbox
+    :onhoverlost "eww close -c ${eww} main-menu-window"
+    (box
+      :class "main-menu"
+      :halign "fill"
+      (main-menu-layout)
+    )
+  )
+)
+
 

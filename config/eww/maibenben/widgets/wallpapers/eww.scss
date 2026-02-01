@@ -28,6 +28,20 @@
     }
   }
 
+  .btn {
+    margin: 12px;
+    &:hover {
+      transition: all 0.3s ease;
+      background: #9399b2;
+      border-radius: 8px;
+      padding: 5px;
+      margin: 7px;
+    }
+    &:active {
+      background: #313244;
+    }
+  }
+
   .img-button {
     background-repeat: no-repeat;
     border-radius: 12px;
