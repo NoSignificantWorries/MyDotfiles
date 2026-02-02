@@ -556,7 +556,8 @@
           :orientation "h"
           :spacing 6
           :space-evenly false
-          (label :class "text" :text "${pth.icon} ${pth.name}")
+          (label :class "icon" :style "color: ${pth.color};" :text "${pth.icon}")
+          (label :class "text" :text "${pth.name}")
           (label :class "path-text" :text "${pth.path}")
         )
       )

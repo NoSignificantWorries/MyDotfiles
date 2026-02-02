@@ -1,6 +1,7 @@
 @define-color cc-bg rgba(30, 30, 46, 0.6);
 @define-color dark-text #a6adc8;
 @define-color dark-bg rgba(17, 17, 27, 0.6);
+@define-color darker-bg rgba(17, 17, 27, 0.8);
 
 @define-color noti-border-color #dcd7ba;
 @define-color noti-bg #1e1e2e;
@@ -101,7 +102,7 @@
 
 .notification-default-action:hover,
 .notification-action:hover {
-  color: @blue-base;
+  color: @darker-bg;
   background: @cc-bg;
 }
 
@@ -170,7 +171,7 @@
 }
 
 .widget-dnd>switch {
-  background: @blue-base;
+  background: @darker-bg;
   border-radius: 0;
 }
 
@@ -204,12 +205,12 @@
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button:hover {
-  background: @blue-base;
+  background: @darker-bg;
   color: @cc-bg;
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button:checked {
-  background: @green-base;
+  background: @darker-bg;
   color: @cc-bg;
   /* border: 1px solid @green-base; */
 }

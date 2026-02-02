@@ -1,11 +1,13 @@
 [
   {
     "icon": "",
+    "color": "#74c7ec",
     "path": "~/Hyprdots_main",
     "name": "Dotfiles"
   },
   {
     "icon": "󱘗",
+    "color": "#fab387",
     "path": "~/Projects/RustSteps",
     "name": "Rust"
   }

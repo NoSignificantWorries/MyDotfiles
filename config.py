@@ -198,7 +198,8 @@ config = Stage(("Config",), [
                     Link("hyprlock.conf"),
                     Link("keybindings.conf"),
                     Link("mocha.conf"),
-                    Link("wallpaper_select.sh")
+                    Link("wallpaper_select.sh"),
+                    Link("select-color.sh"),
                 ]),
                 # eww
                 Tree((f"eww/{version}", "eww"), [
