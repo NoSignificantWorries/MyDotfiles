@@ -54,6 +54,9 @@
 (defvar workspaces-json `[]`)
 ;; weather
 (defpoll weather-info :interval "2m" `~/.config/eww/widgets/panel/scripts/weather.py`)
+;; submap
+(defvar submap "")
+(defvar is_submap false)
 
 
 ;;#################
@@ -600,4 +603,24 @@
   )
 )
 
+;;#########################
+;;##    SUBMAP WINDOW    ##
+;;#########################
+(defwindow submap-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "panel"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :anchor "center top"
+  )
+  :stacking "overlay"
+  :resizable false
+  (box
+    :orientation "h"
+    :space-evenly false
+    (label :class "submap" :text {submap})
+  )
+)
 

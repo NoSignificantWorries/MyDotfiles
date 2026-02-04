@@ -417,3 +417,16 @@
   padding: 8px;
 }
 
+// Submap
+.submap-window {
+  margin-top: 6px;
+  padding: 6px;
+
+  .submap {
+    background: rgba(colors.$base, 0.6);
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
+  }
+}
