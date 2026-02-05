@@ -2,7 +2,7 @@
 
 BR_ICONS=( "󰃜" "󰃝" "󰃞" "󰃠" )
 
-eww="$HOME/.config/eww/widgets/bar"
+eww="$HOME/.config/eww/widgets/panel"
 
 if [ -n "$1" ]; then
   brightnessctl s ${1}%

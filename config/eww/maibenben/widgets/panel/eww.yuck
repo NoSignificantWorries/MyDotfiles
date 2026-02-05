@@ -250,7 +250,7 @@
     (box
       :class "brightness-box"
       :orientation "h"
-      :spacing 3
+      :spacing 8
       :space-evenly false
       :halign "fill"
       (label :text "${br-icon}")
