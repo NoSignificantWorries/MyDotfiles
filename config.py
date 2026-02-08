@@ -178,12 +178,11 @@ config = Stage(("Config",), [
                     Link("style.css"),
                     Link("theme.css"),
                 ]),
-                # yazi
-                Tree(("yazi",), [
-                    Link("init.lua"),
-                    Link("keymap.toml"),
-                    Link("theme.toml"),
-                    Link("yazi.toml"),
+                # superfile
+                Tree(("superfile",), [
+                    Link("config.toml"),
+                    Link("hotkeys.toml"),
+                    Link("theme/catppuccin-mocha.toml"),
                 ]),
                 # hypr
                 Tree(("hypr",), [
@@ -198,8 +197,10 @@ config = Stage(("Config",), [
                     Link("hyprlock.conf"),
                     Link("keybindings.conf"),
                     Link("mocha.conf"),
-                    Link("wallpaper_select.sh"),
+                    Link("battary_data.sh"),
                     Link("select-color.sh"),
+                    Link("reboot.png"),
+                    Link("shutdown.png"),
                 ]),
                 # eww
                 Tree((f"eww/{version}", "eww"), [
@@ -211,6 +212,10 @@ config = Stage(("Config",), [
                                 Link("micro_updater.sh"),
                                 Link("volume_updater.sh"),
                                 Link("battary_data.sh"),
+                                Link("player_toggle.sh"),
+                                Link("player_status.sh"),
+                                Link("player_set_time.sh"),
+                                Link("swaync_toggle_dnd.sh"),
                                 Link("system.py"),
                                 Link("data.py"),
                                 Link("weather.py"),
@@ -220,7 +225,16 @@ config = Stage(("Config",), [
                             Link("eww.yuck"),
                             Link("kill.sh"),
                             Link("launch.sh")
-                        ])
+                        ]),
+                        Tree(("wallpapers",) [
+                            Link("eww.scss"),
+                            Link("eww.yuck"),
+                            Link("launch.sh"),
+                            Link("main.py"),
+                            Link("wallpaper_select.py"),
+                        ]),
+                        Link("folders.json"),
+                        Link("projects.json"),
                     ])
                 ])
             ]),
