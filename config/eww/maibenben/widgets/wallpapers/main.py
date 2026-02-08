@@ -25,6 +25,8 @@ def get_files(root):
 
 
 def main():
+    subprocess.run(["notify-send", "Wallpapers", "Updating wallpapers list..."], stdout=subprocess.DEVNULL)
+
     tmp_dir = Path("~/.cache/wallpapers").expanduser()
     tmp_file = Path("~/.cache/wallpapers/data.json").expanduser()
     tmp_dir.mkdir(parents=True, exist_ok=True)
@@ -60,6 +62,8 @@ def main():
 
     with open(tmp_file, "w") as file:
         json.dump(grid, file)
+
+    subprocess.run(["notify-send", "Wallpapers", "Updation finished"], stdout=subprocess.DEVNULL)
 
     return json.dumps(grid)
 

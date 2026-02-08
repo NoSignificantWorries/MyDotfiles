@@ -109,6 +109,7 @@
   (button
     :class "noti-button"
     :onclick "swaync-client --open-panel"
+    :onmiddleclick "swaync-client -C"
     :onrightclick "swaync-client -d | ${eww}/scripts/swaync_update_dnd.sh"
     (label :class "noti-icon" :text {noti-dnd-state ? (noti-count > 0 ? "" : "") : (noti-count > 0 ? "" : "")})
   )
