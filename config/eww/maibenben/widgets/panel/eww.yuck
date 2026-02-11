@@ -52,6 +52,8 @@
 (defvar kb_layout "N/A")
 ;; workspaces
 (defvar workspaces-json `[]`)
+(defvar apps-json `{}`)
+;; (defpoll apps :interval "10s" `cat ~/.cache/icons.json`)
 ;; weather
 (defpoll weather-info :interval "2m" `~/.config/eww/widgets/panel/scripts/weather.py`)
 ;; submap
@@ -75,11 +77,27 @@
     :class "workspaces"
     :orientation "h"
     :space-evenly false
+    :spacing 6
     (for wsp in {workspaces-json.data}
-      (button
-        :class {wsp.active ? "activebtn" : (wsp.occupied ? "fullbtn" : "normalbtn")}
-        :onclick `${wsp.cmd}`
-        {wsp.active ? "" : (wsp.occupied ? "" : "")}
+      (box
+        :class "workspaces"
+        :orientation "h"
+        :space-evenly false
+        :halign "center"
+        (overlay
+          (button
+            :class {wsp.active ? "activebtn" : (wsp.occupied ? "fullbtn" : "normalbtn")}
+            :onclick `${wsp.cmd}`
+            (box
+              :orientation "h"
+              :space-evenly false
+              (for app in {wsp.apps}
+                (box :style "background-image: url('${app.icon}');" :class "app-icon" :halign "center" :valign "center")
+              )
+            )
+          )
+          (label :text "${wsp.text}" :halign "start" :valign "start" :class "ws-text-${wsp.active ? 'active' : 'normal'}")
+        )
       )
     )
   )

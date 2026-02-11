@@ -37,41 +37,6 @@
       )
     )
 )
-;; (defwidget layout []
-;;     (scroll
-;;       :hscroll true
-;;       :vscroll false
-;;       (box
-;;         :orientation "h"
-;;         :space-evenly true
-;;         (for row in {img_grid.rows}
-;;           (box
-;;             :orientation "v"
-;;             :halign "center"
-;;             :valign "center"
-;;             :space-evenly true
-;;             (for img in {row}
-;;               (button
-;;                 :class "btn-${img.name}"
-;;                 :valign "center"
-;;                 :halign "center"
-;;                 :css ".btn-${img.name} { margin: 12px; } .btn-${img.name}:hover { transition: all 0.3s ease; background: #9399b2; border-radius: 8px; padding: 5px; margin: 7px; &:active { background: #313244; } }"
-;;                 :onclick "${eww}/wallpaper_select.sh ${img.from} ${img.tumb} ${img.name}"
-;;                 (box
-;;                   :class "img-container"
-;;                   :orientation "v"
-;;                   :spacing 6
-;;                   :space-evenly false
-;;                   (box :class "img-button" :style "background-image: url('${img.tumb}');")
-;;                   (label :text "${img.name}")
-;;                 )
-;;               )
-;;             )
-;;           )
-;;         )
-;;       )
-;;     )
-;; )
 
 
 (defwindow wallpapers-window
