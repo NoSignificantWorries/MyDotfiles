@@ -12,7 +12,6 @@ pid_file = Path("~/.config/hypr/system.pid").expanduser()
 
 
 def cleanup(signum, frame):
-    print("Получен SIGTERM, завершаем...")
     if os.path.exists(pid_file):
         os.unlink(pid_file)
     sys.exit(0)
@@ -51,17 +50,23 @@ KB_LAYOUTS = {
 
 SIZE=64
 CACHE = Path("~/.cache/icons.json").expanduser()
-DEFAULT_ICON = Path("").expanduser()
+DEFAULT_ICON = Path("~/.icons/desktop/unknown_app.png").expanduser()
 DIRS = [
     "/usr/share/icons",
     "~/.local/share/icons",
     "/usr/share/pixmaps",
     "~/.icons"
 ]
+APPS_DIRS = [
+    "/usr/share/applications",
+    "~/.local/share/applications"
+]
 
-def desktop_file(app_name, apps_dir="/usr/share/applications"):
-    root = Path(apps_dir)
-    all_paths = list(root.rglob("*.desktop"))
+def desktop_file(app_name, apps_dirs=APPS_DIRS):
+    all_paths = []
+    for apps_dir in apps_dirs:
+        root = Path(apps_dir).expanduser()
+        all_paths.extend(list(root.rglob("*.desktop")))
 
     paths = []
     for path in all_paths:
@@ -93,6 +98,7 @@ def get_icon(path):
 
 
 def find_icons(app_name, dirs):
+    app_name = app_name.split(" ")[0]
     paths = []
     for root_dir in dirs:
         root = Path(root_dir).expanduser()
@@ -162,7 +168,7 @@ def find_app_icon(app_name, cache_file=CACHE, dirs=DIRS):
         app_name: { "icon": str(icon) }
     })
     with open(cache_file, "w") as file:
-        json.dump(cache, file)
+        json.dump(cache, file, indent=2)
     return str(icon)
 
 

@@ -53,9 +53,8 @@
 ;; workspaces
 (defvar workspaces-json `[]`)
 (defvar apps-json `{}`)
-;; (defpoll apps :interval "10s" `cat ~/.cache/icons.json`)
 ;; weather
-(defpoll weather-info :interval "2m" `~/.config/eww/widgets/panel/scripts/weather.py`)
+(defpoll weather-info :interval "2m" :initial `{"data": false}` `~/.config/eww/widgets/panel/scripts/weather.py`)
 ;; submap
 (defvar submap "")
 (defvar is_submap false)
@@ -326,59 +325,55 @@
     :class "weather"
     :orientation "v"
     :space-evenly false
-    :spacing 4
     (box
       :orientation "h"
       :space-evenly false
       :hexpand true
       :halign "fill"
-      :spacing 4
+      :spacing 6
       (box
         :orientation "v"
         :space-evenly false
         :hexpand true
         :halign "fill"
-        :spacing 4
-        (label :class "icon" :text "${weather-info.icon}" :hexpand true)
-        (label :class "label" :text "${weather-info.label}" :hexpand true)
+        :spacing 6
+        (box
+          :class "weather-icon"
+          :orientation "v"
+          :space-evenly false
+          :hexpand true
+          :halign "fill"
+          :spacing 2
+          (label :class "wicon" :text "${weather-info.icon}" :hexpand true)
+          (label :class "wlabel" :text "${weather-info.label}" :hexpand true)
+        )
+        (box
+          :class "weather-main"
+          :orientation "v"
+          :space-evenly false
+          :hexpand true
+          :halign "fill"
+          :spacing 2
+          (label :class "wind" :text " ${weather-info.wind.speed}m/s ${weather-info.wind.orient}" :hexpand true)
+          (label :class "temp-real" :text "${weather-info.temp.real.i} ${weather-info.temp.real.t}󰔄" :hexpand true)
+          (label :class "temp-feels" :text "${weather-info.temp.feels.i} ${weather-info.temp.feels.t}󰔄" :hexpand true)
+        )
       )
-      (box
-        :class "main-info"
-        :orientation "v"
-        :space-evenly false
-        :hexpand true
-        :halign "fill"
-        :spacing 4
-        (label :class "wind" :text " ${weather-info.wind.speed}m/s ${weather-info.wind.orient}" :hexpand true)
-        (label :class "temp-real" :text "${weather-info.temp.real.i} ${weather-info.temp.real.t}󰔄" :hexpand true)
-      )
-    )
     (box
-      :orientation "h"
+      :class "weather-info"
+      :orientation "v"
       :space-evenly false
       :hexpand true
+      :vexpand true
       :halign "fill"
+      :valign "fill"
       :spacing 4
-      (label :class "temp-feels" :text "Feels like: ${weather-info.temp.feels.i} ${weather-info.temp.feels.t}󰔄" :hexpand true)
+      (label :class "pressure" :text " ${weather-info.pressure} hPa" :hexpand true :vexpand true :halign "start")
+      (label :class "humidity" :text " ${weather-info.humidity}%" :hexpand true :vexpand true :halign "start")
+      (label :class "visibility" :text "󰣰 ${weather-info.visibility} km" :hexpand true :vexpand true :halign "start")
+      (label :class "sunrise" :text " ${weather-info.sun.rise}" :hexpand true :vexpand true :halign "start")
+      (label :class "sunset" :text " ${weather-info.sun.set}" :hexpand true :vexpand true :halign "start")
     )
-    (box
-      :orientation "h"
-      :space-evenly false
-      :hexpand true
-      :halign "fill"
-      :spacing 4
-      (label :class "pressure" :text " ${weather-info.pressure} hPa" :hexpand true)
-      (label :class "humidity" :text " ${weather-info.humidity}%" :hexpand true)
-      (label :class "visibility" :text "󰣰 ${weather-info.visibility} km" :hexpand true)
-    )
-    (box
-      :orientation "h"
-      :space-evenly false
-      :hexpand true
-      :halign "fill"
-      :spacing 4
-      (label :class "sunrise" :text " ${weather-info.sun.rise}" :hexpand true)
-      (label :class "sunset" :text " ${weather-info.sun.set}" :hexpand true)
     )
   )
 )
@@ -446,7 +441,12 @@
     :spacing 8
     (brightness)
     (sound)
-    (weather)
+    (revealer
+      :transition "slidedown"
+      :duration 300
+      :reveal {weather-info.data}
+      (weather)
+    )
     (revealer
       :transition "slidedown"
       :duration 300
