@@ -4,18 +4,31 @@ from pathlib import Path
 
 
 SIZE=64
-CACHE = Path("~/.cache/icons.json").expanduser()
-DEFAULT_ICON = Path("").expanduser()
+CACHE = Path("~/.cache/all-apps-icons.json").expanduser()
+DEFAULT_ICON = Path("~/.icons/desktop/unknown_app.png").expanduser()
 DIRS = [
-    "/usr/share/icons/Papirus",
+    "/usr/share/icons",
     "~/.local/share/icons",
     "/usr/share/pixmaps",
     "~/.icons"
 ]
+APPS_DIRS = [
+    "/usr/share/applications",
+    "~/.local/share/applications"
+]
 
-def desktop_file(app_name, apps_dir="/usr/share/applications"):
-    root = Path(apps_dir)
-    paths = list(root.rglob(f"*{app_name}*.desktop"))
+def desktop_file(app_name, apps_dirs=APPS_DIRS):
+    all_paths = []
+    for apps_dir in apps_dirs:
+        root = Path(apps_dir).expanduser()
+        all_paths.extend(list(root.rglob("*.desktop")))
+
+    paths = []
+    for path in all_paths:
+        if app_name.lower() in path.name.lower().split(".")[0]:
+            paths.append(path)
+
+    print(paths)
 
     def score(path):
         name = path.name.lower()
@@ -28,7 +41,16 @@ def desktop_file(app_name, apps_dir="/usr/share/applications"):
     return max(paths, key=score)
 
 
-def get_icon(path):
+def all_desktop_files(apps_dirs=APPS_DIRS):
+    all_paths = []
+    for apps_dir in apps_dirs:
+        root = Path(apps_dir).expanduser()
+        all_paths.extend(list(root.rglob("*.desktop")))
+
+    return all_paths
+
+
+def get_app_icon(path):
     with open(path, "r") as file:
         content = file.read()
 
@@ -40,6 +62,7 @@ def get_icon(path):
 
 
 def find_icons(app_name, dirs):
+    app_name = app_name.split(" ")[0]
     paths = []
     for root_dir in dirs:
         root = Path(root_dir).expanduser()
@@ -51,8 +74,14 @@ def find_icons(app_name, dirs):
         path_str = str(icon)
         name_score = 10 if app_name.lower() == name.split('.')[0] else 5
         size_score = 0
+        if "Papirus" in path_str:
+            size_score += 20
         if f"{SIZE}x{SIZE}" in path_str:
             size_score = 100
+        elif "48x48" in path_str:
+            size_score = 90
+        elif "32x32" in path_str:
+            size_score = 80
         else:
             size_score = 50
         return size_score + name_score, icon.stat().st_size
@@ -63,51 +92,50 @@ def find_icons(app_name, dirs):
     return max(paths, key=score_icon)
 
 
-def main(app_names, cache_file=CACHE, dirs=DIRS):
+def find_apps_icons(app_names, cache_file=CACHE, dirs=DIRS):
     if cache_file.exists():
         with open(cache_file, "r") as file:
             cache = json.load(file)
     else:
         cache = {
             "apps-list": [],
-            "apps": []
+            "apps": {}
         }
 
+    icons = []
     for app_name in app_names:
         if app_name in cache["apps-list"]:
-            continue
+            icons.append(cache["apps"][app_name]["icon"])
 
         cache["apps-list"].append(app_name)
 
         dfile = desktop_file(app_name)
         if dfile is None:
             icon = find_icons(app_name, dirs)
-            cache["apps"].append({
-                "app": app_name,
-                "icon": str(icon)
+            icons.append(icon)
+            cache["apps"].update({
+                app_name: { "icon": str(icon) }
             })
             continue
 
-        dicon = get_icon(dfile)
+        dicon = get_app_icon(dfile)
         if dicon is None:
             icon = find_icons(app_name, dirs)
-            cache["apps"].append({
-                "app": app_name,
-                "icon": str(icon)
+            icons.append(icon)
+            cache["apps"].update({
+                app_name: { "icon": str(icon) }
             })
             continue
 
         icon = find_icons(dicon, dirs)
-        cache["apps"].append({
-            "app": app_name,
-            "icon": str(icon)
+        icons.append(icon)
+        cache["apps"].update({
+            app_name: { "icon": str(icon) }
         })
 
     with open(cache_file, "w") as file:
-        json.dump(cache, file)
+        json.dump(cache, file, indent=2)
 
-
-if __name__ == "__main__":
-    main(["zen", "firefox", "kitty", "hiddify", "org.telegram.desktop"], CACHE, DIRS)
+    return icons
 
 

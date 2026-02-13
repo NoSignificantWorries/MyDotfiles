@@ -1,0 +1,1377 @@
+[
+  {
+    "class": "",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/openscad.svg",
+    "priority": 0
+  },
+  {
+    "class": "Arduino IDE",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/arduino.svg",
+    "priority": 0
+  },
+  {
+    "class": "DesktopEditors",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/onlyoffice-desktopeditors.svg",
+    "priority": 0
+  },
+  {
+    "class": "FBReader",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/FBReader.svg",
+    "priority": 0
+  },
+  {
+    "class": "FBReader",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/FBReader.svg",
+    "priority": 0
+  },
+  {
+    "class": "FBReader",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/FBReader.svg",
+    "priority": 0
+  },
+  {
+    "class": "GitKraken",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/gitkraken.svg",
+    "priority": 0
+  },
+  {
+    "class": "GitKraken",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/gitkraken.svg",
+    "priority": 0
+  },
+  {
+    "class": "GitKraken",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/gitkraken.svg",
+    "priority": 0
+  },
+  {
+    "class": "Magica Voxel",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "Magica Voxel",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "Magica Voxel",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "Noita",
+    "icon": "/home/dmitry/.local/share/icons/hicolor/32x32/apps/steam_icon_881100.png",
+    "priority": 0
+  },
+  {
+    "class": "Noita",
+    "icon": "/home/dmitry/.local/share/icons/hicolor/32x32/apps/steam_icon_881100.png",
+    "priority": 0
+  },
+  {
+    "class": "Noita",
+    "icon": "/home/dmitry/.local/share/icons/hicolor/32x32/apps/steam_icon_881100.png",
+    "priority": 0
+  },
+  {
+    "class": "ONLYOFFICE",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/onlyoffice-desktopeditors.svg",
+    "priority": 0
+  },
+  {
+    "class": "Pentablet",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "Pentablet",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "Pentablet",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "Unistall Pentablet",
+    "icon": "/home/dmitry/.local/share/icons/hicolor/64x64/apps/74FC_unins000.0.png",
+    "priority": 0
+  },
+  {
+    "class": "Unistall Pentablet",
+    "icon": "/home/dmitry/.local/share/icons/hicolor/64x64/apps/74FC_unins000.0.png",
+    "priority": 0
+  },
+  {
+    "class": "Unistall Pentablet",
+    "icon": "/home/dmitry/.local/share/icons/hicolor/64x64/apps/74FC_unins000.0.png",
+    "priority": 0
+  },
+  {
+    "class": "Xdg-desktop-portal-gtk",
+    "icon": "/usr/share/icons/Adwaita/symbolic/categories/applications-system-symbolic.svg",
+    "priority": 0
+  },
+  {
+    "class": "assistant",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/assistant.svg",
+    "priority": 0
+  },
+  {
+    "class": "assistant",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/assistant.svg",
+    "priority": 0
+  },
+  {
+    "class": "assistant",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/assistant.svg",
+    "priority": 0
+  },
+  {
+    "class": "avahi-discover",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "avahi-discover",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "avahi-discover",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "blockbench",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/blockbench.svg",
+    "priority": 0
+  },
+  {
+    "class": "blockbench",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/blockbench.svg",
+    "priority": 0
+  },
+  {
+    "class": "blockbench",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/blockbench.svg",
+    "priority": 0
+  },
+  {
+    "class": "blueman-adapters",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/blueman-device.svg",
+    "priority": 0
+  },
+  {
+    "class": "blueman-adapters",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/blueman-device.svg",
+    "priority": 0
+  },
+  {
+    "class": "blueman-adapters",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/blueman-device.svg",
+    "priority": 0
+  },
+  {
+    "class": "blueman-manager",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/blueman.png",
+    "priority": 0
+  },
+  {
+    "class": "blueman-manager",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/blueman.png",
+    "priority": 0
+  },
+  {
+    "class": "blueman-manager",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/blueman.png",
+    "priority": 0
+  },
+  {
+    "class": "bssh",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "bssh",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "bssh",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "btop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/btop.svg",
+    "priority": 0
+  },
+  {
+    "class": "btop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/btop.svg",
+    "priority": 0
+  },
+  {
+    "class": "btop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/btop.svg",
+    "priority": 0
+  },
+  {
+    "class": "bvnc",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "bvnc",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "bvnc",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/network-wired.svg",
+    "priority": 0
+  },
+  {
+    "class": "cmake-gui",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/CMakeSetup.svg",
+    "priority": 0
+  },
+  {
+    "class": "cmake-gui",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/CMakeSetup.svg",
+    "priority": 0
+  },
+  {
+    "class": "cmake-gui",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/CMakeSetup.svg",
+    "priority": 0
+  },
+  {
+    "class": "code",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/visual-studio-code.svg",
+    "priority": 0
+  },
+  {
+    "class": "code",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/visual-studio-code.svg",
+    "priority": 0
+  },
+  {
+    "class": "code",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/visual-studio-code.svg",
+    "priority": 0
+  },
+  {
+    "class": "code-url-handler",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/visual-studio-code.svg",
+    "priority": 0
+  },
+  {
+    "class": "code-url-handler",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/visual-studio-code.svg",
+    "priority": 0
+  },
+  {
+    "class": "code-url-handler",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/visual-studio-code.svg",
+    "priority": 0
+  },
+  {
+    "class": "com",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "com",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "com",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "com",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "com",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "com",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "com",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "com.github.xournalpp.xournalpp",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/com.github.xournalpp.xournalpp.svg",
+    "priority": 0
+  },
+  {
+    "class": "designer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/designer.svg",
+    "priority": 0
+  },
+  {
+    "class": "designer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/designer.svg",
+    "priority": 0
+  },
+  {
+    "class": "designer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/designer.svg",
+    "priority": 0
+  },
+  {
+    "class": "doublecmd",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/doublecmd.svg",
+    "priority": 0
+  },
+  {
+    "class": "doublecmd",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/doublecmd.svg",
+    "priority": 0
+  },
+  {
+    "class": "doublecmd",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/doublecmd.svg",
+    "priority": 0
+  },
+  {
+    "class": "drawio",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/drawio.png",
+    "priority": 0
+  },
+  {
+    "class": "drawio",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/drawio.png",
+    "priority": 0
+  },
+  {
+    "class": "drawio",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/drawio.png",
+    "priority": 0
+  },
+  {
+    "class": "fluid1",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/fluid.svg",
+    "priority": 0
+  },
+  {
+    "class": "fluid1",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/fluid.svg",
+    "priority": 0
+  },
+  {
+    "class": "fluid1",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/fluid.svg",
+    "priority": 0
+  },
+  {
+    "class": "gcr-prompter",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/security-medium.svg",
+    "priority": 0
+  },
+  {
+    "class": "gcr-prompter",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/security-medium.svg",
+    "priority": 0
+  },
+  {
+    "class": "gcr-prompter",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/security-medium.svg",
+    "priority": 0
+  },
+  {
+    "class": "gcr-viewer",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "gcr-viewer",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "gcr-viewer",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "gkbd-keyboard-display",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-keyboard.svg",
+    "priority": 0
+  },
+  {
+    "class": "gkbd-keyboard-display",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-keyboard.svg",
+    "priority": 0
+  },
+  {
+    "class": "gkbd-keyboard-display",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-keyboard.svg",
+    "priority": 0
+  },
+  {
+    "class": "gnome-disk-image-mounter",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/drive-removable-media.svg",
+    "priority": 0
+  },
+  {
+    "class": "gnome-disk-image-mounter",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/drive-removable-media.svg",
+    "priority": 0
+  },
+  {
+    "class": "gnome-disk-image-mounter",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/drive-removable-media.svg",
+    "priority": 0
+  },
+  {
+    "class": "gnome-disk-image-writer",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/drive-removable-media.svg",
+    "priority": 0
+  },
+  {
+    "class": "gnome-disk-image-writer",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/drive-removable-media.svg",
+    "priority": 0
+  },
+  {
+    "class": "gnome-disk-image-writer",
+    "icon": "/usr/share/icons/Papirus/64x64/devices/drive-removable-media.svg",
+    "priority": 0
+  },
+  {
+    "class": "hiddify",
+    "icon": "/usr/share/pixmaps/hiddify.png",
+    "priority": 0
+  },
+  {
+    "class": "hiddify",
+    "icon": "/usr/share/pixmaps/hiddify.png",
+    "priority": 0
+  },
+  {
+    "class": "hiddify",
+    "icon": "/usr/share/pixmaps/hiddify.png",
+    "priority": 0
+  },
+  {
+    "class": "htop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/htop.svg",
+    "priority": 0
+  },
+  {
+    "class": "htop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/htop.svg",
+    "priority": 0
+  },
+  {
+    "class": "htop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/htop.svg",
+    "priority": 0
+  },
+  {
+    "class": "hyprland-donate-screen",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "io",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/io.missioncenter.MissionCenter.svg",
+    "priority": 0
+  },
+  {
+    "class": "io",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/io.missioncenter.MissionCenter.svg",
+    "priority": 0
+  },
+  {
+    "class": "io",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/io.missioncenter.MissionCenter.svg",
+    "priority": 0
+  },
+  {
+    "class": "io",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/io.missioncenter.MissionCenter.svg",
+    "priority": 0
+  },
+  {
+    "class": "io",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/io.missioncenter.MissionCenter.svg",
+    "priority": 0
+  },
+  {
+    "class": "ipython",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/ipython.svg",
+    "priority": 0
+  },
+  {
+    "class": "ipython",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/ipython.svg",
+    "priority": 0
+  },
+  {
+    "class": "ipython",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/ipython.svg",
+    "priority": 0
+  },
+  {
+    "class": "java-java11-openjdk",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/java11-openjdk.svg",
+    "priority": 0
+  },
+  {
+    "class": "java-java11-openjdk",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/java11-openjdk.svg",
+    "priority": 0
+  },
+  {
+    "class": "jconsole-java11-openjdk",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/java11-openjdk.svg",
+    "priority": 0
+  },
+  {
+    "class": "jconsole-java11-openjdk",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/java11-openjdk.svg",
+    "priority": 0
+  },
+  {
+    "class": "jshell-java11-openjdk",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/java11-openjdk.svg",
+    "priority": 0
+  },
+  {
+    "class": "jshell-java11-openjdk",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/java11-openjdk.svg",
+    "priority": 0
+  },
+  {
+    "class": "jupyter-notebook",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/notebook.svg",
+    "priority": 0
+  },
+  {
+    "class": "jupyter-notebook",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/notebook.svg",
+    "priority": 0
+  },
+  {
+    "class": "jupyter-notebook",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/notebook.svg",
+    "priority": 0
+  },
+  {
+    "class": "jupyterlab",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/jupyterlab-desktop.svg",
+    "priority": 0
+  },
+  {
+    "class": "jupyterlab",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/jupyterlab-desktop.svg",
+    "priority": 0
+  },
+  {
+    "class": "jupyterlab",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/jupyterlab-desktop.svg",
+    "priority": 0
+  },
+  {
+    "class": "kitty",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kitty.svg",
+    "priority": 0
+  },
+  {
+    "class": "kitty",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kitty.svg",
+    "priority": 0
+  },
+  {
+    "class": "kitty",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kitty.svg",
+    "priority": 0
+  },
+  {
+    "class": "kitty-open",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kitty.svg",
+    "priority": 0
+  },
+  {
+    "class": "kitty-open",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kitty.svg",
+    "priority": 0
+  },
+  {
+    "class": "kitty-open",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kitty.svg",
+    "priority": 0
+  },
+  {
+    "class": "kvantummanager",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kvantum.svg",
+    "priority": 0
+  },
+  {
+    "class": "kvantummanager",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kvantum.svg",
+    "priority": 0
+  },
+  {
+    "class": "kvantummanager",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/kvantum.svg",
+    "priority": 0
+  },
+  {
+    "class": "linguist",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/linguist.svg",
+    "priority": 0
+  },
+  {
+    "class": "linguist",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/linguist.svg",
+    "priority": 0
+  },
+  {
+    "class": "linguist",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/linguist.svg",
+    "priority": 0
+  },
+  {
+    "class": "lstopo",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/hwloc.svg",
+    "priority": 0
+  },
+  {
+    "class": "lstopo",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/hwloc.svg",
+    "priority": 0
+  },
+  {
+    "class": "lstopo",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/hwloc.svg",
+    "priority": 0
+  },
+  {
+    "class": "lxappearance",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "lxappearance",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "lxappearance",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "min-browser",
+    "icon": "/usr/share/pixmaps/min-browser.png",
+    "priority": 0
+  },
+  {
+    "class": "min-browser",
+    "icon": "/usr/share/pixmaps/min-browser.png",
+    "priority": 0
+  },
+  {
+    "class": "min-browser",
+    "icon": "/usr/share/pixmaps/min-browser.png",
+    "priority": 0
+  },
+  {
+    "class": "mpv",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/mpv.png",
+    "priority": 0
+  },
+  {
+    "class": "mpv",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/mpv.png",
+    "priority": 0
+  },
+  {
+    "class": "mpv",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/mpv.png",
+    "priority": 0
+  },
+  {
+    "class": "neovide",
+    "icon": "/usr/share/icons/hicolor/48x48/apps/neovide.png",
+    "priority": 0
+  },
+  {
+    "class": "neovide",
+    "icon": "/usr/share/icons/hicolor/48x48/apps/neovide.png",
+    "priority": 0
+  },
+  {
+    "class": "neovide",
+    "icon": "/usr/share/icons/hicolor/48x48/apps/neovide.png",
+    "priority": 0
+  },
+  {
+    "class": "nm-applet",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nm-device-wireless.svg",
+    "priority": 0
+  },
+  {
+    "class": "nm-applet",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nm-device-wireless.svg",
+    "priority": 0
+  },
+  {
+    "class": "nm-applet",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nm-device-wireless.svg",
+    "priority": 0
+  },
+  {
+    "class": "nm-connection-editor",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-system-network.svg",
+    "priority": 0
+  },
+  {
+    "class": "nm-connection-editor",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-system-network.svg",
+    "priority": 0
+  },
+  {
+    "class": "nm-connection-editor",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-system-network.svg",
+    "priority": 0
+  },
+  {
+    "class": "nvim",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nvim.svg",
+    "priority": 0
+  },
+  {
+    "class": "nvim",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nvim.svg",
+    "priority": 0
+  },
+  {
+    "class": "nvim",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nvim.svg",
+    "priority": 0
+  },
+  {
+    "class": "nvtop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nvtop.svg",
+    "priority": 0
+  },
+  {
+    "class": "nvtop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nvtop.svg",
+    "priority": 0
+  },
+  {
+    "class": "nvtop",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/nvtop.svg",
+    "priority": 0
+  },
+  {
+    "class": "nwg-look",
+    "icon": "/usr/share/pixmaps/nwg-look.svg",
+    "priority": 0
+  },
+  {
+    "class": "nwg-look",
+    "icon": "/usr/share/pixmaps/nwg-look.svg",
+    "priority": 0
+  },
+  {
+    "class": "nwg-look",
+    "icon": "/usr/share/pixmaps/nwg-look.svg",
+    "priority": 0
+  },
+  {
+    "class": "onlyoffice-desktopeditors",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/onlyoffice-desktopeditors.svg",
+    "priority": 0
+  },
+  {
+    "class": "onlyoffice-desktopeditors",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/onlyoffice-desktopeditors.svg",
+    "priority": 0
+  },
+  {
+    "class": "openscad",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/openscad.svg",
+    "priority": 0
+  },
+  {
+    "class": "openscad",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/openscad.svg",
+    "priority": 0
+  },
+  {
+    "class": "openscad",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/openscad.svg",
+    "priority": 0
+  },
+  {
+    "class": "opentabletdriver",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "opentabletdriver",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "opentabletdriver",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.apache.directory.studio.svg",
+    "priority": 0
+  },
+  {
+    "class": "org.inkscape.Inkscape",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/org.inkscape.Inkscape.svg",
+    "priority": 0
+  },
+  {
+    "class": "org.pwmt.zathura",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/org.pwmt.zathura.png",
+    "priority": 0
+  },
+  {
+    "class": "org.telegram.desktop",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/org.telegram.desktop.png",
+    "priority": 0
+  },
+  {
+    "class": "qdbusviewer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/qdbusviewer.svg",
+    "priority": 0
+  },
+  {
+    "class": "qdbusviewer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/qdbusviewer.svg",
+    "priority": 0
+  },
+  {
+    "class": "qdbusviewer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/qdbusviewer.svg",
+    "priority": 0
+  },
+  {
+    "class": "qt5ct",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "qt5ct",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "qt5ct",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "qt6ct",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "qt6ct",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "qt6ct",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/preferences-desktop-theme.svg",
+    "priority": 0
+  },
+  {
+    "class": "qv4l2",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/qv4l2.svg",
+    "priority": 0
+  },
+  {
+    "class": "qv4l2",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/qv4l2.svg",
+    "priority": 0
+  },
+  {
+    "class": "qv4l2",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/qv4l2.svg",
+    "priority": 0
+  },
+  {
+    "class": "qvidcap",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/qvidcap.png",
+    "priority": 0
+  },
+  {
+    "class": "qvidcap",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/qvidcap.png",
+    "priority": 0
+  },
+  {
+    "class": "qvidcap",
+    "icon": "/usr/share/icons/hicolor/64x64/apps/qvidcap.png",
+    "priority": 0
+  },
+  {
+    "class": "rofi",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/application-vnd.iccprofile.svg",
+    "priority": 0
+  },
+  {
+    "class": "rofi",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/application-vnd.iccprofile.svg",
+    "priority": 0
+  },
+  {
+    "class": "rofi",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/application-vnd.iccprofile.svg",
+    "priority": 0
+  },
+  {
+    "class": "rofi-theme-selector",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/application-vnd.iccprofile.svg",
+    "priority": 0
+  },
+  {
+    "class": "rofi-theme-selector",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/application-vnd.iccprofile.svg",
+    "priority": 0
+  },
+  {
+    "class": "rofi-theme-selector",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/application-vnd.iccprofile.svg",
+    "priority": 0
+  },
+  {
+    "class": "ru",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/ru.linux_gaming.PortProton.svg",
+    "priority": 0
+  },
+  {
+    "class": "ru",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/ru.linux_gaming.PortProton.svg",
+    "priority": 0
+  },
+  {
+    "class": "ru",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/ru.linux_gaming.PortProton.svg",
+    "priority": 0
+  },
+  {
+    "class": "satty",
+    "icon": "/usr/share/icons/hicolor/scalable/apps/satty.svg",
+    "priority": 0
+  },
+  {
+    "class": "satty",
+    "icon": "/usr/share/icons/hicolor/scalable/apps/satty.svg",
+    "priority": 0
+  },
+  {
+    "class": "satty",
+    "icon": "/usr/share/icons/hicolor/scalable/apps/satty.svg",
+    "priority": 0
+  },
+  {
+    "class": "steam",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/steam.svg",
+    "priority": 0
+  },
+  {
+    "class": "steam",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/steam.svg",
+    "priority": 0
+  },
+  {
+    "class": "steam",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/steam.svg",
+    "priority": 0
+  },
+  {
+    "class": "tlpui",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/tlpui.svg",
+    "priority": 0
+  },
+  {
+    "class": "tlpui",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/tlpui.svg",
+    "priority": 0
+  },
+  {
+    "class": "tlpui",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/tlpui.svg",
+    "priority": 0
+  },
+  {
+    "class": "uxterm",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/xterm-color_48x48.svg",
+    "priority": 0
+  },
+  {
+    "class": "uxterm",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/xterm-color_48x48.svg",
+    "priority": 0
+  },
+  {
+    "class": "uxterm",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/xterm-color_48x48.svg",
+    "priority": 0
+  },
+  {
+    "class": "vim",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/gvim.svg",
+    "priority": 0
+  },
+  {
+    "class": "vim",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/gvim.svg",
+    "priority": 0
+  },
+  {
+    "class": "vim",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/gvim.svg",
+    "priority": 0
+  },
+  {
+    "class": "vncviewer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/tigervnc.svg",
+    "priority": 0
+  },
+  {
+    "class": "vncviewer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/tigervnc.svg",
+    "priority": 0
+  },
+  {
+    "class": "vncviewer",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/tigervnc.svg",
+    "priority": 0
+  },
+  {
+    "class": "waveterm",
+    "icon": "/usr/share/icons/hicolor/32x32/apps/waveterm.png",
+    "priority": 0
+  },
+  {
+    "class": "waveterm",
+    "icon": "/usr/share/icons/hicolor/32x32/apps/waveterm.png",
+    "priority": 0
+  },
+  {
+    "class": "waveterm",
+    "icon": "/usr/share/icons/hicolor/32x32/apps/waveterm.png",
+    "priority": 0
+  },
+  {
+    "class": "xdg-desktop-portal-gtk",
+    "icon": "/usr/share/icons/Adwaita/symbolic/categories/applications-system-symbolic.svg",
+    "priority": 0
+  },
+  {
+    "class": "xdg-desktop-portal-gtk",
+    "icon": "/usr/share/icons/Adwaita/symbolic/categories/applications-system-symbolic.svg",
+    "priority": 0
+  },
+  {
+    "class": "xdg-desktop-portal-gtk",
+    "icon": "/usr/share/icons/Adwaita/symbolic/categories/applications-system-symbolic.svg",
+    "priority": 0
+  },
+  {
+    "class": "xdvi",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xdvi",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xdvi",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xgps",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xgps",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xgps",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xgpsspeed",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xgpsspeed",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xgpsspeed",
+    "icon": "/home/dmitry/.icons/desktop/unknown_app.png",
+    "priority": 0
+  },
+  {
+    "class": "xterm",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/xterm-color_48x48.svg",
+    "priority": 0
+  },
+  {
+    "class": "xterm",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/xterm-color_48x48.svg",
+    "priority": 0
+  },
+  {
+    "class": "xterm",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/xterm-color_48x48.svg",
+    "priority": 0
+  },
+  {
+    "class": "yad-icon-browser",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/yad.svg",
+    "priority": 0
+  },
+  {
+    "class": "yad-icon-browser",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/yad.svg",
+    "priority": 0
+  },
+  {
+    "class": "yad-icon-browser",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/yad.svg",
+    "priority": 0
+  },
+  {
+    "class": "yad-settings",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/yad.svg",
+    "priority": 0
+  },
+  {
+    "class": "yad-settings",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/yad.svg",
+    "priority": 0
+  },
+  {
+    "class": "yad-settings",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/yad.svg",
+    "priority": 0
+  },
+  {
+    "class": "zen",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/zen-browser.svg",
+    "priority": 0
+  },
+  {
+    "class": "zen",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/zen-browser.svg",
+    "priority": 0
+  },
+  {
+    "class": "zen",
+    "icon": "/usr/share/icons/Papirus/64x64/apps/zen-browser.svg",
+    "priority": 0
+  }
+]
