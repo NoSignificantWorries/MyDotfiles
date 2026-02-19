@@ -1,0 +1,23 @@
+[
+  {
+    "id": 10,
+    "class": "Hiddify",
+    "cmd": "hiddify"
+  },
+  {
+    "id": 1,
+    "class": "arduino",
+    "cmd": "flatpak run --nosocket=wayland --env=ELECTRON_OZONE_PLATFORM_HINT=x11 cc.arduino.IDE2"
+  },
+  {
+    "id": 2,
+    "class": "com.github.xournalpp.xournalpp",
+    "cmd": "xournalpp"
+  },
+  {
+    "id": 3,
+    "class": "geeqie",
+    "cmd": "geeqie"
+  }
+]
+

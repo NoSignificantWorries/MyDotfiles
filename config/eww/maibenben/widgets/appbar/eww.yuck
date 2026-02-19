@@ -1,0 +1,72 @@
+(defvar eww "~/.config/eww/widgets/appbar")
+
+(defvar plus-state false)
+(defvar apps-state false)
+(defpoll apps :interval "5s" :initial `{"count": 0, "apps": []}` :run-while {apps-state} `cat ~/.config/eww/widgets/apps_list.json`)
+
+
+(defwidget app-btn [onclick image]
+  (button
+    :class "btn"
+    :onclick "${onclick}"
+    :vexpand true
+    :valign "end"
+    (box :class "btn-img" :style "background-image: url('${image}');" :halign "center" :valign "center")
+  )
+)
+
+
+(defwidget layout []
+  (box
+    :orientation "v"
+    :valign "center"
+    (overlay
+      (box
+        :class "apps-back"
+        :hexpand true
+        :vexpand true
+        :height 90
+        :width {60 * apps.count + 6}
+      )
+      (box
+        :class "apps-row"
+        :orientation "h"
+        :space-evenly true
+        :halign "fill"
+        :valign "end"
+        (for app in {apps.apps}
+          (app-btn :onclick "${app.cmd} &" :image {app.icon})
+        )
+      )
+    )
+  )
+)
+
+(defwindow apps-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "apps"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    ;; :width "50%"
+    :anchor "bottom center"
+  )
+  :resizable false
+  (eventbox
+    :onhover "eww update -c ${eww} apps-state=true"
+    :onhoverlost "eww update -c ${eww} apps-state=false"
+    (box
+      :class "apps"
+      :space-evenly false
+      (revealer
+        :transition "slideup"
+        :duration 300
+        :reveal {apps-state}
+        (layout)
+      )
+    )
+  )
+)
+
+

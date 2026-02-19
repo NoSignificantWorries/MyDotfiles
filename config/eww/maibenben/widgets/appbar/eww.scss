@@ -1,0 +1,80 @@
+@use "/home/dmitry/.config/eww/colors/catppuccin-mocha.scss" as colors;
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 11pt;
+    color: colors.$text;
+}
+
+.apps-window {
+  background: transparent;
+
+  .apps-back {
+    background: rgba(colors.$base, 0.6);
+    border-radius: 12px;
+    margin-top: 34px;
+  }
+
+  .apps-row {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
+  .app-id {
+    background: colors.$teal;
+    border-radius: 50%;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .app-id-text {
+    color: colors.$crust;
+  }
+
+  .btn {
+    transition: all 0.3s ease;
+    padding: 4px;
+
+    .btn-img {
+      background-repeat: no-repeat;
+      border-radius: 12px;
+      background-size: 48px;
+      min-height: 48px;
+      min-width: 48px;
+
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      .btn-img {
+        background-size: 56px;
+        min-height: 56px;
+        min-width: 56px;
+      }
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-bottom: 16px;
+    }
+
+    &:active {
+      .btn-img {
+        background-size: 52px;
+        min-height: 50px;
+        min-width: 50px;
+        transition: all 0.1s ease;
+      }
+      padding-left: 3px;
+      padding-right: 3px;
+      margin-bottom: 18px;
+      transition: all 0.1s ease;
+    }
+  }
+
+}
+.apps {
+  background: transparent;
+  /* background: #ff0000; */
+  margin: 10px;
+}
+
+

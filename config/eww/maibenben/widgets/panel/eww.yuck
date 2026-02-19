@@ -538,7 +538,7 @@
 ;;################
 ;;##    MENU    ##
 ;;################
-(defvar file-manager "nemo")
+(defvar file-manager "doublecmd")
 (defpoll folders-data :interval "10s" `cat ~/.config/eww/widgets/folders.json`)
 (defvar gui-app "neovide")
 (defvar tui-app "kitty -e nvim --cmd")
