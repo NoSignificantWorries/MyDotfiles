@@ -1,10 +1,5 @@
 [
   {
-    "id": 10,
-    "class": "Hiddify",
-    "cmd": "hiddify"
-  },
-  {
     "id": 1,
     "class": "arduino",
     "cmd": "flatpak run --nosocket=wayland --env=ELECTRON_OZONE_PLATFORM_HINT=x11 cc.arduino.IDE2"
@@ -18,6 +13,60 @@
     "id": 3,
     "class": "geeqie",
     "cmd": "geeqie"
+  },
+  {
+    "id": 10,
+    "class": "code",
+    "cmd": "code"
+  },
+  {
+    "id": 10,
+    "class": "neovide",
+    "cmd": "neovide"
+  },
+  {
+    "id": 10,
+    "class": "xed",
+    "cmd": "xed"
+  },
+  {
+    "id": 10,
+    "class": "org.freecad.FreeCAD",
+    "cmd": "freecad"
+  },
+  {
+    "id": 10,
+    "class": "org.telegram.desktop",
+    "cmd": "Telegram"
+  },
+  {
+    "id": 10,
+    "class": "zen",
+    "cmd": "zen-browser"
+  },
+  {
+    "id": 10,
+    "class": "Min",
+    "cmd": "min-browser"
+  },
+  {
+    "id": 10,
+    "class": "onlyoffice-desktopeditors",
+    "cmd": "onlyoffice-desktopeditors"
+  },
+  {
+    "id": 10,
+    "class": "org.inkscape.Inkscape",
+    "cmd": "inkscape"
+  },
+  {
+    "id": 10,
+    "class": "Pixelorama",
+    "cmd": "pixelorama"
+  },
+  {
+    "id": 10,
+    "class": "AmneziaVPN",
+    "cmd": "QT_QPA_PLATFORM=xcb AmneziaVPN"
   }
 ]
-

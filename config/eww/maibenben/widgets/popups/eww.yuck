@@ -1,0 +1,152 @@
+(defvar eww "~/.config/eww/widgets/popups")
+
+(defvar volume-state false)
+(defvar brightness-state false)
+
+;; brightness
+(defpoll br :interval "3s" :run-while {brightness-state} `~/.config/eww/widgets/popups/scripts/brightness_updater.sh`)
+(defvar br-icon "󰃚 ")
+(defvar br-update "~/.config/eww/widgets/popups/scripts/brightness_updater.sh {}")
+;; sound
+(defpoll vol :interval "3s" :run-while {volume-state} `~/.config/eww/widgets/popups/scripts/volume_updater.sh`)
+(defvar vol-mute true)
+(defvar vol-icon " ")
+(defvar vol-color "#ff0000")
+(defvar vol-update "~/.config/eww/widgets/popups/scripts/volume_updater.sh {}")
+(defvar vol-toggle-mute "~/.config/eww/widgets/popups/scripts/volume_updater.sh toggle")
+
+
+(defwidget custom-slider [class orientation value onchange]
+  (box
+    :class {class}
+    :orientation {orientation}
+    :halign "fill"
+    :space-evenly true
+    (scale
+      :orientation {orientation}
+      :flipped false
+      :value {value}
+      :onchange {onchange}
+      :max 101
+      :min 0
+      :hexpand true
+      :halign "fill"
+    )
+  )
+)
+
+(defwidget sound []
+  (box
+    :class "sound"
+    :orientation "v"
+    :halign "center"
+    :spacing 6
+    :space-evenly false
+    (label :text "Sound" :halign "start")
+    (box
+      :class "speaker-box"
+      :orientation "h"
+      :spacing 8
+      :space-evenly false
+      (label :text "${vol-icon}")
+      (label :text "${vol}%")
+      (custom-slider
+        :class "speaker-slider"
+        :orientation "h"
+        :onchange {vol-update}
+        :value {vol}
+      )
+    )
+  )
+)
+
+(defwidget volume-layout []
+  (box
+    :class "content"
+    :orientation "h"
+    :valign "center"
+    (sound)
+  )
+)
+
+(defwindow volume-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "popups"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :anchor "bottom center"
+  )
+  :resizable false
+  (box
+    :class "volume"
+    :space-evenly false
+    (revealer
+      :transition "slideup"
+      :duration 300
+      :reveal {volume-state}
+      (volume-layout)
+    )
+  )
+)
+
+
+(defwidget brightness []
+  (box
+    :class "brightness"
+    :orientation "v"
+    :halign "center"
+    :spacing 6
+    :space-evenly false
+    (label :text "Brightness" :halign "start")
+    (box
+      :class "brightness-box"
+      :orientation "h"
+      :spacing 8
+      :space-evenly false
+      :halign "fill"
+      (label :text "${br-icon}")
+      (label :text "${br}%")
+      (custom-slider
+        :class "brightness-slider"
+        :orientation "h"
+        :onchange {br-update}
+        :value {br}
+      )
+    )
+  )
+)
+
+(defwidget brightness-layout []
+  (box
+    :class "content"
+    :orientation "h"
+    :valign "center"
+    :halign "center"
+    (brightness)
+  )
+)
+
+(defwindow brightness-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "popups"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :anchor "bottom center"
+  )
+  :resizable false
+  (box
+    :class "brightness"
+    :space-evenly false
+    (revealer
+      :transition "slideup"
+      :duration 300
+      :reveal {brightness-state}
+      (brightness-layout)
+    )
+  )
+)
+

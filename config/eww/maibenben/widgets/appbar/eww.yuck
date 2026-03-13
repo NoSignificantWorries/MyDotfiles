@@ -2,7 +2,7 @@
 
 (defvar plus-state false)
 (defvar apps-state false)
-(defpoll apps :interval "5s" :initial `{"count": 0, "apps": []}` :run-while {apps-state} `cat ~/.config/eww/widgets/apps_list.json`)
+(defpoll apps :interval "10s" :initial `{"count": 0, "apps": []}` :run-while {apps-state} `cat ~/.config/eww/widgets/apps_list.json`)
 
 
 (defwidget app-btn [onclick image]

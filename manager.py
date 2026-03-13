@@ -51,6 +51,7 @@ def check_file_and_delete(path: Path) -> None:
         else:
             path.unlink()
 
+
 def prepare_path(path: Path) -> Path:
     path = path.expanduser()
     return path

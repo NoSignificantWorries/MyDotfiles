@@ -639,7 +639,7 @@
   (box
     :orientation "h"
     :space-evenly false
-    (label :class "submap" :text {submap})
+    (label :class "submap" :text " ${submap}")
   )
 )
 

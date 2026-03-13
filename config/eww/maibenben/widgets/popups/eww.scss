@@ -1,0 +1,68 @@
+@use "/home/dmitry/.config/eww/colors/catppuccin-mocha.scss" as colors;
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 11pt;
+    color: colors.$text;
+}
+
+.volume-window {
+  .content {
+    margin-bottom: 100px;
+  }
+
+  // Sound
+  .sound {
+    background: rgba(colors.$base, 0.6);
+    padding: 6px;
+    margin-left: 8px;
+    margin-right: 8px;
+    border-radius: 10px;
+  }
+
+  // Speaker
+  .speaker-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$text;
+    color: colors.$crust;
+    border-radius: 10px;
+  }
+  .speaker-slider scale trough {
+    all: unset;
+    background-color: colors.$crust;
+    border-radius: 50px;
+    min-height: 6px;
+    min-width: 200px;
+  }
+}
+
+.brightness-window {
+  .content {
+    margin-bottom: 100px;
+  }
+
+  // Brightness
+  .brightness {
+    background: rgba(colors.$base, 0.6);
+    padding: 6px;
+    margin-left: 8px;
+    margin-right: 8px;
+    border-radius: 10px;
+  }
+  .brightness-slider scale trough highlight {
+    all: unset;
+    background-color: colors.$text;
+    color: colors.$crust;
+    border-radius: 10px;
+  }
+  .brightness-slider scale trough {
+    all: unset;
+    background-color: colors.$crust;
+    border-radius: 50px;
+    min-height: 6px;
+    min-width: 200px;
+  }
+
+}
+
