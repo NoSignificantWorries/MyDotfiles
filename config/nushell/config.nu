@@ -34,22 +34,22 @@ $env.config = {
   }
 
   completions: {
-      case_sensitive: false
-      quick: true
-      partial: true
-      algorithm: "prefix"
-      external: {
-          enable: true
-          max_results: 100
-          completer: null
-      }
-      use_ls_colors: true
+    case_sensitive: false
+    quick: true
+    partial: true
+    algorithm: "prefix"
+    external: {
+      enable: true
+      max_results: 100
+      completer: null
+    }
+    use_ls_colors: true
   }
 
   cursor_shape: {
-      emacs: block
-      vi_insert: block
-      vi_normal: underscore
+    emacs: block
+    vi_insert: block
+    vi_normal: underscore
   }
 
   edit_mode: vi
