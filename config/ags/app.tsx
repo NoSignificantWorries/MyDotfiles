@@ -7,6 +7,7 @@ import { createBinding, For, This } from "ags"
 
 import { LeftBar } from "./widgets/LeftBar"
 
+
 app.start({
   instanceName: env.appName,
   main() {

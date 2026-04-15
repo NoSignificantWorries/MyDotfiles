@@ -8,6 +8,7 @@ const { CENTER } = Gtk.Align
 const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 const { EXCLUSIVE } = Astal.Exclusivity
 // const { transparent, position } = options.bar
+import style from "./style.scss"
 
 export function LeftBar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
   let win: Astal.Window
@@ -21,16 +22,17 @@ export function LeftBar({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
       $={self => {
         win = self
       }}
-      name="bar"
+      name="left-bar"
       visible
-      class="bar"
+      class="left-bar"
+      css={style}
       gdkmonitor={gdkmonitor}
       exclusivity={EXCLUSIVE}
       anchor={LEFT|TOP|BOTTOM}
       application={app}
     >
       <centerbox valign={CENTER}>
-        <box $type="center" class="horizontal" valign={CENTER}>
+        <box $type="center" class="vertical" valign={CENTER}>
           <Date.TimeObject />
         </box>
       </centerbox>

@@ -27,6 +27,8 @@ enabled:                     true;
 margin:                      0px 0px 20px 0px;
 padding:                     0px;
                              border-radius:               30px;
+                             border: 1px solid;
+                             border-color: @base;
                              background-color:            rgba(30, 30, 46, 0.6);
 cursor:                      "default";
 }
@@ -167,3 +169,4 @@ textbox {
   horizontal-align:            0.0;
 highlight:                   none;
 }
+

@@ -63,14 +63,6 @@
 ;;#################
 ;;##    PANEL    ##
 ;;#################
-(defwidget menu-button []
-  (button
-    :class "menu-button"
-    :onclick "eww open -c ${eww} --toggle main-menu-window"
-    (label :class "menu-icon" :text "")
-  )
-)
-
 (defwidget workspaces []
   (box
     :class "workspaces"
@@ -173,7 +165,6 @@
     :space-evenly false
     :spacing 10
     :halign "start"
-    (menu-button)
     (label :text {kb_layout})
     (workspaces)
   )
@@ -583,41 +574,6 @@
           (label :class "path-text" :text "${pth.path}")
         )
       )
-    )
-  )
-)
-
-(defwidget main-menu-layout []
-  (box
-    :orientation "v"
-    :spacing 6
-    :space-evenly false
-    (folders)
-    (box :class "spacer")
-    (projects)
-  )
-)
-
-
-;;#######################
-;;##    MENU WINDOW    ##
-;;#######################
-(defwindow main-menu-window
-  :monitor 0
-  :windowtype "normal"
-  :namespace "panel"
-  :geometry (geometry
-    :y "0%"
-    :x "0%"
-    :anchor "top left"
-  )
-  :resizable false
-  (eventbox
-    :onhoverlost "eww close -c ${eww} main-menu-window"
-    (box
-      :class "main-menu"
-      :halign "fill"
-      (main-menu-layout)
     )
   )
 )

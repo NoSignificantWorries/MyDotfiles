@@ -1,4 +1,5 @@
 @define-color cc-bg rgba(30, 30, 46, 0.6);
+@define-color cc-bg-border rgba(30, 30, 46, 1.0);
 @define-color dark-text #a6adc8;
 @define-color dark-bg rgba(17, 17, 27, 0.6);
 @define-color darker-bg rgba(17, 17, 27, 0.8);
@@ -63,12 +64,12 @@
 .notification {
   background-color: @cc-bg;
   border-radius: 6px;
-  /* border: 1px solid @border-color; */
+  border: 1px solid @cc-bg-border;
   margin: 3px -2px 3px 0;
 }
 
 .notification-image {
-      border-radius: 12px !important;
+  border-radius: 12px !important;
 }
 
 .close-button {
@@ -158,6 +159,7 @@
 
 .control-center {
   background: @cc-bg;
+  border: 1px solid @cc-bg-border;
   /* border: 1px solid @border-color; */
   border-radius: 8px;
 }

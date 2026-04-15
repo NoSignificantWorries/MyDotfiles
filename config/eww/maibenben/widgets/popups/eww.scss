@@ -1,10 +1,10 @@
 @use "/home/dmitry/.config/eww/colors/catppuccin-mocha.scss" as colors;
 
 * {
-    all: unset;
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 11pt;
-    color: colors.$text;
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 11pt;
+  color: colors.$text;
 }
 
 .volume-window {
@@ -15,6 +15,7 @@
   // Sound
   .sound {
     background: rgba(colors.$base, 0.6);
+    border: 1px solid rgba($color: colors.$base, $alpha: 1.0);
     padding: 6px;
     margin-left: 8px;
     margin-right: 8px;
@@ -28,6 +29,7 @@
     color: colors.$crust;
     border-radius: 10px;
   }
+
   .speaker-slider scale trough {
     all: unset;
     background-color: colors.$crust;
@@ -45,17 +47,20 @@
   // Brightness
   .brightness {
     background: rgba(colors.$base, 0.6);
+    border: 1px solid rgba($color: colors.$base, $alpha: 1.0);
     padding: 6px;
     margin-left: 8px;
     margin-right: 8px;
     border-radius: 10px;
   }
+
   .brightness-slider scale trough highlight {
     all: unset;
     background-color: colors.$text;
     color: colors.$crust;
     border-radius: 10px;
   }
+
   .brightness-slider scale trough {
     all: unset;
     background-color: colors.$crust;
@@ -65,4 +70,3 @@
   }
 
 }
-
