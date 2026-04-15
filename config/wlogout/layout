@@ -6,6 +6,13 @@
 }
 
 {
+    "label": "logout",
+    "action": "hyprctl dispatch exit 0",
+    "text": "Logout",
+    "keybind": "e"
+}
+
+{
     "label": "suspend",
     "action": "hyprlock & disown && systemctl suspend",
     "text": "Suspend",
@@ -32,3 +39,4 @@
     "text": "Reboot",
     "keybind": "r"
 }
+
