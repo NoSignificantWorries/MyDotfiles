@@ -6,6 +6,7 @@ import app from "ags/gtk4/app"
 import { createBinding, For, This } from "ags"
 
 import { LeftBar } from "./widgets/LeftBar"
+import { default as HudTest } from "./widgets/HudTest"
 
 
 app.start({
@@ -13,15 +14,17 @@ app.start({
   main() {
     const monitors = createBinding(app, "monitors");
 
-    return (
-      <For each={monitors}>
-        {(monitor) => (
-          <This this={app}>
-            <LeftBar gdkmonitor={monitor} />
-          </This>
-        )}
-      </For>
-    )
-  },
+    app.add_window(HudTest());
+
+    // return (
+    //   <For each={monitors}>
+    //     {(monitor) => (
+    //       <This this={app}>
+    //         <LeftBar gdkmonitor={monitor} />
+    //       </This>
+    //     )}
+    //   </For>
+    // )
+  }
 })
 

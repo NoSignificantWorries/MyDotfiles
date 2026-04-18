@@ -1,0 +1,80 @@
+(defvar eww "~/.config/eww/widgets/wallpapers")
+
+(defpoll img_grid :interval "2m" `cat ~/.cache/wallpapers/data.json`)
+
+
+(defwidget layout []
+  (scroll
+    :hscroll true
+    :vscroll false
+    (box
+      :orientation "h"
+      :space-evenly true
+      (for row in {img_grid.rows}
+        (box
+          :orientation "v"
+          :halign "center"
+          :valign "center"
+          :space-evenly true
+          (for img in {row}
+            (button
+              :class "btn"
+              :valign "center"
+              :halign "center"
+              :onclick "${eww}/wallpaper_select.sh ${img.from} ${img.tumb} ${img.name}"
+              (box
+                :class "img-container"
+                :orientation "v"
+                :spacing 6
+                :space-evenly false
+                (box :class "img-button" :style "background-image: url('${img.tumb}');")
+                (label :text "${img.name}")
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+
+(defwindow wallpapers-window
+  :monitor 0
+  :windowtype "normal"
+  :namespace "wallpapers"
+  :geometry (geometry
+    :y "0%"
+    :x "0%"
+    :width "800px"
+    :anchor "center center"
+  )
+  :resizable false
+  (box
+    :class "wallpapers"
+    :orientation "v"
+    :space-evenly false
+    (box
+      :orientation "h"
+      :spacing 8
+      :space-evenly false
+      :halign "fill"
+      (label
+        :class "title"
+        :text "Choose Wallpaper"
+        :halign "start"
+        :hexpand true
+      )
+      (button
+        :class "refresh"
+        :halign "end"
+        :hexpand true
+        :onclick "${eww}/reload.sh"
+        " Refresh"
+      )
+    )
+    (layout)
+  )
+)
+
+
