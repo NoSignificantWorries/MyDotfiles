@@ -1,163 +1,258 @@
+#!/usr/bin/python
+
 import os
-import sys
 import json
-import signal
 import asyncio
-import subprocess
-from pathlib import Path
+import sys
 
 
-pid_file = Path("~/.config/eww/widgets/panel/scripts/data.pid").expanduser()
-
-def cleanup(signum, frame):
-    print("Получен SIGTERM, завершаем...")
-    if os.path.exists(pid_file):
-        os.unlink(pid_file)
-    sys.exit(0)
-
-signal.signal(signal.SIGTERM, cleanup)
-signal.signal(signal.SIGINT, cleanup)
-signal.signal(signal.SIGHUP, signal.SIG_IGN)
-
-with open(pid_file, 'w') as f:
-    f.write(str(os.getpid()))
+async def get_keyboard_layouts():
+    proc = await asyncio.create_subprocess_exec(
+        "niri", "msg", "-j", "keyboard-layouts",
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+    stdout, _ = await proc.communicate()
+    if proc.returncode == 0:
+        return json.loads(stdout.decode())
+    return {"names": [], "current_idx": 0}
 
 
-CONFIG = Path("~/.config/eww/widgets/panel").expanduser()
+async def get_workspaces():
+    proc = await asyncio.create_subprocess_exec(
+        "niri", "msg", "-j", "workspaces",
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+    stdout, _ = await proc.communicate()
+    if proc.returncode == 0:
+        data = json.loads(stdout.decode())
+        res = [
+            {
+                "name": str(w["idx"]) if w["name"] is None else w["name"],
+                "id": w["id"],
+                "idx": w["idx"],
+                "is_active": w["is_active"],
+                "is_urgent": w["is_urgent"],
+                "is_empty": w["active_window_id"] is None
+            }
+            for w in data
+        ]
+        return list(sorted(res, key=(lambda x: x["idx"])))
+    return []
 
 
-KB_LAYOUTS = {
-    "Russian": "RU",
-    "English (US)": "EN"
-}
+async def read_niri_stream_async():
+    sock_path = os.environ.get("NIRI_SOCKET")
+    if not sock_path:
+        raise EnvironmentError("NIRI_SOCKET is not set")
 
-class EwwUpdater:
-    @staticmethod
-    def update(var: str, value: str):
-        subprocess.run(['eww', '-c', CONFIG, 'update', f'{var}={value}'], stdout=subprocess.DEVNULL)
-
-
-class CmdRunner:
-    @staticmethod
-    async def get_output(cmd: str) -> str:
-        try:
-            proc = await asyncio.create_subprocess_shell(
-                cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-            )
-            stdout, _ = await proc.communicate()
-            try:
-                text = stdout.decode('utf-8').strip()
-            except UnicodeDecodeError:
-                text =  stdout.decode('latin1').strip()
-            return text
-        except:
-            return "N/A"
-
-
-def parse_worspaces(ws, workspaces, active_workspaces):
-    json_workspaces = []
-    for w in workspaces:
-        cmd = f"hyprctl dispatch workspace {w}"
-        if w == ws:
-            active = True
-            occupied = False
-        elif w in active_workspaces:
-            active = False
-            occupied = True
-        else:
-            active = False
-            occupied = False
-        json_workspaces.append({
-                "active": active,
-                "occupied": occupied,
-                "cmd": cmd,
-                "text": w
-            })
-    json_workspaces = {
-        "count": len(json_workspaces),
-        "data": json_workspaces
+    # Асинхронная инициализация
+    kbs_task = get_keyboard_layouts()
+    wsps_task = get_workspaces()
+    
+    kbs, wsps = await asyncio.gather(kbs_task, wsps_task)
+    
+    KB_NAMES_MAP = {"English (US)": "EN", "Russian": "RU"}
+    kb_variants = {i: KB_NAMES_MAP.get(name, name) for i, name in enumerate(kbs["names"])}
+    
+    state = {
+        "kb": kb_variants.get(kbs["current_idx"], "??"),
+        "wsp": wsps,
+        "is_overview": False
     }
+    current_kb_idx = kbs["current_idx"]
+    
+    print(json.dumps(state))
+    sys.stdout.flush()
 
-    return json_workspaces
-
-
-async def hyprland_events():
-    his = os.environ.get('HYPRLAND_INSTANCE_SIGNATURE')
-    if not his:
-        print("Hyprland didn't start")
-        return
-
-    socket_path = f"{os.environ['XDG_RUNTIME_DIR']}/hypr/{his}/.socket2.sock"
-
-    reader, writer = await asyncio.open_unix_connection(socket_path)
-
+    # Асинхронное чтение сокета
+    reader, writer = await asyncio.open_unix_connection(sock_path)
+    writer.write(b'"EventStream"\n')
+    await writer.drain()
+    
+    buffer = ""
+    
     try:
-        devices_res = subprocess.run(["hyprctl", "devices", "-j"], capture_output=True, text=True)
-        devices_text = devices_res.stdout
-        devices = json.loads(devices_text)
-        keyboards = devices["keyboards"]
-        for kb in keyboards:
-            if kb["main"]:
-                print(kb)
-                kb_layout = kb["active_keymap"]
-                if kb_layout in KB_LAYOUTS.keys():
-                    kb_layout = KB_LAYOUTS[kb_layout]
-                EwwUpdater.update("kb_layout", kb_layout)
-                break
-
-        base_workspaces = {"1", "2", "3", "4", "5"}
-        workspaces = base_workspaces.copy()
-        current_workspace = "1"
-        workspaces_json = parse_worspaces(current_workspace, sorted(workspaces), [])
-        EwwUpdater.update("workspaces-json", json.dumps(workspaces_json))
         while True:
-            data = await reader.readline()
-            event = data.decode().strip()
-            print(event)
-            event, value = event.split(">>", 1)
-            match event:
-                case "activelayout":
-                    new_layout = value.split(",")[-1]
-                    if new_layout in KB_LAYOUTS.keys():
-                        new_layout = KB_LAYOUTS[new_layout]
-                    EwwUpdater.update("kb_layout", new_layout)
-                case "submap":
-                    if len(value) > 0:
-                        EwwUpdater.update("submap", value)
-                        EwwUpdater.update("is_submap", "true")
-                        subprocess.run(['eww', 'open', '-c', CONFIG, 'submap-window'], stdout=subprocess.DEVNULL)
-                    else:
-                        EwwUpdater.update("submap", "")
-                        EwwUpdater.update("is_submap", "false")
-                        subprocess.run(['eww', 'close', '-c', CONFIG, 'submap-window'], stdout=subprocess.DEVNULL)
-                case "workspace":
-                    current_workspace = value
-
-                    workspaces_data = await CmdRunner.get_output("hyprctl workspaces -j")
-                    workspaces_js = json.loads(workspaces_data)
-                    current_workspaces = [str(ws["id"]) for ws in workspaces_js if str(ws["id"]) != current_workspace]
-                    workspaces = sorted(base_workspaces | set(current_workspaces + [current_workspace]))
-
-                    workspaces_json = parse_worspaces(current_workspace, workspaces, current_workspaces)
-                    EwwUpdater.update("workspaces-json", json.dumps(workspaces_json))
-    except asyncio.CancelledError:
+            data = await reader.read(8192)
+            if not data:
+                break
+            
+            buffer += data.decode()
+            
+            while True:
+                try:
+                    decoder = json.JSONDecoder()
+                    obj, idx = decoder.raw_decode(buffer)
+                    buffer = buffer[idx:].lstrip()
+                    
+                    changed = False
+                    
+                    if "WorkspaceActivated" in obj:
+                        state["wsp"] = await get_workspaces()
+                        changed = True
+                    elif "WorkspacesChanged" in obj:
+                        state["wsp"] = [
+                            {
+                                "name": str(w["idx"]) if w.get("name") is None else w["name"],
+                                "id": w["id"],
+                                "idx": w["idx"],
+                                "is_active": w["is_active"],
+                                "is_urgent": w["is_urgent"],
+                                "is_empty": w.get("active_window_id") is None
+                            }
+                            for w in obj["WorkspacesChanged"]["workspaces"]
+                        ]
+                        changed = True
+                        
+                    elif "KeyboardLayoutSwitched" in obj:
+                        new_idx = obj["KeyboardLayoutSwitched"].get("idx")
+                        if new_idx is not None and new_idx != current_kb_idx:
+                            current_kb_idx = new_idx
+                            state["kb"] = kb_variants.get(new_idx, "??")
+                            changed = True
+                            
+                    elif "OverviewOpenedOrClosed" in obj:
+                        is_open = obj["OverviewOpenedOrClosed"].get("is_open")
+                        if is_open is not None:
+                            state["is_overview"] = is_open
+                            changed = True
+                    
+                    if changed:
+                        print(json.dumps(state))
+                        sys.stdout.flush()
+                        
+                except json.JSONDecodeError:
+                    break
+                    
+    except Exception:
         pass
     finally:
         writer.close()
         await writer.wait_closed()
 
 
-async def main():
-    tasks = [asyncio.create_task(hyprland_events())]
-    await asyncio.gather(*tasks)
+if __name__ == "__main__":
+    asyncio.run(read_niri_stream_async())
 
+
+'''
+import os
+import json
+import socket
+import subprocess
+
+
+def get_keyboard_layouts():
+    try:
+        result = subprocess.run(
+            ["niri", "msg", "-j", "keyboard-layouts"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return json.loads(result.stdout)
+    except Exception as e:
+        return {"names": [], "current_idx": 0}
+
+
+def get_workspaces():
+    try:
+        result = subprocess.run(
+            ["niri", "msg", "-j", "workspaces"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        data =  json.loads(result.stdout)
+        workspaces = []
+        for elem in data:
+            workspaces.append({
+                    "name": str(elem["idx"]) if elem["name"] is None else elem["name"],
+                    "id": elem["id"],
+                    "idx": elem["idx"],
+                    "is_active": elem["is_active"],
+                    "is_urgent": elem["is_urgent"],
+                    "is_empty": elem["active_window_id"] is None
+                    })
+        return workspaces
+    except Exception as e:
+        return []
+
+
+def match_kb_name(name):
+    NAMES = {
+            "English (US)": "EN",
+            "Russian": "RU"
+            }
+    matched_name = NAMES.get(name)
+    if matched_name:
+        return matched_name
+    return name
+
+
+def read_niri_stream():
+    sock_path = os.environ.get("NIRI_SOCKET")
+    if not sock_path:
+        raise EnvironmentError("NIRI_SOCKET is not set")
+
+    kbs = get_keyboard_layouts()
+    kb_variants = {}
+    for i, name in enumerate(kbs["names"]):
+        kb_variants[i] = match_kb_name(name)
+    wsps = get_workspaces()
+
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
+        s.connect(sock_path)
+        s.sendall(b'"EventStream"\n')
+
+        buffer = ""
+
+        result = {"kb": kb_variants[kbs["current_idx"]], "wsp": wsps, "is_overview": False}
+
+        while True:
+            try:
+                data = s.recv(4096)
+                if not data:
+                    break
+
+                buffer += data.decode()
+
+                while True:
+                    try:
+                        decoder = json.JSONDecoder()
+                        obj, idx = decoder.raw_decode(buffer)
+
+                        if "KeyboardLayoutSwitched" in obj:
+                            kb = obj["KeyboardLayoutSwitched"].get("idx")
+                            if kb is not None:
+                                result["kb"] = kb_variants[kb]
+                            print(kb)
+                            print(json.dumps(result))
+                        elif "WorkspaceActivated" in obj:
+                            # obj["WorkspaceActivated"]
+                            wsp = get_workspaces()
+                            result["wsp"] = wsp
+                            print(wsp)
+                            print(json.dumps(result))
+                        elif "OverviewOpenedOrClosed" in obj:
+                            is_open = obj["OverviewOpenedOrClosed"].get("is_open")
+                            if is_open is not None:
+                                result["is_overview"] = is_open
+                            print(is_open)
+                            print(json.dumps(result))
+
+                        buffer = buffer[idx:].lstrip()
+
+                    except json.JSONDecodeError:
+                        break
+
+            except Exception as e:
+                # print(f"Ошибка: {e}", file=sys.stderr)
+                break
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    finally:
-        if os.path.exists(pid_file):
-            os.unlink(pid_file)
+    read_niri_stream()
+'''
 

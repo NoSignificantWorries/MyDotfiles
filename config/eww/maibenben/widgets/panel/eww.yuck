@@ -48,16 +48,11 @@
 (defpoll br :interval "3s" `~/.config/eww/widgets/panel/scripts/brightness_updater.sh`)
 (defvar br-icon "󰃚 ")
 (defvar br-update "~/.config/eww/widgets/panel/scripts/brightness_updater.sh {}")
-;; layout
-(defvar kb_layout "N/A")
-;; workspaces
-(defvar workspaces-json `[]`)
-(defvar apps-json `{}`)
 ;; weather
 (defpoll weather-info :interval "2m" :initial `{"data": false}` `~/.config/eww/widgets/panel/scripts/weather.py`)
-;; submap
-(defvar submap "")
-(defvar is_submap false)
+
+;; niri
+(deflisten niri `~/.config/eww/widgets/panel/scripts/data.py`)
 
 
 ;;#################
@@ -65,70 +60,29 @@
 ;;#################
 (defwidget workspaces []
   (box
-    :class "workspaces"
     :orientation "h"
+    :class "workspaces"
     :space-evenly false
-    :spacing 6
-    (for wsp in {workspaces-json.data}
-      (box
-        :class "workspaces"
-        :orientation "h"
-        :space-evenly false
-        :halign "center"
-        (overlay
-          (button
-            :class {wsp.active ? "activebtn" : (wsp.occupied ? "fullbtn" : "normalbtn")}
-            :onclick `${wsp.cmd}`
-            (box
-              :orientation "h"
-              :space-evenly false
-              (for app in {wsp.apps}
-                (box :style "background-image: url('${app.icon}');" :class "app-icon" :halign "center" :valign "center")
-              )
-            )
-          )
-          (label :text "${wsp.text}" :halign "start" :valign "start" :class "ws-text-${wsp.active ? 'active' : 'normal'}")
-        )
+    :spacing 5
+    (for wsp in {niri.wsp}
+      (button
+        :class "wbtn-${wsp.is_active ? 'active' : ( wsp.is_urgent ? 'urgent' : 'normal' )}"
+        :onclick `niri msg action focus-workspace ${wsp.idx}`
+        (label :class "text" :text {wsp.is_active ? "\[${wsp.is_empty ? "." : "${wsp.name}"}\]" : "${wsp.is_empty ? "." : "${wsp.name}"}"})
       )
     )
   )
 )
 
 (defwidget datetime []
-  (eventbox
-    :onhover "eww open -c ${eww} datetime-window"
-    (box
-      :orientation "h"
-      :space-evenly false
-      :spacing 7
-      (box
-        :orientation "h"
-        :space-evenly false
-        :spacing 4
-        (label :class "day" :text "${day_name}")
-        (label :class "date" :text "${month_name}")
-        (label :class "number" :text "${day}")
-      )
-      (label :class "time" :text "${h}:${m}")
-    )
-  )
-)
-
-(defwidget notifications []
-  (button
-    :class "noti-button"
-    :onclick "swaync-client --open-panel"
-    :onmiddleclick "swaync-client -C"
-    :onrightclick "swaync-client -d | ${eww}/scripts/swaync_update_dnd.sh"
-    (label :class "noti-icon" :text {noti-dnd-state ? (noti-count > 0 ? "" : "") : (noti-count > 0 ? "" : "")})
-  )
-)
-
-(defwidget tweaks []
-  (button
-    :class "tweak-button"
-    :onclick "eww open -c ${eww} control-window"
-    (label :class "tweak-icon" :text "")
+  (box
+    :class "datetime"
+    :orientation "h"
+    :space-evenly false
+    :spacing 10
+    (label :class "day" :text "${day}")
+    (label :class "month" :text "${month_name}")
+    (label :class "time" :text "${h}:${m}")
   )
 )
 
@@ -158,14 +112,42 @@
   )
 )
 
+(defwidget kb-layout []
+  (box
+    :class "kb-layout"
+    (label :class "kb-text-${niri.kb}" :text "${niri.kb}")
+  )
+)
+
+(defwidget weather-row []
+  (box
+    :class "weather-row"
+    :orientation "h"
+    :space-evenly false
+    (revealer
+      :transition "slideleft"
+      :duration 300
+      :reveal {weather-info.data}
+      (box
+        :orientation "h"
+        :spacing 10
+        :space-evenly false
+        (label :class "icon" :text "${weather-info.icon}")
+        (label :class "name" :text "${weather-info.label}")
+        (label :class "temp" :text "${weather-info.temp.feels.t}󰔄 ")
+      )
+    )
+  )
+)
+
 (defwidget left-group []
   (box
     :class "left"
     :orientation "h"
     :space-evenly false
-    :spacing 10
+    :spacing 6
     :halign "start"
-    (label :text {kb_layout})
+    (kb-layout)
     (workspaces)
   )
 )
@@ -177,7 +159,6 @@
     :spacing 6
     :halign "center"
     (datetime)
-    (notifications)
   )
 )
 (defwidget right-group []
@@ -185,10 +166,17 @@
     :class "right"
     :orientation "h"
     :space-evenly false
-    :spacing 10
+    :spacing 12
     :halign "end"
-    (systray :orientation "h" :class "tray" :icon-size 16 :spacing 6)
-    (tweaks)
+    (weather-row)
+    (box
+      :orientation "h"
+      :space-evenly false
+      :spacing 4
+      (label :class "rnd" :text "[")
+      (systray :orientation "h" :class "tray" :icon-size 16 :spacing 6)
+      (label :class "rnd" :text "]")
+    )
     (battery)
   )
 )
@@ -214,388 +202,29 @@
     :y "0%"
     :x "0%"
     :width "100%"
-    :height "30px"
-    :anchor "top center"
+    :height "10px"
+    :anchor "bottom center"
   )
   :resizable false
-  :reserve (struts :side "top" :distance "30")
+  :reserve (struts :side "bottom" :distance "10")
   (box
-    :class "panel"
+    ;; :class "panel"
     :halign "fill"
-    (layout)
-  )
-)
-
-
-;;###################
-;;##    CONTROL    ##
-;;###################
-(defwidget custom-slider [class orientation value onchange]
-  (box
-    :class {class}
-    :orientation {orientation}
-    :halign "fill"
-    :space-evenly true
-    (scale
-      :orientation {orientation}
-      :flipped false
-      :value {value}
-      :onchange {onchange}
-      :max 101
-      :min 0
-      :hexpand true
-      :halign "fill"
-    )
-  )
-)
-
-(defwidget brightness []
-  (box
-    :class "brightness"
-    :orientation "v"
-    :spacing 6
-    :space-evenly false
-    (label :text "Brightness" :halign "start")
-    (box
-      :class "brightness-box"
-      :orientation "h"
-      :spacing 8
+     (box
+      :orientation "v"
       :space-evenly false
-      :halign "fill"
-      (label :text "${br-icon}")
-      (label :text "${br}%")
-      (custom-slider
-        :class "brightness-slider"
-        :orientation "h"
-        :onchange {br-update}
-        :value {br}
-      )
-    )
-  )
-)
-(defwidget sound []
-  (box
-    :class "sound"
-    :orientation "v"
-    :spacing 6
-    :space-evenly false
-    (label :text "Sound" :halign "start")
-    (box
-      :class "speaker-box"
-      :orientation "h"
-      :spacing 8
-      :space-evenly false
-      (button :onclick {vol-toggle-mute} "${vol-icon}")
-      (label :text "${vol}%")
-      (custom-slider
-        :class "speaker-slider"
-        :orientation "h"
-        :onchange {vol-update}
-        :value {vol}
-      )
-    )
-    (box
-      :class "micro-box"
-      :orientation "h"
-      :spacing 6
-      :space-evenly false
-      (button :onclick {mic-toggle-mute} "${mic-icon}")
-      (label :text "${mic}%")
-      (custom-slider
-        :class "micro-slider"
-        :orientation "h"
-        :onchange {mic-update}
-        :value {mic}
-      )
-    )
-  )
-)
-
-(defwidget weather []
-  (box
-    :class "weather"
-    :orientation "v"
-    :space-evenly false
-    (box
-      :orientation "h"
-      :space-evenly false
-      :hexpand true
-      :halign "fill"
-      :spacing 6
-      (box
+      (revealer
+       :transition "crossfade"
+       :duration 300
+       :reveal {!niri.is_overview}
+       (box
+        :class "panel"
         :orientation "v"
         :space-evenly false
-        :hexpand true
-        :halign "fill"
-        :spacing 6
-        (box
-          :class "weather-icon"
-          :orientation "v"
-          :space-evenly false
-          :hexpand true
-          :halign "fill"
-          :spacing 2
-          (label :class "wicon" :text "${weather-info.icon}" :hexpand true)
-          (label :class "wlabel" :text "${weather-info.label}" :hexpand true)
-        )
-        (box
-          :class "weather-main"
-          :orientation "v"
-          :space-evenly false
-          :hexpand true
-          :halign "fill"
-          :spacing 2
-          (label :class "wind" :text " ${weather-info.wind.speed}m/s ${weather-info.wind.orient}" :hexpand true)
-          (label :class "temp-real" :text "${weather-info.temp.real.i} ${weather-info.temp.real.t}󰔄" :hexpand true)
-          (label :class "temp-feels" :text "${weather-info.temp.feels.i} ${weather-info.temp.feels.t}󰔄" :hexpand true)
-        )
-      )
-    (box
-      :class "weather-info"
-      :orientation "v"
-      :space-evenly false
-      :hexpand true
-      :vexpand true
-      :halign "fill"
-      :valign "fill"
-      :spacing 4
-      (label :class "pressure" :text " ${weather-info.pressure} hPa" :hexpand true :vexpand true :halign "start")
-      (label :class "humidity" :text " ${weather-info.humidity}%" :hexpand true :vexpand true :halign "start")
-      (label :class "visibility" :text "󰣰 ${weather-info.visibility} km" :hexpand true :vexpand true :halign "start")
-      (label :class "sunrise" :text " ${weather-info.sun.rise}" :hexpand true :vexpand true :halign "start")
-      (label :class "sunset" :text " ${weather-info.sun.set}" :hexpand true :vexpand true :halign "start")
-    )
-    )
-  )
-)
-
-(defwidget player-widget []
-  (box
-    :class "player"
-    :orientation "h"
-    :spacing 6
-    :space-evenly false
-    (eventbox
-      :onrightclick "playerctl stop"
-      (box
-        :class "player-image"
-        :orientation "h"
-        :space-evenly false
-        :style "background-image: url('${player-cover}');"
+        (layout)
+       )
       )
     )
-    (box
-      :orientation "v"
-      :spacing 4
-      :space-evenly false
-      (label :class "player-title" :text "${player-title}")
-      (custom-slider
-        :class "player-slider"
-        :orientation "h"
-        :onchange "${eww}/scripts/player_set_time.sh ${player-all-time / 1000000} {}"
-        :value {round(player-time-now / (player-all-time / 1000000) * 100, 0)}
-      )
-      (box
-        :class "player-buttons"
-        :orientation "h"
-        :halign "fill"
-        :space-evenly true
-        (button :class "player-btn"
-          :onclick "playerctl shuffle toggle | ${eww}/scripts/player.sh"
-          {player-shuffle ? "" : "󰒞"}
-        )
-        (button :class "player-btn"
-          :onclick "playerctl previous | ${eww}/scripts/player.sh"
-          ""
-        )
-        (button :class "player-btn"
-          :onclick "playerctl play-pause | ${eww}/scripts/player.sh"
-          {playing ? "" : ""}
-        )
-        (button :class "player-btn"
-          :onclick "playerctl next | ${eww}/scripts/player.sh"
-          ""
-        )
-        (button :class "player-btn"
-          :onclick "${eww}/scripts/player_toggle.sh | ${eww}/scripts/player.sh"
-          {player-loop == "None" ? "󰑗" : (player-loop == "Track" ? "󰑘" : "󰑖")}
-        )
-      )
-    )
-  )
-)
-
-(defwidget control-layout []
-  (box
-    :orientation "v"
-    :space-evenly false
-    :spacing 8
-    (brightness)
-    (sound)
-    (revealer
-      :transition "slidedown"
-      :duration 300
-      :reveal {weather-info.data}
-      (weather)
-    )
-    (revealer
-      :transition "slidedown"
-      :duration 300
-      :reveal {player-status}
-      (player-widget)
-    )
-  )
-)
-
-;;##########################
-;;##    CONTROL WINDOW    ##
-;;##########################
-(defwindow control-window
-  :monitor 0
-  :windowtype "normal"
-  :namespace "panel"
-  :geometry (geometry
-    :y "0%"
-    :x "0%"
-    :anchor "top right"
-  )
-  :resizable false
-  (eventbox
-    :onhoverlost "eww close -c ${eww} control-window"
-    (box
-      :class "control"
-      :halign "fill"
-      (control-layout)
-    )
-  )
-)
-
-
-;;####################
-;;##    DATETIME    ##
-;;####################
-(defwidget datetime-layout []
-  (box
-    :orientation "v"
-    :spacing 6
-    :space-evenly false
-    (box
-      :class "timezone-header"
-      :orientation "h"
-      :spacing 4
-      :space-evenly false
-      (label :class "timezone" :text "${timezone}" :hexpand true)
-      (label :class "timeshift" :text "${time_shift}" :hexpand true)
-    )
-    (box
-      :class "cal-box"
-      :orientation "h"
-      :space-evenly false
-      (calendar
-        :class "cal"
-        :day {day}
-        :month {month}
-        :year {year}
-      )
-    )
-  )
-)
-
-
-;;###########################
-;;##    DATETIME WINDOW    ##
-;;###########################
-(defwindow datetime-window
-  :monitor 0
-  :windowtype "normal"
-  :namespace "panel"
-  :geometry (geometry
-    :y "0%"
-    :x "0%"
-    :anchor "top center"
-  )
-  :resizable false
-  (eventbox
-    :onhoverlost "eww close -c ${eww} datetime-window"
-    (box
-      :class "datetime"
-      :halign "fill"
-      (datetime-layout)
-    )
-  )
-)
-
-
-;;################
-;;##    MENU    ##
-;;################
-(defvar file-manager "doublecmd")
-(defpoll folders-data :interval "10s" `cat ~/.config/eww/widgets/folders.json`)
-(defvar gui-app "neovide")
-(defvar tui-app "kitty -e nvim --cmd")
-(defpoll projects-data :interval "10s" `cat ~/.config/eww/widgets/projects.json`)
-
-(defwidget folders []
-  (box
-    :class "folders"
-    :orientation "v"
-    :space-evenly false
-    :halign "start"
-    (for pth in {folders-data}
-      (button
-        :class "folder-btn"
-        :onclick "${file-manager} ${pth.path} &"
-        :halign "start"
-        :hexpand true
-        (label :class "text" :text "${pth.icon} ${pth.name}")
-      )
-    )
-  )
-)
-(defwidget projects []
-  (box
-    :class "projects"
-    :orientation "v"
-    :space-evenly false
-    :halign "start"
-    (for pth in {projects-data}
-      (button
-        :class "project-btn"
-        :onclick "${tui-app} 'cd ${pth.path}' &"
-        :onrightclick "${gui-app} ${pth.path} &"
-        :halign "start"
-        :hexpand true
-        (box
-          :orientation "h"
-          :spacing 6
-          :space-evenly false
-          (label :class "icon" :style "color: ${pth.color};" :text "${pth.icon}")
-          (label :class "text" :text "${pth.name}")
-          (label :class "path-text" :text "${pth.path}")
-        )
-      )
-    )
-  )
-)
-
-;;#########################
-;;##    SUBMAP WINDOW    ##
-;;#########################
-(defwindow submap-window
-  :monitor 0
-  :windowtype "normal"
-  :namespace "panel"
-  :geometry (geometry
-    :y "0%"
-    :x "0%"
-    :anchor "center top"
-  )
-  :stacking "overlay"
-  :resizable false
-  (box
-    :orientation "h"
-    :space-evenly false
-    (label :class "submap" :text " ${submap}")
   )
 )
 

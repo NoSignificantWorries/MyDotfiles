@@ -11,21 +11,19 @@
 @mixin special-font($color: colors.$text, $family: "Iosevka", $weight: normal, $size: 11pt) {
   color: $color;
   font-family: $family;
+
   font-weight: $weight;
   font-size: $size;
 }
 
 @mixin ws-button-base() {
-  background: rgba(colors.$sky, 0.1);
+  // padding-left: 3px;
+  // padding-right: 6px;
+  // margin-top: 2px;
+  // margin-bottom: 2px;
+  // font-size: 7pt;
 
-  margin-top: 2px;
-  margin-bottom: 2px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 6px;
-  padding-right: 3px;
-
-  border-radius: 2px 5px 5px 5px;
+  border-radius: 5px;
   transition: all 0.1s ease;
 }
 
@@ -33,34 +31,25 @@
 .panel-window {
   background: transparent;
 
-  // Workspaces
-  .ws-text-active {
-    color: colors.$text;
-    font-size: 10pt;
-    font-weight: bold;
-    margin-top: -2px;
+  .kb-layout {
+    margin-right: 10px;
+
+    .kb-text-EN {
+      font-weight: bold;
+      color: colors.$yellow;
+    }
+    .kb-text-RU {
+      font-weight: bold;
+      color: colors.$blue;
+    }
   }
 
-  .ws-text-normal {
-    color: colors.$subtext0;
-    font-size: 10pt;
-    font-weight: bold;
-    margin-top: -2px;
-  }
-
-  .app-icon {
-    background-repeat: no-repeat;
-    background-size: 20px;
-    min-height: 20px;
-    min-width: 20px;
-    padding-left: 3px;
-    /* padding-right: 3px; */
-
-  }
-
-  .activebtn {
+  .wbtn-normal {
     @include ws-button-base();
-    border: 1px solid colors.$text;
+
+    .text {
+      color: colors.$surface2;
+    }
 
     &:hover {
       background: rgba(colors.$crust, 0.6);
@@ -70,10 +59,13 @@
       background: rgba(colors.$crust, 0.9);
     }
   }
-
-  .normalbtn {
+  .wbtn-active {
     @include ws-button-base();
-    border: 1px solid colors.$subtext0;
+
+    .text {
+      color: colors.$subtext0;
+      font-weight: bold;
+    }
 
     &:hover {
       background: rgba(colors.$crust, 0.6);
@@ -83,10 +75,12 @@
       background: rgba(colors.$crust, 0.9);
     }
   }
-
-  .fullbtn {
+  .wbtn-urgent {
     @include ws-button-base();
-    border: 1px solid colors.$subtext0;
+
+    .text {
+      color: colors.$peach;
+    }
 
     &:hover {
       background: rgba(colors.$crust, 0.6);
@@ -104,7 +98,15 @@
 
   .number {}
 
-  .time {}
+  .time {
+    color: colors.$lavender;
+  }
+  .day {
+    color: colors.$lavender;
+  }
+  .month {
+    color: colors.$lavender;
+  }
 
   // Notifications
   .noti-icon {
@@ -132,11 +134,30 @@
     }
   }
 
+  // Weather
+  .icon {
+    color: colors.$surface2;
+    font-size: 13pt;
+    font-weight: bold;
+  }
+  .name {
+    color: colors.$surface2;
+    font-size: 10pt;
+  }
+  .temp {
+    color: colors.$surface2;
+    font-size: 10pt;
+  }
+
   // Tray
+  .rnd {
+    font-weight: bold;
+    font-size: 13pt;
+  }
   .tray {
     menu {
-      background: rgba(colors.$base, 0.6);
-      border: 1px solid rgba($color: colors.$base, $alpha: 1.0);
+      background: rgba(colors.$crust, 1.0);
+      border: 1px solid rgba($color: colors.$mantle, $alpha: 1.0);
       color: colors.$text;
       border-radius: 8px;
       padding: 10px 5px 10px 5px;
@@ -150,11 +171,11 @@
       transition: all 0.1s ease;
 
       &:hover {
-        background: rgba(colors.$crust, 0.6);
+        background: rgba(colors.$base, 1.0);
       }
 
       &:active {
-        background: rgba(colors.$crust, 0.9);
+        background: rgba(colors.$base, 0.6);
       }
     }
   }
@@ -179,9 +200,13 @@
   }
 
   // Battery
-  .bat {}
+  .bat {
+    color: colors.$green;
+  }
 
-  .bat-icon-normal {}
+  .bat-icon-normal {
+    color: colors.$green;
+  }
 
   .bat-icon-low {
     color: colors.$peach;
@@ -194,18 +219,27 @@
   .bat-time {
     margin-right: 8px;
     font-size: 9pt;
+    color: colors.$subtext0;
   }
 }
 
 .panel {
-  background: rgba(colors.$base, 0.6);
+  // background: rgba(colors.$crust, 1.0);
   /* background: transparent; */
+  background: black;
   /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); */
-  margin: 3px 10px 0px 10px;
-  border: 1px solid rgba(colors.$base, 1.0);
-  border-radius: 8px;
-  padding-left: 6px;
-  padding-right: 8px;
+  // margin: 3px 10px 0px 10px;
+  // border: 1px solid rgba(colors.$mantle, 1.0);
+  border-radius: 5px 5px 0px 0px;
+  border-top: 1px solid colors.$teal;
+  border-left: 1px solid colors.$teal;
+  border-right: 1px solid colors.$teal;
+  margin-left: 12px;
+  margin-right: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 
@@ -413,26 +447,3 @@
   }
 }
 
-.datetime {
-  // background: rgba(colors.$base, 0.6);
-  // border-radius: 10px;
-  background: transparent;
-  margin: 10px;
-  padding: 8px;
-}
-
-
-// Submap
-.submap-window {
-  margin-top: 6px;
-  padding: 6px;
-
-  .submap {
-    background: rgba(colors.$base, 0.6);
-    border: 1px solid rgba($color: colors.$base, $alpha: 1.0);
-    border-radius: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-weight: bold;
-  }
-}

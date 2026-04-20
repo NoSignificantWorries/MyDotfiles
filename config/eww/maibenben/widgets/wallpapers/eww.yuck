@@ -44,10 +44,10 @@
   :windowtype "normal"
   :namespace "wallpapers"
   :geometry (geometry
-    :y "0%"
+    :y "2%"
     :x "0%"
     :width "800px"
-    :anchor "center center"
+    :anchor "top center"
   )
   :resizable false
   (box
