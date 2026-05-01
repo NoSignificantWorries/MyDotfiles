@@ -52,7 +52,7 @@
 (defpoll weather-info :interval "2m" :initial `{"data": false}` `~/.config/eww/widgets/panel/scripts/weather.py`)
 
 ;; niri
-(deflisten niri `~/.config/eww/widgets/panel/scripts/data.py`)
+(deflisten niri `python -u ~/.config/eww/widgets/panel/scripts/data.py`)
 
 
 ;;#################
@@ -125,7 +125,7 @@
     :orientation "h"
     :space-evenly false
     (revealer
-      :transition "slideleft"
+      :transition "crossfade"
       :duration 300
       :reveal {weather-info.data}
       (box

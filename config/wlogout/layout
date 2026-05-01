@@ -1,6 +1,6 @@
 {
     "label": "lock",
-    "action": "hyprlock",
+    "action": "~/.config/niri/lock.sh",
     "text": "Lock",
     "keybind": "l"
 }
@@ -14,7 +14,7 @@
 
 {
     "label": "suspend",
-    "action": "hyprlock & disown && systemctl suspend",
+    "action": "~/.config/niri/lock.sh & disown && systemctl suspend",
     "text": "Suspend",
     "keybind": "u"
 }

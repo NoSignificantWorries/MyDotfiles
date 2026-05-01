@@ -1,0 +1,52 @@
+layout {
+  gaps 14
+  always-center-single-column
+  center-focused-column "never"
+  preset-column-widths {
+    proportion 0.25
+    proportion 0.5
+    proportion 0.75
+    proportion 1.0
+  }
+  preset-window-heights {
+    proportion 0.25
+    proportion 0.5
+    proportion 0.75
+    proportion 1.0
+  }
+  default-column-width {
+    proportion 0.8
+  }
+  focus-ring {
+    width 1
+    active-gradient from="#74c7ec" to="#a6e3a1" angle=45
+    inactive-gradient from="#6c7086" to="#1e1e2e" angle=45 relative-to="workspace-view"
+  }
+  shadow {
+    on
+    softness 30
+    spread 5
+    offset x=0 y=5
+    color "#0007"
+  }
+  struts {
+
+  }
+  tab-indicator {
+    width 10
+    gap 3
+    gaps-between-tabs 3
+    corner-radius 5
+    length total-proportion=0.85
+    active-gradient from="#74c7ec" to="#a6e3a1"
+    inactive-color "#6c7086"
+    urgent-color "#f38ba8"
+    position "left"
+    place-within-column
+  }
+  insert-hint {
+    color "#000000A0"
+  }
+  background-color "transparent"
+}
+
