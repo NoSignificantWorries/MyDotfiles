@@ -52,7 +52,8 @@
 (defpoll weather-info :interval "2m" :initial `{"data": false}` `~/.config/eww/widgets/panel/scripts/weather.py`)
 
 ;; niri
-(deflisten niri `python -u ~/.config/eww/widgets/panel/scripts/data.py`)
+(defvar niri `{"is_overview": false}`)
+;; (deflisten niri `python -u ~/.config/eww/widgets/panel/scripts/data.py`)
 
 
 ;;#################

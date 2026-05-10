@@ -4,7 +4,7 @@
 configuration {
 modi:                       "drun";
                             show-icons:                 true;
-                            display-drun:               " ";
+                            display-drun:               " ";
                             drun-display-format:        "{name}";
 }
 
@@ -15,18 +15,18 @@ font:                        "JetBrains Mono Nerd Font 12";
 
 window {
 transparency:                "real";
-location:                    south;
+location:                    center;
 anchor:                      center;
 fullscreen:                  false;
-width:                       800px;
-height:                      600px;
+width:                       500px;
+height:                      0px;
                              x-offset:                    0px;
                              y-offset:                    0px;
 
 enabled:                     true;
-margin:                      0px 0px 20px 0px;
+margin:                      0px 0px 5px 0px;
 padding:                     0px;
-                             border-radius:               30px;
+                             border-radius:               12px;
                              border: 1px solid;
                              border-color: @teal;
                              background-color:            @base;
@@ -36,9 +36,9 @@ cursor:                      "default";
 /*****----- Main Box -----*****/
 mainbox {
 enabled:                     true;
-spacing:                     10px;
-margin:                      0px;
-padding:                     20px 20px;
+spacing:                     0px;
+margin:                      10px;
+padding:                     8px 5px;
                              // border:                      0px solid;
                              border-radius:               0px 0px 0px 0px;
                              border-color:                @mauve;
@@ -50,7 +50,7 @@ children:                    [ "inputbar", "listview" ];
 inputbar {
 enabled:                     true;
 spacing:                     5px;
-margin:                      2% 3%;
+margin:                      1% 3%;
 padding:                     10px;
                              // border:                      1px solid;
                              border-radius:               10px;
@@ -85,7 +85,7 @@ placeholder:                 "Search";
 /*****----- Listview -----*****/
 listview {
 enabled:                     true;
-columns:                     6;
+columns:                     1;
 cycle:                       true;
 dynamic:                     false;
 scrollbar:                   false;
@@ -116,15 +116,15 @@ scrollbar {
 /*****----- Elements -----*****/
 element {
 enabled:                     true;
-spacing:                     5px;
-margin:                      5px;
-padding:                     10px 10px;
+spacing:                     0px;
+margin:                      0px;
+padding:                     3px 3px;
                              // border:                      0px solid;
                              border-radius:               10px;
                              // border-color:                @overlay0;
                              background-color:            transparent;
                              text-color:                  @text;
-orientation:                 vertical;
+orientation:                 horizontal;
 cursor:                      pointer;
 }
 element normal.normal {
@@ -141,7 +141,7 @@ border:                      1px solid;
 element-icon {
   background-color:            transparent;
   text-color:                  inherit;
-size:                        48px;
+size:                        32px;
 cursor:                      inherit;
 }
 element-text {
@@ -150,7 +150,7 @@ element-text {
 highlight:                   inherit;
 cursor:                      inherit;
                              vertical-align:              0.5;
-                             horizontal-align:            0.5;
+                             horizontal-align:            0.05;
 }
 
 /*****----- Message -----*****/

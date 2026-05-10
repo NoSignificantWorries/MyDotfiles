@@ -1,9 +1,36 @@
 #!/usr/bin/python
 
 import os
-import json
-import asyncio
 import sys
+import json
+import signal
+import asyncio
+import subprocess
+from pathlib import Path
+
+pid_file = Path("~/.config/eww/widgets/panel/scripts/data.pid").expanduser()
+
+def cleanup(signum, frame):
+    print("Получен SIGTERM, завершаем...")
+    if os.path.exists(pid_file):
+        os.unlink(pid_file)
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, cleanup)
+signal.signal(signal.SIGINT, cleanup)
+signal.signal(signal.SIGHUP, signal.SIG_IGN)
+
+with open(pid_file, 'w') as f:
+    f.write(str(os.getpid()))
+
+
+CONFIG = Path("~/.config/eww/widgets/panel").expanduser()
+
+
+class EwwUpdater:
+    @staticmethod
+    def update(var: str, value: str):
+        subprocess.run(['eww', '-c', CONFIG, 'update', f'{var}={value}'], stdout=subprocess.DEVNULL)
 
 
 async def get_keyboard_layouts():
@@ -47,7 +74,6 @@ async def read_niri_stream_async():
     if not sock_path:
         raise EnvironmentError("NIRI_SOCKET is not set")
 
-    # Асинхронная инициализация
     kbs_task = get_keyboard_layouts()
     wsps_task = get_workspaces()
     
@@ -63,7 +89,8 @@ async def read_niri_stream_async():
     }
     current_kb_idx = kbs["current_idx"]
     
-    print(json.dumps(state))
+    # print(json.dumps(state))
+    EwwUpdater.update("niri", json.dumps(state))
     sys.stdout.flush()
 
     # Асинхронное чтение сокета
@@ -120,8 +147,9 @@ async def read_niri_stream_async():
                             changed = True
                     
                     if changed:
-                        print(json.dumps(state))
-                        sys.stdout.flush()
+                        # print(json.dumps(state))
+                        # sys.stdout.flush()
+                        EwwUpdater.update("niri", json.dumps(state))
                         
                 except json.JSONDecodeError:
                     break
@@ -134,5 +162,9 @@ async def read_niri_stream_async():
 
 
 if __name__ == "__main__":
-    asyncio.run(read_niri_stream_async())
+    try:
+        asyncio.run(read_niri_stream_async())
+    finally:
+        if os.path.exists(pid_file):
+            os.unlink(pid_file)
 

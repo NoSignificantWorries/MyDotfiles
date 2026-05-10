@@ -23,7 +23,7 @@ spawn-at-startup "swaync"
 spawn-sh-at-startup "~/.scripts/battery_allert.sh"
 spawn-at-startup "~/.config/eww/widgets/panel/launch.sh"
 spawn-sh-at-startup "systemctl --user start opentabletdriver.service"
-spawn-sh-at-startup "pkill swayidle; echo '10 minutes' > /tmp/idle-time; $NIRICONF/scripts/swayidle.sh"
+spawn-sh-at-startup "pkill swayidle; echo '10 minutes' > /tmp/idle-time; ~/.config/niri/idle.sh"
 // spawn-sh-at-startup "~/.config/eww/widgets/hud/launch.sh"
 // spawn-sh-at-startup "~/.config/eww/widgets/controls/launch.sh"
 hotkey-overlay {

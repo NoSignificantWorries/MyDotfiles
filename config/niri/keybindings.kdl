@@ -32,8 +32,8 @@ binds {
   Mod+Shift+N hotkey-overlay-title="Open code editor (noevim)" {
     spawn-sh "kitty -e nvim"
   }
-  Mod+Shift+C hotkey-overlay-title="Open additional code editor (Code)" {
-    spawn-sh "code"
+  Mod+Shift+C hotkey-overlay-title="Open additional code editor (Zed)" {
+    spawn "zed"
   }
   Mod+Shift+W hotkey-overlay-title="Open wallpapers selection" {
     spawn-sh "~/.config/eww/widgets/wallpapers/launch.sh"
